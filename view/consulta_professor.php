@@ -43,6 +43,6 @@ and open the template in the editor.
             </tr>
         </table>
         <br><br>
-        <table id="tabelaProfessor" class="bordasimples">
-        </table>
+        <div  id="tabelaProfessor" class="centralizado"></div>
+
 </html>

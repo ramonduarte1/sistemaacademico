@@ -8,16 +8,7 @@
 //    <fieldset>
 //        <legend>Select a maintenance drone</legend>
 
-echo '  <table>            
-            <tr>
-                <th>Matricula</th>
-                <th>Nome</th>
-                <th>email</th>
-                <th>endereço</th>
-                <th>Telefone</th>
-                <th><th>
-                <th><th>
-            </tr>';
+
 session_start();
 foreach ($_SESSION['alunos'] as $matricula => $aluno) {
     
@@ -25,17 +16,14 @@ foreach ($_SESSION['alunos'] as $matricula => $aluno) {
 
           $pattern = '/' . $pesquisa . '/';//Padrão a ser encontrado na string $tags
           if (preg_match($pattern, $aluno['nome'])) {
-             echo "<tr>
-                    <form action='../controller/AlunoController.php' method='post'>
-
-                        <td><input readonly name='matricula' value='".$matricula."'></>
-                        <td><input name='nome' value='".$aluno['nome']."'></td>
-                        <td><input name='email' value='".$aluno['email']."'></td>
-                        <td><input name='endereco' value='".$aluno['endereco']."'></td>
-                        <td><input name='telefone' value='".$aluno['telefone']."'></td>
-                        <td><button>salvar</button></td>
-                    </form>
-                    </tr></table>";
+             echo "<form action='../controller/AlunoController.php' method='post'>
+                            <input size='4' readonly name='matricula' value='".$matricula."'>
+                            <input name='nome' type='text' value='".$aluno['nome']."'>
+                            <input name='email' type='text' value='".$aluno['email']."'>
+                            <input name='endereco' type='text' value='".$aluno['endereco']."'>
+                            <input name='telefone' type='text' value='".$aluno['telefone']."'>
+                            <button>salvar</button>
+                    </form>";
           
           }
     

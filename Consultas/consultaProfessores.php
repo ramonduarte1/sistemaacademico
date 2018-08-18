@@ -6,16 +6,6 @@
  * and open the template in the editor.
  */
 
-$resposta = '              
-            <tr>
-                <th>Matricula</th>
-                <th>Nome</th>
-                <th>email</th>
-                <th>endereço</th>
-                <th>Telefone</th>
-                <th><th>
-                <th><th>
-            </tr>';
 session_start();
 foreach ($_SESSION['professores'] as $matricula => $professor) {
     
@@ -23,29 +13,18 @@ foreach ($_SESSION['professores'] as $matricula => $professor) {
 
           $pattern = '/' . $pesquisa . '/';//Padrão a ser encontrado na string $tags
           if (preg_match($pattern, $professor['nome'])) {
-              $resposta .=  "
-                            <tr>
-                                <form action="."../controller/AlunoController.php"." method="."post".">
-                                    <td><input readonly name='matricula' value='$matricula'></>
-                                    <td><input name='nome' value=".$professor['nome']."></td>
-                                    <td><input name='email' value=".$professor['email']."></td>
-                                    <td><input name='endereco' value=".$professor['endereco']."></td>
-                                    <td><input name='telefone' value=".$professor['telefone']."></td>
-                                    <td><button>salvar</button></td>
-                                </form>
-                                <form action="."../controller/AlunoController.php"." method="."post".">
-                                    <td><input type='button' value='apagar'></td>
-                                </form>
-                                
-                            </tr>";
-          
+             echo "<form action='../controller/ProfessorController.php' method='post'>
+                            <input readonly size='4' name='matricula' value='".$matricula."'>
+                            <input name='nome' type='text' value='".$professor['nome']."'>
+                            <input name='email' type='text' value='".$professor['email']."'>
+                            <input name='endereco' type='text' value='".$professor['endereco']."'>
+                            <input name='telefone' type='text' value='".$professor['telefone']."'>
+                            <button>salvar</button>
+                    </form>
+                    <form action='../controller/ProfessorController.php' method='post'>
+                            <input readonly size='4' name='matricula' value='".$matricula."'>
+                            <button>apagar</button>
+                    </form>";
           }
     
 }
-if(!empty($resposta)){
-    echo $resposta;
-}else{
-    echo 'Professor não encontrado!';
-}
-
-    

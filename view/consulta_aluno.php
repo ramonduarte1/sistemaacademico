@@ -41,11 +41,8 @@ and open the template in the editor.
                     <button onclick="consultaAluno()">Pesquisar</button>
                 </td>
             </tr>
-            <tr>
-            <div id="tabelaAluno"></div>
-            
-        </tr>
-    </table>
-    <br><br>
-</body>
+        </table>
+        <br><br>
+        <div class="centralizado" id="tabelaAluno"></div>
+    </body>
 </html>
