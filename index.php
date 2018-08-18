@@ -11,9 +11,7 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        // put your code here
-        //alterado netbeans de novo
-        echo 'oi';
+
         
         ?>
     </body>
