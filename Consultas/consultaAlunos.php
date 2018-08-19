@@ -16,14 +16,25 @@ foreach ($_SESSION['alunos'] as $matricula => $aluno) {
 
           $pattern = '/' . $pesquisa . '/';//Padrão a ser encontrado na string $tags
           if (preg_match($pattern, $aluno['nome'])) {
-             echo "<form action='../controller/AlunoController.php' method='post'>
+             echo "<table>
+                   <tr>
+                    <td>
+                     <form action='../controller/AlunoController.php' method='post'>
                             <input size='4' readonly name='matricula' value='".$matricula."'>
                             <input name='nome' type='text' value='".$aluno['nome']."'>
                             <input name='email' type='text' value='".$aluno['email']."'>
                             <input name='endereco' type='text' value='".$aluno['endereco']."'>
                             <input name='telefone' type='text' value='".$aluno['telefone']."'>
                             <button>salvar</button>
-                    </form>";
+                     </form>
+                    </td>
+                    <td>
+                    <form action='../controller/AlunoController.php' method='post'>
+                       <input name='matricula' type='hidden' value='".$matricula."'>
+                       <input name='apagar' type='hidden' value='apagar'>
+                       <button>apagar</button></td>
+                    </form>
+                    </tr></table><br>";
           
           }
     

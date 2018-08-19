@@ -52,7 +52,12 @@ class Disciplina {
         $_SESSION['disciplinas'][$this->getCodigo()]['nome'] = $this->getNome();
         $_SESSION['disciplinas'][$this->getCodigo()]['carga_horaria'] = $this->getCargaHoraria();
         var_dump($_SESSION['disciplinas']);
-        
+
+        require_once '../controller/NumeroMatriculaController.php';
+    }
+
+    public function apagar() {
+        unset($_SESSION['disciplinas'][$this->getMatricula()]);
         require_once '../controller/NumeroMatriculaController.php';
     }
 

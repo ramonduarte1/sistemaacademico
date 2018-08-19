@@ -43,7 +43,5 @@ and open the template in the editor.
             </tr>
         </table>
         <br><br>
-        <table id="tabelaDisciplina" class="bordasimples">
-
-        </table>
+        <div id="tabelaDisciplina" class="centralizado"></div>
 </html>

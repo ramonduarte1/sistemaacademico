@@ -16,6 +16,7 @@ require_once '../model/Disciplina.php';
 class DisciplinaController {
 
     private $discplina;
+    private $apagar;
 
     function __construct() {
         if (!isset($_SESSION['disciplinas'])) {
@@ -23,14 +24,21 @@ class DisciplinaController {
         }
         $this->discplina = new Disciplina();
         $this->incluir();
-        $this->discplina->cadastrar();
+        if ($this->apagar === 'apagar') {
+            $this->discplina->apagar();
+        } else {
+            $this->discplina->cadastrar();
+        }
     }
 
     private function incluir() {
         $this->discplina->setCodigo($_SESSION['matricula']);
         $this->discplina->setNome($_POST['nome']);
         $this->discplina->setCargaHoraria($_POST['carga_horaria']);
+
+        $this->apagar = $_POST['apagar'];
     }
 
 }
+
 new DisciplinaController();

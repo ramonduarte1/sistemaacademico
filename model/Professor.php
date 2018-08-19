@@ -28,7 +28,12 @@ class Professor extends Pessoa {
         $_SESSION['professores'][$this->getMatricula()]['endereco'] = $this->getEndereco();
         $_SESSION['professores'][$this->getMatricula()]['telefone'] = $this->getTelefone();
         //array_push($_SESSION['alunos'][$this->getMatricula()]['notas'], $this->getNotas());
-        var_dump($_SESSION);
+       // var_dump($_SESSION);
+        require_once '../controller/NumeroMatriculaController.php';
+    }
+
+    public function apagar() {
+        unset($_SESSION['professores'][$this->getMatricula()]);
         require_once '../controller/NumeroMatriculaController.php';
     }
 

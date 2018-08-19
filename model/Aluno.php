@@ -31,7 +31,12 @@ class Aluno extends Pessoa {
         $_SESSION['alunos'][$this->getMatricula()]['endereco'] = $this->getEndereco();
         $_SESSION['alunos'][$this->getMatricula()]['telefone'] = $this->getTelefone();
         //array_push($_SESSION['alunos'][$this->getMatricula()]['notas'], $this->getNotas());
-        var_dump($_SESSION['alunos']);
+        //var_dump($_SESSION['alunos']);
+        require_once '../controller/NumeroMatriculaController.php';
+    }
+
+    public function apagar() {
+        unset($_SESSION['alunos'][$this->getMatricula()]);
         require_once '../controller/NumeroMatriculaController.php';
     }
 

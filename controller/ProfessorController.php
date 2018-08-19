@@ -16,14 +16,20 @@ require_once '../model/Professor.php';
 class ProfessorController {
 
     private $professor;
+    private $apagar;
 
     function __construct() {
-
-        session_start();
+        if (!isset($_SESSION)) {
+            session_start();
+        }
 
         $this->professor = new Professor();
         $this->incluir();
-        $this->professor->cadastrar();
+        if ($this->apagar === 'apagar') {
+            $this->professor->apagar();
+        } else {
+            $this->professor->cadastrar();
+        }
     }
 
     private function incluir() {
@@ -32,6 +38,11 @@ class ProfessorController {
         $this->professor->setEmail($_POST['email']);
         $this->professor->setEndereco($_POST['endereco']);
         $this->professor->setTelefone($_POST['telefone']);
+
+        if (isset($_POST['apagar'])) {
+            $this->apagar = $_POST['apagar'];
+        }
+        
     }
 
 }

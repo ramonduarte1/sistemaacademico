@@ -16,14 +16,21 @@ require_once '../model/Aluno.php';
 class AlunoController {
 
     private $aluno;
+    private $apagar;
 
     function __construct() {
-        session_start();
+        if (!isset($_SESSION)) {
+            session_start();
+        }
         $this->aluno = new Aluno();
         $this->incluir();
-        $this->aluno->cadastrar();
+
+        if ($this->apagar === 'apagar') {
+            $this->aluno->apagar();
+        } else {
+            $this->aluno->cadastrar();
+        }
     }
-    
 
     private function incluir() {
         $this->aluno->setMatricula($_POST['matricula']);
@@ -31,6 +38,10 @@ class AlunoController {
         $this->aluno->setEmail($_POST['email']);
         $this->aluno->setEndereco($_POST['endereco']);
         $this->aluno->setTelefone($_POST['telefone']);
+        
+        if (isset($_POST['apagar'])) {
+            $this->apagar = $_POST['apagar'];
+        }
     }
 
 }

@@ -13,7 +13,9 @@
  */
 class NumeroMatriculaController {
     function __construct() {
-        session_start();
+        if (!isset($_SESSION)) {
+            session_start();
+        }
         if(!isset($_SESSION['matricula'])){
             $_SESSION['matricula'] = 0;
             
