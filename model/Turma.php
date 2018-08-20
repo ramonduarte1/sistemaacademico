@@ -17,10 +17,9 @@ class Turma {
     private $nome;
 
     function __construct() {
-        if(!isset($_SESSION['turmas'])){
+        if (!isset($_SESSION['turmas'])) {
             session_start();
         }
-        
     }
 
     function getCodigo() {
@@ -38,12 +37,17 @@ class Turma {
     function setNome($nome) {
         $this->nome = $nome;
     }
-    
-    public function cadastrar(){
+
+    public function cadastrar() {
         $_SESSION['turmas'][$this->getCodigo()]['codigo'] = $this->getCodigo();
         $_SESSION['turmas'][$this->getCodigo()]['nome'] = $this->getNome();
         var_dump($_SESSION);
-        
+
+        require_once '../controller/NumeroMatriculaController.php';
+    }
+
+    public function apagar() {
+        unset($_SESSION['turmas'][$this->getCodigo()]);
         require_once '../controller/NumeroMatriculaController.php';
     }
 

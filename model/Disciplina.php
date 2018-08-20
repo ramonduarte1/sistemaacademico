@@ -57,7 +57,7 @@ class Disciplina {
     }
 
     public function apagar() {
-        unset($_SESSION['disciplinas'][$this->setCodigo($codigo)]);
+        unset($_SESSION['disciplinas'][$this->getCodigo()]);
         require_once '../controller/NumeroMatriculaController.php';
     }
 

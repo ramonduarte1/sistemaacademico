@@ -27,8 +27,10 @@ class ProfessorController {
         $this->incluir();
         if ($this->apagar === 'apagar') {
             $this->professor->apagar();
+            echo "<script>alert('Professor apagado com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
         } else {
             $this->professor->cadastrar();
+            echo "<script>alert('Professor cadastrado com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
         }
     }
 

@@ -10,7 +10,20 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <title></title>
         <script type='text/javascript' src="../js/jquery-3.3.1.min.js"></script>
-        <script type="text/javascript" src="../js/Funcoes.js"></script>
+        <script type="text/javascript">
+            function consultaTurmas() {
+
+                $.ajax({
+                    type: "POST",
+                    url: "../Consultas/consultaTurmas.php",
+                    data: 'pesq_turma=' + $('#pesq_turma').val(),
+                    success: function (data) {
+                        $('#tabelaTurma').html(data);
+
+                    }
+                });
+            }
+        </script>
     </head>
     <body>
         <?php
@@ -25,12 +38,12 @@ and open the template in the editor.
                     <input required="" type="text" size="50" id="pesq_turma" name="pesq_turma">
                 </td>
                 <td>
-                    <button onclick="">Pesquisar</button>
+                    <button onclick="consultaTurmas()">Pesquisar</button>
                 </td>
             </tr>
-    </table>
-        <br><br>
-        <table id="tabela" class="bordasimples">
-            
         </table>
+        <br><br>
+        <div id="tabelaTurma" class="centralizado"></div>
+
+    </table>
 </html>

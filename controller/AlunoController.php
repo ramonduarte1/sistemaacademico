@@ -27,8 +27,12 @@ class AlunoController {
 
         if ($this->apagar === 'apagar') {
             $this->aluno->apagar();
+            echo "<script>alert('Aluno apagado com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+            
         } else {
             $this->aluno->cadastrar();
+            echo "<script>alert('Aluno cadastrado com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+            
         }
     }
 

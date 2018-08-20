@@ -27,13 +27,16 @@ class DisciplinaController {
 
         if ($this->apagar === 'apagar') {
             $this->discplina->apagar();
+           echo "<script>alert('Disciplina apagado com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
         } else {
             $this->discplina->cadastrar();
+            echo "<script>alert('Disciplina cadastrado com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
         }
+        
     }
 
     private function incluir() {
-        $this->discplina->setCodigo($_SESSION['matricula']);
+        $this->discplina->setCodigo($_POST['matricula']);
         $this->discplina->setNome($_POST['nome']);
         $this->discplina->setCargaHoraria($_POST['carga_horaria']);
 
