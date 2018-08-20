@@ -28,14 +28,20 @@ class MatriculaController {
     }
 
     private function incluir() {
+        if (isset($_POST['apagar'])) {
+            unset($_SESSION['aluno_disciplina']['disciplina'][$_POST['disciplina_deletar']]);
+            echo "<script>alert('Disciplina removida com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+        }
         if (isset($_POST['disciplina'])) {
             $_SESSION['aluno_disciplina']['disciplina'][$_POST['disciplina']] = $_POST['disciplina'];
+            echo "<script>alert('Disciplina inserida com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
         }
         if (isset($_POST['matricula'])) {
             $_SESSION['aluno_disciplina']['aluno'] = $_POST['matricula'];
+            echo "<script>alert('Aluno inserido com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
         }
-//$_SESSION['aluno_disciplina'][$this->aluno->getMatricula()]['disciplina'] = $_POST['codigo_disciplina'];
-        var_dump($_SESSION['aluno_disciplina']);
+         
+ 
     }
 
 }

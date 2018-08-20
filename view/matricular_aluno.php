@@ -68,4 +68,47 @@ and open the template in the editor.
                 </td>
             </tr>
         </table>
+        <table border='1'>
+
+            <?php if (isset($_SESSION['aluno_disciplina'])): ?>
+                <tr><th colspan="7" class="centralizado">Aluno</th></tr>
+                <tr>
+                    <td>Matricula</td>
+                    <td><input size="4" readonly value="<?php echo $_SESSION['aluno_disciplina']['aluno']; ?>"></td>
+                    <td>Aluno</td>
+                    <td><input readonly value="<?php echo $_SESSION['alunos'][$_SESSION['aluno_disciplina']['aluno']]['nome']; ?>"></td>
+                    <td>Email</td>
+                    <td><input readonly value="<?php echo $_SESSION['alunos'][$_SESSION['aluno_disciplina']['aluno']]['email']; ?>"></td>
+                </tr>
+                <tr><th colspan="7" class="centralizado">Disciplinas</th></tr>
+                <?php foreach ($_SESSION['aluno_disciplina']['disciplina'] as $codigo): ?>
+                    <tr>
+
+                        <td>Codigo</td>
+                        <td><input size="4" name="" readonly value="<?php echo $codigo; ?>"></td>
+                        <td>Nome</td>
+                        <td><input readonly name="" value="<?php echo $_SESSION['disciplinas'][$codigo]['nome'] ?>"></td>
+                        <td>Carga Horária</td>
+                        <td><input class="centralizado" readonly name="" value="<?php echo $_SESSION['disciplinas'][$codigo]['carga_horaria'] ?>"></td>
+                        <td> 
+                            <form action="../controller/MatriculaController.php" method="post">
+                                <input type="hidden" name="disciplina_deletar" value="<?php echo $codigo; ?>">
+                                <input type="hidden" name="apagar" value="apagar">
+                                <button>remover</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                <tr>
+                    <td colspan="6"></td>
+                    <td>
+                        <form action="../controller/RealizaMatricula.php" method="post">
+                            <!--pega a sessao aluno_disciplina e faz a matricula-->
+                            <button>Efutuar Maricula</button></td>
+                    </form>
+                </tr>
+            <?php endif; ?>
+
+
+        </table>
 </html>
