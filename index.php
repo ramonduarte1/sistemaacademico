@@ -13,6 +13,7 @@ and open the template in the editor.
         <?php
 //teste git
         //mais um teste
+        //teste
         echo 'teste';
         
         ?>
