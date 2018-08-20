@@ -18,7 +18,7 @@ class Disciplina {
     private $cargaHoraria;
 
     function __construct() {
-        if (!isset($_SESSION['disciplinas'])) {
+        if (!isset($_SESSION)) {
             session_start();
         }
     }
@@ -51,13 +51,13 @@ class Disciplina {
         $_SESSION['disciplinas'][$this->getCodigo()]['codigo'] = $this->getCodigo();
         $_SESSION['disciplinas'][$this->getCodigo()]['nome'] = $this->getNome();
         $_SESSION['disciplinas'][$this->getCodigo()]['carga_horaria'] = $this->getCargaHoraria();
-        var_dump($_SESSION['disciplinas']);
+        //var_dump($_SESSION['disciplinas']);
 
         require_once '../controller/NumeroMatriculaController.php';
     }
 
     public function apagar() {
-        unset($_SESSION['disciplinas'][$this->getMatricula()]);
+        unset($_SESSION['disciplinas'][$this->setCodigo($codigo)]);
         require_once '../controller/NumeroMatriculaController.php';
     }
 

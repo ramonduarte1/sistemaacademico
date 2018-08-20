@@ -19,11 +19,12 @@ class DisciplinaController {
     private $apagar;
 
     function __construct() {
-        if (!isset($_SESSION['disciplinas'])) {
+        if (!isset($_SESSION)) {
             session_start();
         }
         $this->discplina = new Disciplina();
         $this->incluir();
+
         if ($this->apagar === 'apagar') {
             $this->discplina->apagar();
         } else {
@@ -36,7 +37,9 @@ class DisciplinaController {
         $this->discplina->setNome($_POST['nome']);
         $this->discplina->setCargaHoraria($_POST['carga_horaria']);
 
-        $this->apagar = $_POST['apagar'];
+        if (isset($_POST['apagar'])) {
+            $this->apagar = $_POST['apagar'];
+        }
     }
 
 }
