@@ -20,9 +20,13 @@ class Matricula {
     private $turmas;
     private $disciplinas;
     
-    function __construct() {
+    function __construct($aluno, $turmas, $disciplinas) {
+        $this->aluno = new Aluno();
         $this->turmas = array();
         $this->disciplinas = array();
+        $this->aluno = $aluno;
+        array_push($this->turmas, $turmas);
+        array_push($this->disciplinas, $disciplinas);
         
     }
     function getAluno() {

@@ -37,6 +37,19 @@ and open the template in the editor.
                     }
                 });
             }
+            function consultaNomeTurma() {
+                var nome;
+                nome = document.getElementById('buscar_turma').value;
+                $.ajax({
+                    type: "POST",
+                    url: "../Consultas/matricularTurmas.php",
+                    data: 'pesq_turma=' + nome,
+                    success: function (data) {
+                        $('#turmas').html(data);
+
+                    }
+                });
+            }
         </script>
 
     </head>
@@ -67,6 +80,16 @@ and open the template in the editor.
                     <div id="disciplinas"></div>
                 </td>
             </tr>
+            <tr>
+                <td class="direita">Nome da Turma:</td>
+                <td><input size="60" type="text" id="buscar_turma" name="buscar_turma"></td>
+                <td><button  onclick="consultaNomeTurma()">buscar</button></td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <div id="turmas"></div>
+                </td>
+            </tr>
         </table>
         <table border='1'>
 
@@ -86,7 +109,7 @@ and open the template in the editor.
 
                         <td>Codigo</td>
                         <td><input size="4" name="" readonly value="<?php echo $codigo; ?>"></td>
-                        <td>Nome</td>
+                        <td>Disciplina</td>
                         <td><input readonly name="" value="<?php echo $_SESSION['disciplinas'][$codigo]['nome'] ?>"></td>
                         <td>Carga Horária</td>
                         <td><input class="centralizado" readonly name="" value="<?php echo $_SESSION['disciplinas'][$codigo]['carga_horaria'] ?>"></td>
@@ -94,6 +117,22 @@ and open the template in the editor.
                             <form action="../controller/MatriculaController.php" method="post">
                                 <input type="hidden" name="disciplina_deletar" value="<?php echo $codigo; ?>">
                                 <input type="hidden" name="apagar" value="apagar">
+                                <button>remover</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                <tr><th colspan="7" class="centralizado">Turmas</th></tr>
+                <?php foreach ($_SESSION['aluno_disciplina']['turmas'] as $codigo): ?>
+                    <tr>
+                        <td>Codigo</td>
+                        <td><input size="4" name="" readonly value="<?php echo $codigo; ?>"></td>
+                        <td>Turmas</td>
+                        <td colspan="3"><input size="52" readonly name="" value="<?php echo $_SESSION['turmas'][$codigo]['nome'] ?>"></td>
+                        <td> 
+                            <form action="../controller/MatriculaController.php" method="post">
+                                <input type="hidden" name="turma_deletar" value="<?php echo $codigo; ?>">
+                                <input type="hidden" name="apagar_turma" value="apagar_turma">
                                 <button>remover</button>
                             </form>
                         </td>
@@ -108,7 +147,5 @@ and open the template in the editor.
                     </form>
                 </tr>
             <?php endif; ?>
-
-
-        </table>
+        </table>        
 </html>

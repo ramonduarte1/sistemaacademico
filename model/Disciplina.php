@@ -16,13 +16,40 @@ class Disciplina {
     private $codigo;
     private $nome;
     private $cargaHoraria;
+    private $nota1;
+    private $nota2;
+    private $nota3;
 
     function __construct() {
         if (!isset($_SESSION)) {
             session_start();
         }
     }
+    function getNota1() {
+        return $this->nota1;
+    }
 
+    function getNota2() {
+        return $this->nota2;
+    }
+
+    function getNota3() {
+        return $this->nota3;
+    }
+
+    function setNota1($nota1) {
+        $this->nota1 = $nota1;
+    }
+
+    function setNota2($nota2) {
+        $this->nota2 = $nota2;
+    }
+
+    function setNota3($nota3) {
+        $this->nota3 = $nota3;
+    }
+
+    
     function getCargaHoraria() {
         return $this->cargaHoraria;
     }

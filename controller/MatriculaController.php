@@ -28,6 +28,10 @@ class MatriculaController {
     }
 
     private function incluir() {
+        if (isset($_POST['apagar_turma'])) {
+            unset($_SESSION['aluno_disciplina']['turmas'][$_POST['turma_deletar']]);
+            echo "<script>alert('Disciplina removida com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+        }
         if (isset($_POST['apagar'])) {
             unset($_SESSION['aluno_disciplina']['disciplina'][$_POST['disciplina_deletar']]);
             echo "<script>alert('Disciplina removida com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
@@ -36,12 +40,15 @@ class MatriculaController {
             $_SESSION['aluno_disciplina']['disciplina'][$_POST['disciplina']] = $_POST['disciplina'];
             echo "<script>alert('Disciplina inserida com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
         }
+        if (isset($_POST['turma'])) {
+            $_SESSION['aluno_disciplina']['turmas'][$_POST['turma']] = $_POST['turma'];
+            //var_dump($_SESSION['aluno_disciplina']);
+            echo "<script>alert('Turma inserida com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+        }
         if (isset($_POST['matricula'])) {
             $_SESSION['aluno_disciplina']['aluno'] = $_POST['matricula'];
             echo "<script>alert('Aluno inserido com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
         }
-         
- 
     }
 
 }
