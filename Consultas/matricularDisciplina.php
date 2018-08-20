@@ -5,14 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-$resposta = '              
-            <tr>
-                <th>Codigo</th>
-                <th>Nome</th>
-                <th>Carga Horária</th>
-                <th><th>
-                <th><th>
-            </tr>';
+
 session_start();
 foreach ($_SESSION['disciplinas'] as $matricula => $disciplina) {
     
@@ -20,20 +13,21 @@ foreach ($_SESSION['disciplinas'] as $matricula => $disciplina) {
 
           $pattern = '/' . $pesquisa . '/';//Padrão a ser encontrado na string $tags
           if (preg_match($pattern, $disciplina['nome'])) {
-              $resposta .=  "
+              echo "<table>
                             <tr>
-                                <td><input readonly name='matricula' value='$matricula'></>
-                                <td><input name='nome' value=".$disciplina['nome']."></td>
-                                <td><input name='carga_horaria' value=".$disciplina['carga_horaria']."></td>
-                                <td><button>Incluir</button></td>
-                            </tr>";
+                            <td>
+                               <form method=\"POST\" action=\"../controller/MatriculaController.php\">
+                                    <input readonly size='3' name='disciplina' value='$matricula'>
+                                    <input name='nome' type='text' value='" . $disciplina['nome'] . "'>
+                                    <input name='carga_horaria' type='text' value='" . $disciplina['carga_horaria']. "'>
+                                    <button>Incluir</button>
+                               </form>    
+                            </td>
+                            </tr>
+                    </table>";
           }
     
 }
-if(!empty($resposta)){
-    echo $resposta;
-}else{
-    echo 'Aluno não encontrado!';
-}
+
 
     

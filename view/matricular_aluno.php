@@ -49,21 +49,21 @@ and open the template in the editor.
         <table border="0">
             <tr>
                 <td class="direita">Nome Aluno:</td>
-                <td colspan="3"><input size="110" type="text" id="buscar" name="buscar"></td>
-                <td colspan="3"><button  onclick="consultaNome()">buscar</button></td>
+                <td><input size="60" type="text" id="buscar" name="buscar"></td>
+                <td><button  onclick="consultaNome()">buscar</button></td>
             </tr>
             <tr>
-                <td colspan="5">
+                <td colspan="4">
                     <div id="alunos"></div>
                 </td>
             </tr>
             <tr>
                 <td class="direita">Nome da Disciplina:</td>
-                <td colspan="3"><input size="110" type="text" id="buscar_disciplina" name="buscar_disciplina"></td>
-                <td colspan="3"><button  onclick="consultaNomeDisciplina()">buscar</button></td>
+                <td><input size="60" type="text" id="buscar_disciplina" name="buscar_disciplina"></td>
+                <td><button  onclick="consultaNomeDisciplina()">buscar</button></td>
             </tr>
             <tr>
-                <td colspan="5">
+                <td colspan="4">
                     <div id="disciplinas"></div>
                 </td>
             </tr>
