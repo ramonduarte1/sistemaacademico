@@ -42,7 +42,7 @@ and open the template in the editor.
                 </tr>
                 <tr>
                     <td class="direita">Telefone</td>
-                    <td><input type="text" name="telefone" onkeypress="mascara(this, '## #####-####')" maxlength="13"></td>
+                    <td><input type="text" required name="telefone" onkeypress="mascara(this, '## #####-####')" maxlength="13"></td>
                 </tr>
                 <tr>
                     <td></td>

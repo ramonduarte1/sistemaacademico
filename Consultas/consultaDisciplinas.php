@@ -13,27 +13,30 @@ foreach ($_SESSION['disciplinas'] as $matricula => $disciplina) {
 
     $pattern = '/' . $pesquisa . '/'; //Padrão a ser encontrado na string $tags
     if (preg_match($pattern, $disciplina['nome'])) {
-        echo "<table>
-                   <tr>
-                    <td>
-                     <form action='../controller/DisciplinaController.php' method='post'>
-                            <input size='4' readonly name='matricula' value='" . $matricula . "'>
-                            <input name='nome' type='text' value='" . $disciplina['nome'] . "'>
-                            <input name='carga_horaria' type='text' value='" . $disciplina['carga_horaria']. "'>
-                            <button>salvar</button>
-                     </form>
-                    </td>
-                    <td>
-                    <form action='../controller/DisciplinaController.php' method='post'>
-                       <input name='matricula' type='hidden' value='" . $matricula . "'>
-                       <input name='apagar' type='hidden' value='apagar'>
-                       <button>apagar</button>
-                    </form>
-                    </td>
-                    
-                    </tr>
-             </table>
-             <br>";
+        echo "
+           <form action='../controller/DisciplinaController.php' method='post'>
+           <table>
+              <tr>
+                  <th>Matricula</th>
+                  <th>Nome</th>
+                  <th>Carga Horaria</th>
+              </tr>
+              <tr>
+                   <td><input size='4' readonly name='matricula' value='" . $matricula . "'></td>
+                   <td><input name='nome' type='text' value='" . $disciplina['nome'] . "'></td>
+                   <td><input name='carga_horaria' type='text' value='" . $disciplina['carga_horaria']. "'></td>
+                   <td><button>salvar</button></td>
+           </form>
+                  <td>
+                   <form action='../controller/DisciplinaController.php' method='post'>
+                      <input name='matricula' type='hidden' value='" . $matricula . "'>
+                      <input name='apagar' type='hidden' value='apagar'>
+                      <button>apagar</button>
+                   </form>
+                  </td>
+              </tr>
+           </table>";
+
 
     }
 }

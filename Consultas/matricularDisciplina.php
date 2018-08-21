@@ -18,8 +18,8 @@ foreach ($_SESSION['disciplinas'] as $matricula => $disciplina) {
                             <td>
                                <form method=\"POST\" action=\"../controller/MatriculaController.php\">
                                     <input readonly size='3' name='disciplina' value='$matricula'>
-                                    <input name='nome' type='text' value='" . $disciplina['nome'] . "'>
-                                    <input name='carga_horaria' type='text' value='" . $disciplina['carga_horaria']. "'>
+                                    <input readonly name='nome' type='text' value='" . $disciplina['nome'] . "'>
+                                    <input readonly name='carga_horaria' type='text' value='" . $disciplina['carga_horaria']. "'>
                                     <button>Incluir</button>
                                </form>    
                             </td>

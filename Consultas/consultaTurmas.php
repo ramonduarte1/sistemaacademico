@@ -13,26 +13,27 @@ foreach ($_SESSION['turmas'] as $matricula => $turma) {
 
     $pattern = '/' . $pesquisa . '/'; //Padrão a ser encontrado na string $tags
     if (preg_match($pattern, $turma['nome'])) {
-        echo "<table>
-                   <tr>
+        echo "
+           <form action='../controller/TurmaController.php' method='post'>
+           <table>
+              <tr>
+                  <th>Matricula</th>
+                  <th>Nome</th>
+              </tr>
+              <tr>
+                    <td><input size='4' readonly name='matricula' value='" . $matricula . "'></td>
+                    <td><input name='nome' type='text' value='" . $turma['nome'] . "'></td>
+                    <td><button>salvar</button></td>
+           </form>
                     <td>
-                     <form action='../controller/TurmaController.php' method='post'>
-                            <input size='4' readonly name='matricula' value='" . $matricula . "'>
-                            <input name='nome' type='text' value='" . $turma['nome'] . "'>
-                            <button>salvar</button>
-                     </form>
+                      <form action='../controller/TurmaController.php' method='post'>
+                         <input name='matricula' type='hidden' value='" . $matricula . "'>
+                         <input name='apagar' type='hidden' value='apagar'>
+                         <button>apagar</button>
+                      </form>
                     </td>
-                    <td>
-                    <form action='../controller/TurmaController.php' method='post'>
-                       <input name='matricula' type='hidden' value='" . $matricula . "'>
-                       <input name='apagar' type='hidden' value='apagar'>
-                       <button>apagar</button>
-                    </form>
-                    </td>
-                    
-                    </tr>
-             </table>
-             <br>";
+              </tr>
+           </table>";
 
     }
 }

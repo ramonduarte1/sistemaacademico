@@ -23,6 +23,15 @@ and open the template in the editor.
                     }
                 });
             }
+
+            function imprimeBoletinho() {
+                var conteudo = document.getElementById('tabelaBoletinho').innerHTML,
+                        tela_impressao = window.open('about:blank');
+
+                tela_impressao.document.write(conteudo);
+                tela_impressao.window.print();
+                tela_impressao.window.close();
+            }
         </script>
     </head>
     <body>
@@ -43,7 +52,5 @@ and open the template in the editor.
             </tr>
         </table>
         <br><br>
-         <div id="tabelaBoletinho" class="centralizado">
-             
-
+        <div id="tabelaBoletinho" class="centralizado"></div>
 </html>

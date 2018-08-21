@@ -86,10 +86,10 @@ foreach ($_SESSION['alunos_matriculados'] as $matricula => $aluno) {
             . "</tr>"
                     . "<tr>"
                     . "<td colspan='7'></td>"
-                    . "<td><button>Imprimir</button>"
+                    . "<td><button onclick='imprimeBoletinho()'>Imprimir</button>"
                     . "</tr>";
         }
-        echo "</table><br><br><br>";
+        
         
     }
 }
