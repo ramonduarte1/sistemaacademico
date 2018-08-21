@@ -11,11 +11,8 @@ and open the template in the editor.
         <title></title>
     </head>
     <body
-    <?php
-    include 'menu.php';
-
-    ?>
+    <?php include 'menu.php';?>
         <h2 class="centralizado">Inicio</h2><br><br>
 
-</body>
+    </body>
 </html>

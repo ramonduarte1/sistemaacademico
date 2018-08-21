@@ -5,28 +5,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-echo '
-        <nav id="nav">
-            <ul class="menu">
-                <li><a href="index.php">Inicio</a></li>
-                <li><a href="#">Cadastro</a>
-                    <ul>
-                        <li><a href="cadastro_aluno.php">Aluno</a></li>
-                        <li><a href="cadastro_professor.php">Professor</a></li>
-                        <li><a href="cadastro_disciplina.php">Disciplina</a></li>
-                        <li><a href="cadastro_turma.php">Turma</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Consulta</a>
-                    <ul>
-                        <li><a href="consulta_aluno.php">Aluno</a></li>
-                        <li><a href="consulta_professor.php">Professor</a></li>
-                        <li><a href="consulta_disciplina.php">Disciplina</a></li>
-                        <li><a href="consulta_turma.php">Turma</a></li>
-                        <li><a href="consulta_boletinho.php">Boletinho</a></li>
-                    </ul>
-                </li>
-                <li><a href="matricular_aluno.php">Matricular</a></li>
-                <li><a href="lancar_notas.php">Lançar Notas</a></li>                
-            </ul>
-        </nav><br><br><br>';
+echo '<ul>
+        <li><a href="index.php">Home</a></li>
+        <li class="dropdown">
+          <a href="javascript:void(0)" class="dropbtn">Cadastro</a>
+          <div class="dropdown-content">
+            <a href="cadastro_aluno.php">Aluno</a>
+            <a href="cadastro_professor.php">Professor</a>
+            <a href="cadastro_disciplina.php">Disciplina</a>
+            <a href="cadastro_turma.php">Turma</a>
+          </div>
+        </li>
+        <li class="dropdown">
+          <a href="javascript:void(0)" class="dropbtn">Consulta</a>
+          <div class="dropdown-content">
+            <a href="consulta_aluno.php">Aluno</a>
+            <a href="consulta_professor.php">Professor</a>
+            <a href="consulta_disciplina.php">Disciplina</a>
+            <a href="consulta_turma.php">Turma</a>
+            <a href="consulta_boletinho.php">Boletinho</a>
+          </div>
+        </li>
+          <li><a href="matricular_aluno.php">Matricular</a></li>
+          <li><a href="lancar_notas.php">Lançar Notas</a></li>
+      </ul><br><br>';

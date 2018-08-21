@@ -6,11 +6,11 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <link rel="stylesheet" type="text/css"  href="css/css.css" />
+        <link rel="stylesheet" type="text/css"  href="css/newcss.css" />
         <meta charset="UTF-8">
         <title></title>
     </head>
     <body>
-        <?php include 'menu.php'; ?>
+        <?php include 'menu_1.php'; ?>
     </body>
 </html>

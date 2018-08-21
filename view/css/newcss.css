@@ -4,10 +4,10 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : Aug 14, 2018, 10:06:23 PM
-    Author     : ramon
+    Created on : 21/08/2018, 15:40:47
+    Author     : usuario
 */
-/* css menu*/
+
 ul {
     list-style-type: none;
     margin: 0;
@@ -57,56 +57,4 @@ li.dropdown {
 
 .dropdown:hover .dropdown-content {
     display: block;
-}
-/* css menu*/
-
-*{margin: 0; padding: 0;}
- 
-body{
-font-family: arial, helvetica, sans-serif;
-font-size: 14px;
-}
-
-.centralizado{
-    text-align: center;
-    align-content: center;
-}
-.direita{
-    text-align: right;
-    align-content: center;
-}
-table{ 
-    margin-right:auto; 
-    margin-left:auto; 
-    align-content: center;
-}
-table.bordasimples{
-    border-collapse: collapse;
-}
-table.bordasimples tr td {
-    border:1px solid #a0a0a0;
-    
-}
-.centro_disciplina{
-    padding-top: 20px;
-    padding-bottom: 20px;
-    text-align: center;
-    align-content: center;
-}
-.centro_check{
-    vertical-align: central;
-    text-align: center;
-    
-}
-.button {
- 
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
 }
