@@ -44,6 +44,5 @@ and open the template in the editor.
         <br><br>
         <div class="centralizado" id="tabelaAluno"></div>
         <br><br>
-        
     </body>
 </html>

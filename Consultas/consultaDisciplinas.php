@@ -37,3 +37,4 @@ foreach ($_SESSION['disciplinas'] as $matricula => $disciplina) {
 
     }
 }
+//ok
