@@ -38,7 +38,7 @@ class MatriculaController {
         }
         if (isset($_POST['disciplina'])) {
             $_SESSION['aluno_disciplina']['disciplina'][$_POST['disciplina']] = $_POST['disciplina'];
-            echo "<script>alert('Disciplina inserida com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+            echo "<script>window.setTimeout(\"history.back(-2)\", 0)</script> ";//alert('Disciplina inserida com sucesso!');
         }
         if (isset($_POST['turma'])) {
             $_SESSION['aluno_disciplina']['turmas'][$_POST['turma']] = $_POST['turma'];

@@ -8,6 +8,7 @@ and open the template in the editor.
     <head>
         <link rel="stylesheet" type="text/css" href="css/css.css">
         <meta charset="UTF-8">
+         <script type='text/javascript' src="../js/jquery-3.3.1.min.js"></script>
         <title></title>
     </head>
     <body

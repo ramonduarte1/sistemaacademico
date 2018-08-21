@@ -18,10 +18,8 @@ class NumeroMatriculaController {
         }
         if(!isset($_SESSION['matricula'])){
             $_SESSION['matricula'] = 0;
-            
         }
         $this->geraMatricula();
-        
     }
     private function geraMatricula(){
         $matricula  = $_SESSION['matricula'];
