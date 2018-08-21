@@ -20,3 +20,4 @@ foreach ($_SESSION['alunos_matriculados'] as $matricula => $aluno) {
     }
     
 }
+//teste
