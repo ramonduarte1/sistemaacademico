@@ -21,6 +21,15 @@ class Aluno extends Pessoa {
         if (!session_status()) {
             session_start();
         }
+        $this->notas = array();
+    }
+
+    function getNotas() {
+        return $this->notas;
+    }
+
+    function setNotas($notas) {
+        $this->notas = $notas;
     }
 
     public function cadastrar() {

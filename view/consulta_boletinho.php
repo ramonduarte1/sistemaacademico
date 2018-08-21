@@ -38,14 +38,12 @@ and open the template in the editor.
                     <input required="" type="text" size="50" id="pesq_aluno" name="pesq_aluno">
                 </td>
                 <td>
-                    <button onclick="consultaAluno()">Pesquisar</button>
+                    <button  onclick="consultaBoletinho()">Pesquisar</button>
                 </td>
             </tr>
-            <tr>
-            <table id="tabelaAluno" class="bordasimples">
-            </table>    
-        </tr>
-    </table>
-    <br><br>
+        </table>
+        <br><br>
+         <div id="tabelaBoletinho" class="centralizado">
+             
 
 </html>
