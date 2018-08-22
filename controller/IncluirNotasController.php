@@ -18,7 +18,7 @@ class IncluiNotasController {
             session_start();
         }
         $this->incluir();
-        echo "<script>alert('Notas adicionadas apagado com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+        echo "<script>alert('Notas adicionadas com sucesso!');location.href=\"../view/lancar_notas.php\"</script> ";
         //var_dump($_SESSION['aluno_nota']);
     }
 

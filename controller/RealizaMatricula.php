@@ -13,8 +13,9 @@ class RealizaMatricula {
             session_start();
         }
         $this->efetuarMatricula();
+        echo "<script>alert('Matricula realizada com sucesso!');location.href=\"../view/matricular_aluno.php\"</script> ";
 
-        var_dump($_SESSION['alunos_matriculados']);
+//        var_dump($_SESSION['alunos_matriculados']);
     }
 
     private function efetuarMatricula() {

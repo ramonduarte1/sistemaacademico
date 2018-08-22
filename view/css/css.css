@@ -74,10 +74,15 @@ body{
     text-align: right;
     align-content: center;
 }
+.esquerda{
+    text-align: left;
+    align-content: center;
+}
 table{ 
     margin-right:auto; 
     margin-left:auto; 
     align-content: center;
+    
 }
 
 table.bordasimples{

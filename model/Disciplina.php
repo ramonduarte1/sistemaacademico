@@ -87,20 +87,23 @@ class Disciplina {
     public function apagar() {
 
         if (isset($_SESSION['alunos_matriculados'])) {
+            $flag = 0;
             foreach ($_SESSION['alunos_matriculados'] as $matAluno => $value) {
                 //echo 'key: '.$matAluno.'<br>';
                 foreach ($_SESSION['alunos_matriculados'][$matAluno]['disciplina'] as $codigo => $disciplina) {
                     //echo 'se '.$codigo.' === '.$this->getCodigo().'<br>';
 
                     if ($codigo == $this->getCodigo()) {
-                        echo 'ok';
+                        $flag++;
                         echo "<script>alert('Disciplina não pode ser deletada!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
                     }
                 }
             }
-            unset($_SESSION['disciplinas'][$this->getCodigo()]);
-            require_once '../controller/NumeroMatriculaController.php';
-            echo "<script>alert('Disciplina deletada com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+            if ($flag == 0) { // se nao entrou no if flag continua 0
+                unset($_SESSION['disciplinas'][$this->getCodigo()]);
+                require_once '../controller/NumeroMatriculaController.php';
+                echo "<script>alert('Disciplina deletada com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+            }
         }
     }
 

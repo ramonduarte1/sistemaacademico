@@ -5,9 +5,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-//    <fieldset>
-//        <legend>Select a maintenance drone</legend>
-
 
 session_start();
 foreach ($_SESSION['alunos_matriculados'] as $matricula => $aluno) {
@@ -16,7 +13,6 @@ foreach ($_SESSION['alunos_matriculados'] as $matricula => $aluno) {
 
     $pattern = '/' . $pesquisa . '/'; //Padrão a ser encontrado na string $tags
     if (preg_match($pattern, $aluno['aluno']['nome'])) {
-// <fieldset><legend>Boletinho:</legend>
         echo 
         "
          <table border='1'>"
@@ -51,7 +47,6 @@ foreach ($_SESSION['alunos_matriculados'] as $matricula => $aluno) {
                 . "<th>Media</th>"
                 . "<th>Situação</th>"
         . "</tr>";
-
        foreach ($aluno['disciplina'] as $codigo => $nome) {
             echo 
 
@@ -65,15 +60,11 @@ foreach ($_SESSION['alunos_matriculados'] as $matricula => $aluno) {
                     . "<td>" . number_format($_SESSION['aluno_nota'][$matricula][$codigo]['media'],2) . "</td>"//formata para duas casas decimais
                     . "<td>" . $_SESSION['aluno_nota'][$matricula][$codigo]['situacao'] . "</td>"
            . "</tr>";
-
         }
         echo 
         "<tr>"
         . "<td colspan='8'>Turmas</td>"
         . "</tr>";
-
-        
-
         foreach ($aluno['turma'] as $codigo => $nome) {
             echo 
             "<tr>"
@@ -89,7 +80,5 @@ foreach ($_SESSION['alunos_matriculados'] as $matricula => $aluno) {
                     . "<td><button onclick='imprimeBoletinho()'>Imprimir</button>"
                     . "</tr>";
         }
-        
-        
     }
 }

@@ -47,8 +47,25 @@ class Turma {
     }
 
     public function apagar() {
-        unset($_SESSION['turmas'][$this->getCodigo()]);
-        require_once '../controller/NumeroMatriculaController.php';
+        if (isset($_SESSION['alunos_matriculados'])) {
+            $flag = 0;
+            foreach ($_SESSION['alunos_matriculados'] as $matAluno => $value) {
+                //echo 'key: '.$matAluno.'<br>';
+                foreach ($_SESSION['alunos_matriculados'][$matAluno]['turma'] as $codigo => $turma) {
+                    //echo 'se '.$codigo.' === '.$this->getCodigo().'<br>';
+
+                    if ($codigo == $this->getCodigo()) {
+                        $flag++;
+                        echo "<script>alert('Turma não pode ser deletada, em uso!');location.href=\"../view/consulta_turma.php\"</script> ";
+                    }
+                }
+            }
+            if ($flag == 0) { // se nao entrou no if flag continua 0
+                unset($_SESSION['turmas'][$this->getCodigo()]);
+                require_once '../controller/NumeroMatriculaController.php';
+                echo "<script>alert('Turma deletada com sucesso!');location.href=\"../view/consulta_turma.php\"</script> ";
+            }
+        }
     }
 
 }

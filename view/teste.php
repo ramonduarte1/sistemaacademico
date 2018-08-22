@@ -12,14 +12,11 @@ and open the template in the editor.
     <body>
         <?php
         session_start();
-        // put your code here $_SESSION['alunos_matriculados'][$matricula]['disciplina'][$codigo] = $_SESSION['disciplinas'][$codigo]['nome'];
-        foreach ($_SESSION['alunos_matriculados'] as $matAluno => $value) {
-            echo 'key: '.$matAluno.'<br>';
-            foreach ($_SESSION['alunos_matriculados'][$matAluno]['disciplina'] as $codigo=>$disciplina) {
-                echo 'codigo da disciplina '.$codigo;
-                
-            }
-        }
+        $_SESSION['alunos'][1]['matricula'] = 1;
+        $_SESSION['alunos'][1]['nome'] = 'Ramon Medeiros Duarte';
+        $_SESSION['alunos'][1]['email'] = 'ramonduarte1@hotmail.com';
+        $_SESSION['alunos'][1]['endereco'] = 'av jose nilo padua fortes,1451';
+        $_SESSION['alunos'][1]['telefone'] =   '86 99937-4968';
         ?>
     </body>
 </html>

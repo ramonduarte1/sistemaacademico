@@ -13,11 +13,13 @@ and open the template in the editor.
         <script language="JavaScript" src="../js/mascaras.js"></script>
         <script type="text/javascript">
             function consultaAluno() {
+                var pesq_aluno = $("#pesq_aluno").val();
+                var checkbox =  $("input[name='radio']:checked").val();
 
                 $.ajax({
                     type: "POST",
                     url: "../Consultas/consultaAlunos.php",
-                    data: 'pesq_aluno=' + $('#pesq_aluno').val(),
+                    data: {pesq_aluno: pesq_aluno, checkbox: checkbox},
                     success: function (data) {
                         $('#tabelaAluno').html(data);
 
@@ -34,7 +36,9 @@ and open the template in the editor.
         <h2 class="centralizado">Pesquisar Aluno</h2><br><br>
         <table border="0">
             <tr>
-                <td>Pesquisa por Nome : </td>
+                <th colspan="2">Pesquisa por Nome</th>
+            <tr>
+            <tr>
                 <td>
                     <input required="" type="text" size="50" id="pesq_aluno" name="pesq_aluno">
                 </td>
@@ -42,8 +46,20 @@ and open the template in the editor.
                     <button onclick="consultaAluno()">Pesquisar</button>
                 </td>
             </tr>
-        </table>
-        <br><br>
-        <div class="centralizado" id="tabelaAluno"></div>
-    </body>
+            <tr>
+                <td colspan="2" class="esquerda">
+                    <input type="radio" id="radio" value="1" name="radio"> Pesquisar apenas alunos matriculados
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="esquerda">
+                    <input type="radio" id="radio" value="2" name="radio" checked> Pesquisar apenas alunos não matriculado
+                </td>
+            </tr>
+        </tr>
+    </tr>
+</table>
+<br><br>
+<div class="centralizado" id="tabelaAluno"></div>
+</body>
 </html>
