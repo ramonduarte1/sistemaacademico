@@ -28,10 +28,10 @@ foreach ($_SESSION['alunos'] as $matricula => $aluno) {
                        </tr>
                        <tr>
                            <td><input size='4' readonly name='matricula' value='".$matricula."'></td>
-                           <td><input name='nome' type='text' value='".$aluno['nome']."'></td>
-                           <td><input name='email' type='text' value='".$aluno['email']."'></td>
-                           <td><input name='endereco' type='text' value='".$aluno['endereco']."'></td>
-                           <td><input name='telefone' type='text' value='".$aluno['telefone']."'></td>
+                           <td><input required name='nome' type='text' value='".$aluno['nome']."'></td>
+                           <td><input required name='email' type='text' value='".$aluno['email']."'></td>
+                           <td><input required name='endereco' type='text' value='".$aluno['endereco']."'></td>
+                           <td><input required name='telefone' onkeypress=\"mascara(this, '## #####-####')\" maxlength=\"13\" type='text' value='".$aluno['telefone']."' ></td>
                            <td><button>salvar</button></td>
                            </form>
                            <td>

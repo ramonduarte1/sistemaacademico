@@ -23,8 +23,8 @@ foreach ($_SESSION['disciplinas'] as $matricula => $disciplina) {
               </tr>
               <tr>
                    <td><input size='4' readonly name='matricula' value='" . $matricula . "'></td>
-                   <td><input name='nome' type='text' value='" . $disciplina['nome'] . "'></td>
-                   <td><input name='carga_horaria' type='text' value='" . $disciplina['carga_horaria']. "'></td>
+                   <td><input required name='nome' type='text' value='" . $disciplina['nome'] . "'></td>
+                   <td><input required name='carga_horaria' type='text' value='" . $disciplina['carga_horaria']. "'></td>
                    <td><button>salvar</button></td>
            </form>
                   <td>

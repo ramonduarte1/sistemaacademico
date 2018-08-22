@@ -25,6 +25,7 @@ class Disciplina {
             session_start();
         }
     }
+
     function getNota1() {
         return $this->nota1;
     }
@@ -49,7 +50,6 @@ class Disciplina {
         $this->nota3 = $nota3;
     }
 
-    
     function getCargaHoraria() {
         return $this->cargaHoraria;
     }
@@ -81,11 +81,27 @@ class Disciplina {
         //var_dump($_SESSION['disciplinas']);
 
         require_once '../controller/NumeroMatriculaController.php';
+        echo "<script>alert('Disciplina cadastrada com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
     }
 
     public function apagar() {
-        unset($_SESSION['disciplinas'][$this->getCodigo()]);
-        require_once '../controller/NumeroMatriculaController.php';
+
+        if (isset($_SESSION['alunos_matriculados'])) {
+            foreach ($_SESSION['alunos_matriculados'] as $matAluno => $value) {
+                //echo 'key: '.$matAluno.'<br>';
+                foreach ($_SESSION['alunos_matriculados'][$matAluno]['disciplina'] as $codigo => $disciplina) {
+                    //echo 'se '.$codigo.' === '.$this->getCodigo().'<br>';
+
+                    if ($codigo == $this->getCodigo()) {
+                        echo 'ok';
+                        echo "<script>alert('Disciplina não pode ser deletada!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+                    }
+                }
+            }
+            unset($_SESSION['disciplinas'][$this->getCodigo()]);
+            require_once '../controller/NumeroMatriculaController.php';
+            echo "<script>alert('Disciplina deletada com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+        }
     }
 
 }

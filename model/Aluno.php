@@ -39,14 +39,20 @@ class Aluno extends Pessoa {
         $_SESSION['alunos'][$this->getMatricula()]['email'] = $this->getEmail();
         $_SESSION['alunos'][$this->getMatricula()]['endereco'] = $this->getEndereco();
         $_SESSION['alunos'][$this->getMatricula()]['telefone'] = $this->getTelefone();
-        //array_push($_SESSION['alunos'][$this->getMatricula()]['notas'], $this->getNotas());
-        //var_dump($_SESSION['alunos']);
+        
         require_once '../controller/NumeroMatriculaController.php';
+        echo "<script>alert('Aluno cadastrado com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
     }
 
     public function apagar() {
-        unset($_SESSION['alunos'][$this->getMatricula()]);
-        require_once '../controller/NumeroMatriculaController.php';
+
+        if (isset($_SESSION['alunos_matriculados'][$this->getMatricula()])) {
+            echo "<script>alert('Aluno não pode ser deletado, devido a uma matricula ativa!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+        } else {
+            unset($_SESSION['alunos'][$this->getMatricula()]);
+            require_once '../controller/NumeroMatriculaController.php';
+            echo "<script>alert('Aluno apagado com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+        }
     }
 
     public function incluirNotas() {

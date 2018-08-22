@@ -127,7 +127,7 @@ and open the template in the editor.
                     <tr>
                         <td>Codigo</td>
                         <td><input size="4" name="" readonly value="<?php echo $codigo; ?>"></td>
-                        <td>Turmas</td>
+                        <td>Turma</td>
                         <td colspan="3"><input size="52" readonly name="" value="<?php echo $_SESSION['turmas'][$codigo]['nome'] ?>"></td>
                         <td> 
                             <form action="../controller/MatriculaController.php" method="post">

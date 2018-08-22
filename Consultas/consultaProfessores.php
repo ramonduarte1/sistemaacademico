@@ -24,11 +24,11 @@ foreach ($_SESSION['professores'] as $matricula => $professor) {
                            <th>Telefone</th>
                        </tr>
                        <tr>
-                           <td><input size='4' readonly name='matricula' value='".$matricula."'></td>
-                           <td><input name='nome' type='text' value='".$professor['nome']."'></td>
-                           <td><input name='email' type='text' value='".$professor['email']."'></td>
-                           <td><input name='endereco' type='text' value='".$professor['endereco']."'></td>
-                           <td><input name='telefone' type='text' value='".$professor['telefone']."'></td>
+                           <td><input required size='4' readonly name='matricula' value='".$matricula."'></td>
+                           <td><input required name='nome' type='text' value='".$professor['nome']."'></td>
+                           <td><input required name='email' type='text' value='".$professor['email']."'></td>
+                           <td><input required name='endereco' type='text' value='".$professor['endereco']."'></td>
+                           <td><input required name='telefone' onkeypress=\"mascara(this, '## #####-####')\" maxlength=\"13\" type='text' value='".$professor['telefone']."'></td>
                            <td><button>salvar</button></td>
                            </form>
                            <td>

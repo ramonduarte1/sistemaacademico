@@ -18,37 +18,41 @@ class IncluiNotasController {
             session_start();
         }
         $this->incluir();
-        var_dump($_SESSION['aluno_nota']);
+        echo "<script>alert('Notas adicionadas apagado com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+        //var_dump($_SESSION['aluno_nota']);
     }
 
     private function incluir() {
 
-        if ($_POST['n1']) {
-            $_SESSION['aluno_nota'][$_POST['matricula']][$_POST['codigo']]['n1'] = $_POST['n1']; //matricula aluno -codigo disciplina -nota
-        }
+        foreach ($_SESSION['codigos'] as $codigo) {
 
-        if ($_POST['n2']) {
-            $_SESSION['aluno_nota'][$_POST['matricula']][$_POST['codigo']]['n2'] = $_POST['n2'];
-        }
+            if ($_POST['n1_'.$codigo]) {
+                $_SESSION['aluno_nota'][$_POST['matricula']][$codigo]['n1'] = $_POST['n1_'.$codigo]; //matricula aluno -codigo disciplina -nota
+            }
 
-        if ($_POST['n3']) {
-            $_SESSION['aluno_nota'][$_POST['matricula']][$_POST['codigo']]['n3'] = $_POST['n3'];
-        }
-        
-        $media = ($_SESSION['aluno_nota'][$_POST['matricula']][$_POST['codigo']]['n1'] +
-                $_SESSION['aluno_nota'][$_POST['matricula']][$_POST['codigo']]['n2'] +
-                $_SESSION['aluno_nota'][$_POST['matricula']][$_POST['codigo']]['n3']) / 3;
-        
-        $_SESSION['aluno_nota'][$_POST['matricula']][$_POST['codigo']]['media'] = $media;
-         
-        if ($media <= 3) {
-             $_SESSION['aluno_nota'][$_POST['matricula']][$_POST['codigo']]['situacao'] = 'Reprovado';
-        }
-        if ($media > 3 && $media < 7) {
-            $_SESSION['aluno_nota'][$_POST['matricula']][$_POST['codigo']]['situacao'] = 'Recuperação';
-        }
-        if ($media >= 7) {
-            $_SESSION['aluno_nota'][$_POST['matricula']][$_POST['codigo']]['situacao'] = 'Aprovado';
+            if ($_POST['n2_'.$codigo]) {
+                $_SESSION['aluno_nota'][$_POST['matricula']][$codigo]['n2'] = $_POST['n2_'.$codigo];
+            }
+
+            if ($_POST['n3_'.$codigo]) {
+                $_SESSION['aluno_nota'][$_POST['matricula']][$codigo]['n3'] = $_POST['n3_'.$codigo];
+            }
+
+            $media = ($_SESSION['aluno_nota'][$_POST['matricula']][$codigo]['n1'] +
+                    $_SESSION['aluno_nota'][$_POST['matricula']][$codigo]['n2'] +
+                    $_SESSION['aluno_nota'][$_POST['matricula']][$codigo]['n3']) / 3;
+
+            $_SESSION['aluno_nota'][$_POST['matricula']][$codigo]['media'] = $media;
+
+            if ($media <= 3) {
+                $_SESSION['aluno_nota'][$_POST['matricula']][$codigo]['situacao'] = 'Reprovado';
+            }
+            if ($media > 3 && $media < 7) {
+                $_SESSION['aluno_nota'][$_POST['matricula']][$codigo]['situacao'] = 'Recuperação';
+            }
+            if ($media >= 7) {
+                $_SESSION['aluno_nota'][$_POST['matricula']][$codigo]['situacao'] = 'Aprovado';
+            }
         }
     }
 

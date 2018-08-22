@@ -22,7 +22,7 @@ foreach ($_SESSION['turmas'] as $matricula => $turma) {
               </tr>
               <tr>
                     <td><input size='4' readonly name='matricula' value='" . $matricula . "'></td>
-                    <td><input name='nome' type='text' value='" . $turma['nome'] . "'></td>
+                    <td><input required name='nome' type='text' value='" . $turma['nome'] . "'></td>
                     <td><button>salvar</button></td>
            </form>
                     <td>

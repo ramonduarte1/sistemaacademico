@@ -6,13 +6,15 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="css/css.css">
+        <link rel="stylesheet" type="text/css"  href="css/css.css" />
         <meta charset="UTF-8">
-         <script type='text/javascript' src="../js/jquery-3.3.1.min.js"></script>
         <title></title>
     </head>
-    <body
-    <?php include 'menu.php';?>
+    <body>
+        <?php
+
+        include 'menu.php';
+        ?>
         <h2 class="centralizado">Inicio</h2><br><br>
 
     </body>

@@ -27,12 +27,8 @@ class AlunoController {
 
         if ($this->apagar === 'apagar') {
             $this->aluno->apagar();
-            echo "<script>alert('Aluno apagado com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
-            
         } else {
             $this->aluno->cadastrar();
-            echo "<script>alert('Aluno cadastrado com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
-            
         }
     }
 
@@ -42,7 +38,7 @@ class AlunoController {
         $this->aluno->setEmail($_POST['email']);
         $this->aluno->setEndereco($_POST['endereco']);
         $this->aluno->setTelefone($_POST['telefone']);
-        
+
         if (isset($_POST['apagar'])) {
             $this->apagar = $_POST['apagar'];
         }

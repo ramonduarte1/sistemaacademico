@@ -27,10 +27,10 @@ class DisciplinaController {
 
         if ($this->apagar === 'apagar') {
             $this->discplina->apagar();
-           echo "<script>alert('Disciplina apagado com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+           
         } else {
             $this->discplina->cadastrar();
-            echo "<script>alert('Disciplina cadastrado com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+         
         }
         
     }

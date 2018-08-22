@@ -61,12 +61,11 @@ li.dropdown {
 /* css menu*/
 
 *{margin: 0; padding: 0;}
- 
-body{
-font-family: arial, helvetica, sans-serif;
-font-size: 14px;
-}
 
+body{
+    font-family: arial, helvetica, sans-serif;
+    font-size: 14px;
+}
 .centralizado{
     text-align: center;
     align-content: center;
@@ -80,12 +79,13 @@ table{
     margin-left:auto; 
     align-content: center;
 }
+
 table.bordasimples{
     border-collapse: collapse;
 }
 table.bordasimples tr td {
     border:1px solid #a0a0a0;
-    
+
 }
 .centro_disciplina{
     padding-top: 20px;
@@ -96,17 +96,20 @@ table.bordasimples tr td {
 .centro_check{
     vertical-align: central;
     text-align: center;
-    
+
 }
-.button {
- 
+input{
+    padding: 10px 12px;  
+    font-size: 16px;
+}
+button{
     border: none;
-    color: white;
-    padding: 15px 32px;
+    color: back;
+    padding: 10px 12px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
     margin: 4px 2px;
-    cursor: pointer;
+    cursor: pointer;   
 }

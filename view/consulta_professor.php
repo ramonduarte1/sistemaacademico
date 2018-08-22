@@ -10,6 +10,7 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <title></title>
         <script type='text/javascript' src="../js/jquery-3.3.1.min.js"></script>
+        <script language="JavaScript" src="../js/mascaras.js"></script>
         <script type="text/javascript">
             function consultaProfessor() {
 

@@ -9,6 +9,7 @@
 //        <legend>Select a maintenance drone</legend>
 
 session_start();
+
 foreach ($_SESSION['alunos_matriculados'] as $matricula => $aluno) {
 
     $pesquisa = $_POST['pesq_aluno'];
@@ -45,14 +46,15 @@ foreach ($_SESSION['alunos_matriculados'] as $matricula => $aluno) {
                             <th>Nota 2</th>
                             <th>Nota 3</th>
                        </tr>";
-                       foreach ($aluno['disciplina'] as $codigo => $nome):
                        
+                       foreach ($aluno['disciplina'] as $codigo => $nome):
+                        $_SESSION['codigos'][$codigo] = $codigo;
                        echo "<tr>
-                                <td>$codigo</td>
+                                <td><input size='3' readonly name='codigo' value='$codigo'></td>
                                 <td colspan='3'>$nome</td>
-                                <td><input size='2' type='text' name='n1' value='".$_SESSION['aluno_nota'][$matricula][$codigo]['n1']."'></td>
-                                <td><input size='2' type='text' name='n2' value='".$_SESSION['aluno_nota'][$matricula][$codigo]['n2']."'></td>
-                                <td><input size='2'type='text' name='n3'value='".$_SESSION['aluno_nota'][$matricula][$codigo]['n3']."'></td>
+                                <td><input size='2' type='number' step=\"0.01\" min=\"0.0\" max=\"10.0\" name='n1_$codigo' value='".$_SESSION['aluno_nota'][$matricula][$codigo]['n1']."'></td>
+                                <td><input size='2' type='number' step=\"0.01\" min=\"0\" max=\"10\" name='n2_$codigo' value='".$_SESSION['aluno_nota'][$matricula][$codigo]['n2']."'></td>
+                                <td><input size='2'type='number' step=\"0.01\" min=\"0\" max=\"10\" name='n3_$codigo' value='".$_SESSION['aluno_nota'][$matricula][$codigo]['n3']."'></td>
                             </tr>";
                        endforeach;
                     echo "<tr>
@@ -75,33 +77,5 @@ foreach ($_SESSION['alunos_matriculados'] as $matricula => $aluno) {
                             </td>
                               </tr>
                              </table></form>";
-
-        
-
-    }
+   }
 }
-/*    if (preg_match($pattern, $aluno['aluno']['nome'])) {
-
-        echo "<h2 class='centralizado'>Aluno</h2><br>"
-        . "Matricula<input size='2' value='" . $matricula . "'>Nome:<input value='" . $aluno['aluno']['nome'] . "'>"
-        . "Email<input value='" . $aluno['aluno']['email'] . "'><br><br>Endereco<input value='" . $aluno['aluno']['endereco'] . "'>"
-        . "Telefone<input value='" . $aluno['aluno']['telefone'] . "'><br>"
-        . "<br><h2 class='centralizado'>Disciplinas</h2><br>";
-
-        foreach ($aluno['disciplina'] as $codigo => $nome) {
-            echo "<form action='../controller/IncluirNotasController.php' method='post'>"
-            . "Codigo<input size='2' name='codigo' value='" . $codigo . "'>Nome<input value='" . $nome . "'>"
-            . "nota 1<input size='2' type='text' name='n1' value='".$_SESSION['aluno_nota'][$matricula][$codigo]['n1']."'>"//pega as notas da sessao aluno_nota
-            . "nota 2<input size='2' type='text' name='n2' value='".$_SESSION['aluno_nota'][$matricula][$codigo]['n2']."'>"
-            . "nota 3<input size='2'type='text' name='n3'value='".$_SESSION['aluno_nota'][$matricula][$codigo]['n3']."'>"
-            . "<input type='hidden' name='matricula' value='" . $matricula . "'>"
-            . "&ensp;<button>salvar</button>"
-            . "</form><br><br>";
-        }
-
-        echo "<br><h2 class='centralizado'>Turmas</h2><br>";
-
-        foreach ($aluno['turma'] as $codigo => $nome) {
-            echo "Codigo<input size='2' value='" . $codigo . "'>Nome<input value='" . $nome . "'>";
-        }
-    }*/
