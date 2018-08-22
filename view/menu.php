@@ -23,6 +23,7 @@ echo '<ul>
             <a href="consulta_professor.php">Professor</a>
             <a href="consulta_disciplina.php">Disciplina</a>
             <a href="consulta_turma.php">Turma</a>
+            <a href="consulta_turma_aluno.php">Turma Aluno</a>
             <a href="consulta_boletinho.php">Boletinho</a>
           </div>
         </li>

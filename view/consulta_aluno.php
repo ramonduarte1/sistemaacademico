@@ -14,7 +14,7 @@ and open the template in the editor.
         <script type="text/javascript">
             function consultaAluno() {
                 var pesq_aluno = $("#pesq_aluno").val();
-                var checkbox =  $("input[name='radio']:checked").val();
+                var checkbox = $("input[name='radio']:checked").val();
 
                 $.ajax({
                     type: "POST",
@@ -35,10 +35,9 @@ and open the template in the editor.
         ?>
         <h2 class="centralizado">Pesquisar Aluno</h2><br><br>
         <table border="0">
+
             <tr>
-                <th colspan="2">Pesquisa por Nome</th>
-            <tr>
-            <tr>
+                <th>Pesquisa por Nome</th>
                 <td>
                     <input required="" type="text" size="50" id="pesq_aluno" name="pesq_aluno">
                 </td>
@@ -47,12 +46,14 @@ and open the template in the editor.
                 </td>
             </tr>
             <tr>
-                <td colspan="2" class="esquerda">
+                <td></td>
+                <td class="esquerda">
                     <input type="radio" id="radio" value="1" name="radio"> Pesquisar apenas alunos matriculados
                 </td>
             </tr>
             <tr>
-                <td colspan="2" class="esquerda">
+                <td></td>
+                <td class="esquerda">
                     <input type="radio" id="radio" value="2" name="radio" checked> Pesquisar apenas alunos não matriculado
                 </td>
             </tr>

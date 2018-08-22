@@ -34,7 +34,7 @@ and open the template in the editor.
         <h2 class="centralizado">Pesquisar Professor</h2><br><br>
         <table border="0">
             <tr>
-                <td>Pesquisa por Nome : </td>
+                <th>Pesquisa por Nome </th>
                 <td>
                     <input required="" type="text" size="50" id="pesq_professor" name="pesq_professor">
                 </td>

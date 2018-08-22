@@ -15,10 +15,23 @@ and open the template in the editor.
 
                 $.ajax({
                     type: "POST",
-                    url: "../Consultas/consultaTurmas.php",
+                    url: "../Consultas/consultaAlunoPorTurma.php",
                     data: 'pesq_turma=' + $('#pesq_turma').val(),
                     success: function (data) {
                         $('#tabelaTurma').html(data);
+
+                    }
+                });
+            }
+            function consultaAlunoPorTurma() {
+                var pesq_turma = $("#pesq_turma").val();
+                var codigo_turma = $("#codigo_turma").val();
+                $.ajax({
+                    type: "POST",
+                    url: "../Consultas/consultaTurmasAluno.php",
+                    data: {pesq_turma: pesq_turma, codigo_turma: codigo_turma},
+                    success: function (data) {
+                        $('#tabelaAlunoPorTurma').html(data);
 
                     }
                 });
@@ -44,6 +57,7 @@ and open the template in the editor.
         </table>
         <br><br>
         <div id="tabelaTurma" class="centralizado"></div>
+        <div id="tabelaAlunoPorTurma" class="centralizado"></div>
 
     </table>
 </html>
