@@ -12,10 +12,10 @@ and open the template in the editor.
         <script type='text/javascript' src="../js/jquery-3.3.1.min.js"></script>
         <script type="text/javascript">
             function consultaNome() {
-                if ($("#buscar").val() == "") {
-                    alert('Por favor, preencha o campo');
-                    return false
-                }
+//                if ($("#buscar").val() == "") {
+//                    alert('Por favor, preencha o campo');
+//                    return false
+//                }
                 var nome = document.getElementById('buscar').value;
                 $.ajax({
                     type: "POST",
@@ -28,10 +28,10 @@ and open the template in the editor.
                 });
             }
             function consultaNomeDisciplina() {
-                if ($("#buscar_disciplina").val() == "") {
-                    alert('Por favor, preencha o campo');
-                    return false
-                }
+//                if ($("#buscar_disciplina").val() == "") {
+//                    alert('Por favor, preencha o campo');
+//                    return false
+//                }
                 var nome = document.getElementById('buscar_disciplina').value;
                 $.ajax({
                     type: "POST",
@@ -44,10 +44,10 @@ and open the template in the editor.
                 });
             }
             function consultaNomeTurma() {
-                if ($("#buscar_turma").val() == "") {
-                    alert('Por favor, preencha o campo');
-                    return false
-                }
+//                if ($("#buscar_turma").val() == "") {
+//                    alert('Por favor, preencha o campo');
+//                    return false
+//                }
                 var nome = document.getElementById('buscar_turma').value;
                 $.ajax({
                     type: "POST",

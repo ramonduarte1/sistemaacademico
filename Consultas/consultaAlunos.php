@@ -11,12 +11,14 @@
 
 session_start();
 //echo 'checkbox: '.$_POST['checkbox'];
+$flag = 0;
 foreach ($_SESSION['alunos'] as $matricula => $aluno) {
 
     $pesquisa = $_POST['pesq_aluno'];
 
     $pattern = '/' . $pesquisa . '/'; //Padrão a ser encontrado na string $tags
     if (preg_match($pattern, $aluno['nome'])) {
+        $flag++;
         if (isset($_SESSION['alunos_matriculados'][$matricula]) && $_POST['checkbox'] == 1) {
             echo "
                     <form action='../controller/AlunoController.php' method='post'>
@@ -45,8 +47,7 @@ foreach ($_SESSION['alunos'] as $matricula => $aluno) {
                            </td>
                        </tr>
                     </table>";
-        }
-        if(!isset($_SESSION['alunos_matriculados'][$matricula]) && $_POST['checkbox'] == 2){
+        }elseif(!isset($_SESSION['alunos_matriculados'][$matricula]) && $_POST['checkbox'] == 2){
             echo "
                     <form action='../controller/AlunoController.php' method='post'>
                     <table>
@@ -74,6 +75,11 @@ foreach ($_SESSION['alunos'] as $matricula => $aluno) {
                            </td>
                        </tr>
                     </table>";
-        }
+        }else{
+         echo "<script>alert('Nenhum registro encontrado!');location.href=\"../view/consulta_aluno.php\"</script> ";
     }
+    }
+}
+if($flag == 0){
+    echo "<script>alert('Nenhum registro encontrado!');location.href=\"../view/consulta_aluno.php\"</script> ";
 }
