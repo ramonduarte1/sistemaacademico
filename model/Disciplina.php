@@ -81,7 +81,7 @@ class Disciplina {
         //var_dump($_SESSION['disciplinas']);
 
         require_once '../controller/NumeroMatriculaController.php';
-        echo "<script>alert('Disciplina cadastrada com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+        echo "<script>alert('Disciplina cadastrada com sucesso!');location.href=\"../view/cadastro_disciplina.php\"</script> ";
     }
 
     public function apagar() {
@@ -95,14 +95,14 @@ class Disciplina {
 
                     if ($codigo == $this->getCodigo()) {
                         $flag++;
-                        echo "<script>alert('Disciplina não pode ser deletada!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+                        echo "<script>alert('Disciplina não pode ser deletada!');location.href=\"../view/consulta_disciplina.php\"</script> ";
                     }
                 }
             }
             if ($flag == 0) { // se nao entrou no if flag continua 0
                 unset($_SESSION['disciplinas'][$this->getCodigo()]);
                 require_once '../controller/NumeroMatriculaController.php';
-                echo "<script>alert('Disciplina deletada com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+                echo "<script>alert('Disciplina deletada com sucesso!');location.href=\"../view/consulta_disciplina.php\"</script> ";
             }
         }
     }

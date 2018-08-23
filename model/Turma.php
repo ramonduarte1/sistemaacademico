@@ -44,6 +44,7 @@ class Turma {
 //        var_dump($_SESSION);
 
         require_once '../controller/NumeroMatriculaController.php';
+        echo "<script>alert('Turma cadastrado com sucesso!');location.href=\"../view/cadastro_turma.php\"</script> ";
     }
 
     public function apagar() {

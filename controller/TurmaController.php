@@ -29,7 +29,6 @@ class TurmaController {
             
         } else {
             $this->turma->cadastrar();
-            echo "<script>alert('Turma cadastrado com sucesso!');location.href=\"../view/consulta_turma.php\"</script> ";
         }
     }
 

@@ -41,17 +41,17 @@ class Aluno extends Pessoa {
         $_SESSION['alunos'][$this->getMatricula()]['telefone'] = $this->getTelefone();
         
         require_once '../controller/NumeroMatriculaController.php';
-        echo "<script>alert('Aluno cadastrado com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+        echo "<script>alert('Aluno cadastrado com sucesso!');location.href=\"../view/cadastro_aluno.php\"</script> ";
     }
 
     public function apagar() {
 
         if (isset($_SESSION['alunos_matriculados'][$this->getMatricula()])) {
-            echo "<script>alert('Aluno não pode ser deletado, devido a uma matricula ativa!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+            echo "<script>alert('Aluno não pode ser deletado, devido a uma matricula ativa!');location.href=\"../view/cadastro_aluno.php\"</script> ";
         } else {
             unset($_SESSION['alunos'][$this->getMatricula()]);
             require_once '../controller/NumeroMatriculaController.php';
-            echo "<script>alert('Aluno apagado com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+            echo "<script>alert('Aluno apagado com sucesso!');location.href=\"../view/cadastro_aluno.php\"</script> ";
         }
     }
 
