@@ -13,6 +13,10 @@ and open the template in the editor.
         <script language="JavaScript" src="../js/mascaras.js"></script>
         <script type="text/javascript">
             function consultaAluno() {
+                if ($("#pesq_aluno").val() == "") {
+                    alert('Por favor, preencha o campo');
+                    return false
+                }
                 var pesq_aluno = $("#pesq_aluno").val();
                 var checkbox = $("input[name='radio']:checked").val();
 

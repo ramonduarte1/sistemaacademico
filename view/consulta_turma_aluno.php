@@ -12,6 +12,10 @@ and open the template in the editor.
         <script type='text/javascript' src="../js/jquery-3.3.1.min.js"></script>
         <script type="text/javascript">
             function consultaTurmas() {
+                if ($("#pesq_turma").val() == "") {
+                    alert('Por favor, preencha o campo nome');
+                    return false
+                }
 
                 $.ajax({
                     type: "POST",

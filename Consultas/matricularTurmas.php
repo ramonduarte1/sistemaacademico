@@ -10,7 +10,7 @@
 session_start();
 foreach ($_SESSION['turmas'] as $matricula => $turma) {
     
-          $pesquisa = $_POST['pesq_turmas'];
+          $pesquisa = $_POST['pesq_turma'];
 
           $pattern = '/' . $pesquisa . '/';//Padrão a ser encontrado na string $tags
           if (preg_match($pattern, $turma['nome'])) {

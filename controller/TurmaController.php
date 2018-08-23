@@ -26,10 +26,10 @@ class TurmaController {
         $this->incluir();
         if ($this->apagar === 'apagar') {
             $this->turma->apagar();
-            echo "<script>alert('Turma apagado com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+            
         } else {
             $this->turma->cadastrar();
-            echo "<script>alert('Turma cadastrado com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
+            echo "<script>alert('Turma cadastrado com sucesso!');location.href=\"../view/consulta_turma.php\"</script> ";
         }
     }
 

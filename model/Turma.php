@@ -41,16 +41,17 @@ class Turma {
     public function cadastrar() {
         $_SESSION['turmas'][$this->getCodigo()]['codigo'] = $this->getCodigo();
         $_SESSION['turmas'][$this->getCodigo()]['nome'] = $this->getNome();
-        var_dump($_SESSION);
+//        var_dump($_SESSION);
 
         require_once '../controller/NumeroMatriculaController.php';
     }
 
     public function apagar() {
         if (isset($_SESSION['alunos_matriculados'])) {
-            $flag = 0;
+
             foreach ($_SESSION['alunos_matriculados'] as $matAluno => $value) {
                 //echo 'key: '.$matAluno.'<br>';
+                $flag = 0;
                 foreach ($_SESSION['alunos_matriculados'][$matAluno]['turma'] as $codigo => $turma) {
                     //echo 'se '.$codigo.' === '.$this->getCodigo().'<br>';
 

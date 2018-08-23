@@ -12,8 +12,11 @@ and open the template in the editor.
         <script type='text/javascript' src="../js/jquery-3.3.1.min.js"></script>
         <script type="text/javascript">
             function consultaNome() {
-                var nome;
-                nome = document.getElementById('buscar').value;
+                if ($("#buscar").val() == "") {
+                    alert('Por favor, preencha o campo');
+                    return false
+                }
+                var nome = document.getElementById('buscar').value;
                 $.ajax({
                     type: "POST",
                     url: "../Consultas/matricularAluno.php",
@@ -25,8 +28,11 @@ and open the template in the editor.
                 });
             }
             function consultaNomeDisciplina() {
-                var nome;
-                nome = document.getElementById('buscar_disciplina').value;
+                if ($("#buscar_disciplina").val() == "") {
+                    alert('Por favor, preencha o campo');
+                    return false
+                }
+                var nome = document.getElementById('buscar_disciplina').value;
                 $.ajax({
                     type: "POST",
                     url: "../Consultas/matricularDisciplina.php",
@@ -38,8 +44,11 @@ and open the template in the editor.
                 });
             }
             function consultaNomeTurma() {
-                var nome;
-                nome = document.getElementById('buscar_turma').value;
+                if ($("#buscar_turma").val() == "") {
+                    alert('Por favor, preencha o campo');
+                    return false
+                }
+                var nome = document.getElementById('buscar_turma').value;
                 $.ajax({
                     type: "POST",
                     url: "../Consultas/matricularTurmas.php",
@@ -123,7 +132,7 @@ and open the template in the editor.
                     </tr>
                 <?php endforeach; ?>
                 <tr><th colspan="7" class="centralizado">Turmas</th></tr>
-                <?php foreach ($_SESSION['aluno_disciplina']['turmas'] as $codigo): ?>
+                        <?php foreach ($_SESSION['aluno_disciplina']['turmas'] as $codigo): ?>
                     <tr>
                         <td>Codigo</td>
                         <td><input size="4" name="" readonly value="<?php echo $codigo; ?>"></td>

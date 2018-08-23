@@ -13,7 +13,10 @@ and open the template in the editor.
         <script language="JavaScript" src="../js/mascaras.js"></script>
         <script type="text/javascript">
             function consultaProfessor() {
-
+                if ($("#pesq_professor").val() == "") {
+                    alert('Por favor, preencha o campo');
+                    return false
+                }
                 $.ajax({
                     type: "POST",
                     url: "../Consultas/consultaProfessores.php",

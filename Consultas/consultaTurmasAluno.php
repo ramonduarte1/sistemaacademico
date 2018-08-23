@@ -7,33 +7,50 @@
  */
 
 session_start();
-foreach ($_SESSION['turmas'] as $matricula => $turma) {
+//foreach ($_SESSION['turmas'] as $matricula => $turma) {
 
-    $codigoTurma = $_POST['codigo_turma'];
-echo "codigo da turma post: ".$codigoTurma;
-    $pattern = '/' . $pesquisa . '/'; //Padrão a ser encontrado na string $tags
-    if (preg_match($pattern, $turma['nome'])) {
-        if (isset($_SESSION['alunos_matriculados'])) {
-            $flag = 0;
-            foreach ($_SESSION['alunos_matriculados'] as $matAluno => $value) {
+$codigoTurma = $_POST['codigo_turma'];
+// echo "codigo da turma post: " . $codigoTurma;
+$pattern = '/' . $pesquisa . '/'; //Padrão a ser encontrado na string $tags
+if (preg_match($pattern, $turma['nome'])) {
+    if (isset($_SESSION['alunos_matriculados'])) {
+        $flag = 0;
+        echo 
+         "<table border='1'>
+             <tr>
+                 <th colspan='2'>Turma</th>
+             </tr>
+             <tr>
+                 <th>Matricula</th>
+                 <th>Nome</th>
+             </tr>";
+        foreach ($_SESSION['alunos_matriculados'] as $matAluno => $value) {
 
-                foreach ($_SESSION['alunos_matriculados'][$matAluno]['turma'] as $codigo => $turma) {
+            foreach ($_SESSION['alunos_matriculados'][$matAluno]['turma'] as $codigo => $turma) {
 
-                    if ($codigo == $codigoTurma) {
-                        $flag++;
-                        echo 'matAluno: ' . $matAluno . '<br>';
-                        echo 'codigo ' . $codigo . '<br>';
+                if ($codigo == $codigoTurma) {
+                    $flag++;
+                    echo "<tr>
+                            <td>$matAluno</td>
+                            <td>".$_SESSION['alunos'][$matAluno]['nome']."</td>
+                          </tr>";
 
-//                        echo "<script>alert('Disciplina não pode ser deletada!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
-                    }
+
+
+
                 }
             }
-            if ($flag == 0) { // se nao entrou no if flag continua 0
-//                unset($_SESSION['disciplinas'][$this->getCodigo()]);
-//                require_once '../controller/NumeroMatriculaController.php';
-//                echo "<script>alert('Disciplina deletada com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
-            }
+        }
+        echo "<tr>
+                 <td>Total</td>
+                 <td>$flag</td>
+              </tr>
+              </table>";
+        if ($flag == 0) { // se nao entrou no if flag continua 0
+//                
+            echo "<script>alert('Nenhum registro encontrado!');;location.href=\"../view/consulta_turma_aluno.php\"</script> ";
         }
     }
 }
+//}
 //ok

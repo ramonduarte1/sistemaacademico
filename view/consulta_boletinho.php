@@ -12,7 +12,10 @@ and open the template in the editor.
         <script type='text/javascript' src="../js/jquery-3.3.1.min.js"></script>
         <script type="text/javascript">
             function consultaBoletinho() {
-
+                if ($("#pesq_aluno").val() == "") {
+                    alert('Por favor, preencha o campo');
+                    return false
+                }
                 $.ajax({
                     type: "POST",
                     url: "../Consultas/consultaBoletinho.php",
