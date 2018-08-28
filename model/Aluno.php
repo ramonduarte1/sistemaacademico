@@ -11,7 +11,7 @@
  *
  * @author ramon
  */
-require_once '../model/Pessoa.php';
+require_once '../autoload.php';//require_once '../model/Pessoa.php';
 
 class Aluno extends Pessoa {
 

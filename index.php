@@ -11,11 +11,13 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-//teste git
-        //mais um teste
-        //teste
-        echo 'teste';
+        require_once 'autoload.php';
         
+        $aluno = new Aluno();
+        $aluno->setMatricula(1);
+        $aluno->setNome('ramon');
+        var_dump($aluno);
+
         ?>
     </body>
 </html>

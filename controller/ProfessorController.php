@@ -11,7 +11,7 @@
  *
  * @author ramon
  */
-require_once '../model/Professor.php';
+require_once '../autoload.php';//require_once '../model/Professor.php';
 
 class ProfessorController {
 

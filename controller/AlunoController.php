@@ -11,7 +11,7 @@
  *
  * @author ramon
  */
-require_once '../model/Aluno.php';
+require_once '../autoload.php';
 
 class AlunoController {
 

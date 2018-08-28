@@ -11,7 +11,7 @@
  *
  * @author usuario
  */
-require_once '../model/Disciplina.php';
+require_once '../autoload.php';//require_once '../model/Disciplina.php';
 
 class DisciplinaController {
 
