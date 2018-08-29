@@ -11,25 +11,29 @@
  *
  * @author ramon
  */
-require_once '../model/Pessoa.php';
-
 class Professor extends Pessoa {
 
+    private $conexao;
+
     function __construct() {
-        if (!session_status()) {
-            session_start();
-        }
+        $this->conexao = new Conexao();
     }
 
     public function cadastrar() {
-        $_SESSION['professores'][$this->getMatricula()]['matricula'] = $this->getMatricula();
-        $_SESSION['professores'][$this->getMatricula()]['nome'] = $this->getNome();
-        $_SESSION['professores'][$this->getMatricula()]['email'] = $this->getEmail();
-        $_SESSION['professores'][$this->getMatricula()]['endereco'] = $this->getEndereco();
-        $_SESSION['professores'][$this->getMatricula()]['telefone'] = $this->getTelefone();
-        //array_push($_SESSION['alunos'][$this->getMatricula()]['notas'], $this->getNotas());
-       // var_dump($_SESSION);
-        require_once '../controller/NumeroMatriculaController.php';
+        $sql = "INSERT INTO professor (nome,email,endereco,telefone) VALUES (:nome,:email,:endereco,:telefone)"; //'".$this->getNome()."'
+        $insert = $this->conexao->prepare($sql);
+        $insert->bindParam(':nome', $this->getNome());
+        $insert->bindParam(':email', $this->getEmail());
+        $insert->bindParam(':endereco', $this->getEndereco());
+        $insert->bindParam(':telefone', $this->getTelefone());
+
+        $insert->execute();
+
+        if ($insert != FALSE) {
+            echo "<script>alert('Professor cadastrado com sucesso!');location.href=\"../view/cadastro_professor.php\"</script> ";
+        } else {
+            echo "<script>alert('Ocorreu um erro ao cadastrar!');location.href=\"../view/cadastro_professor.php\"</script> ";
+        }
     }
 
     public function apagar() {

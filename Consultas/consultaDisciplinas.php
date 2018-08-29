@@ -5,15 +5,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+require_once '../autoload.php';
 
-session_start();
-foreach ($_SESSION['disciplinas'] as $matricula => $disciplina) {
+$pesquisa = $_POST['pesq_disciplina'];
 
-    $pesquisa = $_POST['pesq_disciplina'];
+$sql = "select *from disciplina where nome like '$pesquisa%'";
 
-    $pattern = '/' . $pesquisa . '/'; //Padrão a ser encontrado na string $tags
-    if (preg_match($pattern, $disciplina['nome'])) {
-        echo "
+$conexao = new Conexao();
+
+$disciplinas = $conexao->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+
+foreach ($disciplinas as $disciplina) {
+    echo "
            <form action='../controller/DisciplinaController.php' method='post'>
            <table>
               <tr>
@@ -22,22 +25,18 @@ foreach ($_SESSION['disciplinas'] as $matricula => $disciplina) {
                   <th>Carga Horaria</th>
               </tr>
               <tr>
-                   <td><input size='4' readonly name='matricula' value='" . $matricula . "'></td>
+                   <td><input size='4' readonly name='matricula' value='" . $disciplina['id'] . "'></td>
                    <td><input required name='nome' type='text' value='" . $disciplina['nome'] . "'></td>
-                   <td><input required name='carga_horaria' type='text' value='" . $disciplina['carga_horaria']. "'></td>
+                   <td><input required name='carga_horaria' type='text' value='" . $disciplina['carga_horaria'] . "'></td>
                    <td><button>salvar</button></td>
            </form>
                   <td>
                    <form action='../controller/DisciplinaController.php' method='post'>
-                      <input name='matricula' type='hidden' value='" . $matricula . "'>
+                      <input name='matricula' type='hidden' value='" . $disciplina['id'] . "'>
                       <input name='apagar' type='hidden' value='apagar'>
                       <button>apagar</button>
                    </form>
                   </td>
               </tr>
            </table>";
-
-
-    }
 }
-//ok

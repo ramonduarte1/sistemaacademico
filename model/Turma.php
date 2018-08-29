@@ -15,8 +15,10 @@ class Turma {
 
     private $codigo;
     private $nome;
+    private $conexao;
 
     function __construct() {
+        $this->conexao = new Conexao();
         if (!isset($_SESSION['turmas'])) {
             session_start();
         }
@@ -39,12 +41,18 @@ class Turma {
     }
 
     public function cadastrar() {
-        $_SESSION['turmas'][$this->getCodigo()]['codigo'] = $this->getCodigo();
-        $_SESSION['turmas'][$this->getCodigo()]['nome'] = $this->getNome();
-//        var_dump($_SESSION);
 
-        require_once '../controller/NumeroMatriculaController.php';
-        echo "<script>alert('Turma cadastrado com sucesso!');location.href=\"../view/cadastro_turma.php\"</script> ";
+        $sql = "INSERT INTO turma (nome) VALUES (:nome)";
+        $insert = $this->conexao->prepare($sql);
+        $insert->bindParam(':nome', $this->getNome());
+
+        $insert->execute();
+
+        if ($insert != FALSE) {
+            echo "<script>alert('Inserido com sucesso!');location.href=\"../view/cadastro_turma.php\"</script> ";
+        } else {
+            echo "<script>alert('Ocorreu um erro ao inserir!');location.href=\"../view/cadastro_turma.php\"</script> ";
+        }
     }
 
     public function apagar() {

@@ -12,7 +12,7 @@ and open the template in the editor.
         <script type='text/javascript' src="../js/jquery-3.3.1.min.js"></script>
         <script type="text/javascript">
             function consultaDisciplina() {
-                if ($("#pesq_aluno").val() == "") {
+                if ($("#pesq_disciplina").val() == "") {
                     alert('Por favor, preencha o campo');
                     return false
                 }

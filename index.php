@@ -11,13 +11,15 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        require_once 'autoload.php';
-        
-        $aluno = new Aluno();
-        $aluno->setMatricula(1);
-        $aluno->setNome('ramon');
-        var_dump($aluno);
+        require_once './autoload.php';
+        $pes = 'ra';
+        $con = new Conexao();
+        $sql = "SELECT * FROM aluno where nome like '%$pes%' ";
+        $perfilSelect = $con->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
-        ?>
+        foreach ($perfilSelect as $value) {
+            echo $value['nome'];
+        }
+            ?>
     </body>
 </html>

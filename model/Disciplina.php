@@ -16,11 +16,13 @@ class Disciplina {
     private $codigo;
     private $nome;
     private $cargaHoraria;
+    private $conexao;
     private $nota1;
     private $nota2;
     private $nota3;
 
     function __construct() {
+        $this->conexao = new Conexao();
         if (!isset($_SESSION)) {
             session_start();
         }
@@ -75,13 +77,33 @@ class Disciplina {
     }
 
     public function cadastrar() {
-        $_SESSION['disciplinas'][$this->getCodigo()]['codigo'] = $this->getCodigo();
-        $_SESSION['disciplinas'][$this->getCodigo()]['nome'] = $this->getNome();
-        $_SESSION['disciplinas'][$this->getCodigo()]['carga_horaria'] = $this->getCargaHoraria();
-        //var_dump($_SESSION['disciplinas']);
+        $sql = "INSERT INTO disciplina (nome,carga_horaria) VALUES (:nome,:carga_horaria)";
+        $insert = $this->conexao->prepare($sql); 
+        $insert->bindParam(':nome', $this->getNome());
+        $insert->bindParam(':carga_horaria', $this->getCargaHoraria());
+        $insert->execute();
 
-        require_once '../controller/NumeroMatriculaController.php';
-        echo "<script>alert('Disciplina cadastrada com sucesso!');location.href=\"../view/cadastro_disciplina.php\"</script> ";
+        if ($insert != FALSE) {
+            echo "<script>alert('Disciplina cadastrada com sucesso!');location.href=\"../view/cadastro_disciplina.php\"</script> ";
+        } else {
+            echo "<script>alert('Ocorreu um erro ao cadastrar!');location.href=\"../view/cadastro_disciplina.php\"</script> ";
+        }
+    }
+
+    public function atualizar() {
+        $sql = "UPDATE disciplina SET nome = :nome ,carga_horaria = :carga_horaria WHERE id = :id";
+        $insert = $this->conexao->prepare($sql);
+        $insert->bindParam(':nome', $this->getNome());
+        $insert->bindParam(':carga_horaria', $this->getCargaHoraria());
+        $insert->bindParam(':id', $this->getCodigo());
+        
+        $insert->execute();
+
+        if ($insert != FALSE) {
+            echo "<script>alert('Disciplina alterada com sucesso!');location.href=\"../view/cadastro_disciplina.php\"</script> ";
+        } else {
+            echo "<script>alert('Ocorreu um erro ao alterar!');location.href=\"../view/cadastro_disciplina.php\"</script> ";
+        }
     }
 
     public function apagar() {

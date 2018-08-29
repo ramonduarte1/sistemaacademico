@@ -11,37 +11,43 @@
  *
  * @author ramon
  */
-require_once '../autoload.php';//require_once '../model/Pessoa.php';
 
 class Aluno extends Pessoa {
 
-    private $notas;
+    private $turma_id;
+    private $conexao;
 
     function __construct() {
         if (!session_status()) {
             session_start();
         }
         $this->notas = array();
+        $this->conexao = new Conexao();
     }
 
-    function getNotas() {
-        return $this->notas;
+    function getTurma_id() {
+        return $this->turma_id;
     }
 
-    function setNotas($notas) {
-        $this->notas = $notas;
+    function setTurma_id($turma_id) {
+        $this->turma_id = $turma_id;
     }
 
     public function cadastrar() {
+        $sql = "INSERT INTO aluno (nome,email,endereco,telefone) VALUES (:nome,:email,:endereco,:telefone)"; //'".$this->getNome()."'
+        $insert = $this->conexao->prepare($sql);
+        $insert->bindParam(':nome', $this->getNome());
+        $insert->bindParam(':email', $this->getEmail());
+        $insert->bindParam(':endereco', $this->getEndereco());
+        $insert->bindParam(':telefone', $this->getTelefone());
 
-        $_SESSION['alunos'][$this->getMatricula()]['matricula'] = $this->getMatricula();
-        $_SESSION['alunos'][$this->getMatricula()]['nome'] = $this->getNome();
-        $_SESSION['alunos'][$this->getMatricula()]['email'] = $this->getEmail();
-        $_SESSION['alunos'][$this->getMatricula()]['endereco'] = $this->getEndereco();
-        $_SESSION['alunos'][$this->getMatricula()]['telefone'] = $this->getTelefone();
-        
-        require_once '../controller/NumeroMatriculaController.php';
-        echo "<script>alert('Aluno cadastrado com sucesso!');location.href=\"../view/cadastro_aluno.php\"</script> ";
+        $insert->execute();
+
+        if ($insert != FALSE) {
+            echo "<script>alert('Aluno cadastrado com sucesso!');location.href=\"../view/cadastro_aluno.php\"</script> ";
+        } else {
+            echo "<script>alert('Ocorreu um erro ao cadastrar!');location.href=\"../view/cadastro_aluno.php\"</script> ";
+        }
     }
 
     public function apagar() {

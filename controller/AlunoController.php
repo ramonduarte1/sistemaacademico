@@ -38,6 +38,7 @@ class AlunoController {
         $this->aluno->setEmail($_POST['email']);
         $this->aluno->setEndereco($_POST['endereco']);
         $this->aluno->setTelefone($_POST['telefone']);
+        //$this->aluno->setTurma_id($_POST['turma_id']);
 
         if (isset($_POST['apagar'])) {
             $this->apagar = $_POST['apagar'];

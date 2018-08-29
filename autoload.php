@@ -9,6 +9,7 @@
 function __autoload($class_name) {
     $diretorios = array(
         'Consultas/',
+        'banco/',
         'ajax/',
         'controller/',
         'model/',
@@ -16,7 +17,9 @@ function __autoload($class_name) {
     );
     $caminhos = array(
         '',
-        '../'
+        '../',
+        './',
+        '../../'
     );
 //echo $class_name;
     if ($class_name) {
@@ -26,7 +29,7 @@ function __autoload($class_name) {
                 $arquivo = $caminho . $diretorio . $class_name . '.php';
                 //echo "$arquivo<br>";
                 if (file_exists($arquivo)) {
-                    echo "$arquivo";
+                   // echo "$arquivo";
                     require_once($arquivo);
                     return;
                 }
