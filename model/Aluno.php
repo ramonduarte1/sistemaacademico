@@ -14,6 +14,8 @@
 class Aluno extends Pessoa {
 
     private $turma_id;
+    private $usuarioAltera;
+    private $dataAtltera;
     private $conexao;
 
     function __construct() {
@@ -32,8 +34,24 @@ class Aluno extends Pessoa {
         $this->turma_id = $turma_id;
     }
 
+    function getUsuarioAltera() {
+        return $this->usuarioAltera;
+    }
+
+    function getDataAtltera() {
+        return $this->dataAtltera;
+    }
+
+    function setUsuarioAltera($usuarioAltera) {
+        $this->usuarioAltera = $usuarioAltera;
+    }
+
+    function setDataAtltera($dataAtltera) {
+        $this->dataAtltera = $dataAtltera;
+    }
+
     public function cadastrar() {
-        $sql = "INSERT INTO aluno (nome,email,endereco,telefone) VALUES (:nome,:email,:endereco,:telefone)"; //'".$this->getNome()."'
+        $sql = "INSERT INTO aluno (nome,email,endereco,telefone) VALUES (?,?,?,?)";
         $insert = $this->conexao->prepare($sql);
 
         $bind = array('nome' => $this->getNome(), 'email' => $this->getEmail(), 'endereco' => $this->getEndereco(),
@@ -48,18 +66,18 @@ class Aluno extends Pessoa {
     }
 
     public function apagar() {
-        
-        $sql = "select *from aluno inner join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where id = '".$this->getMatricula()."'";
+
+        $sql = "select *from aluno inner join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where id = '" . $this->getMatricula() . "'";
         $insert = $this->conexao->query($sql);
-        
-        if ($insert->rowCount() > 0) {
-            echo "<script>alert('Aluno não pode ser deletado!');location.href=\"../view/cadastro_aluno.php\"</script> ";
+
+        if ($insert->rowCount() > 0) {// se o aluno tiver matricula ativa
+            echo "<script>alert('Aluno não pode ser deletado!');location.href=\"../view/consulta_aluno.php\"</script> ";
         } else {
             $sql = "delete from aluno where id = :matricula ";
             $insert = $this->conexao->prepare($sql);
             $insert->bindParam(':matricula', $this->getMatricula());
             $insert->execute();
-            echo "<script>alert('Aluno apagado com sucesso!');location.href=\"../view/cadastro_aluno.php\"</script> ";
+            echo "<script>alert('Aluno apagado com sucesso!');location.href=\"../view/consulta_aluno.php\"</script> ";
         }
     }
 
