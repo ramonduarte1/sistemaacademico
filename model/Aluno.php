@@ -11,7 +11,6 @@
  *
  * @author ramon
  */
-
 class Aluno extends Pessoa {
 
     private $turma_id;
@@ -36,12 +35,10 @@ class Aluno extends Pessoa {
     public function cadastrar() {
         $sql = "INSERT INTO aluno (nome,email,endereco,telefone) VALUES (:nome,:email,:endereco,:telefone)"; //'".$this->getNome()."'
         $insert = $this->conexao->prepare($sql);
-        $insert->bindParam(':nome', $this->getNome());
-        $insert->bindParam(':email', $this->getEmail());
-        $insert->bindParam(':endereco', $this->getEndereco());
-        $insert->bindParam(':telefone', $this->getTelefone());
 
-        $insert->execute();
+        $bind = array('nome' => $this->getNome(), 'email' => $this->getEmail(), 'endereco' => $this->getEndereco(),
+            'telefone' => $this->getTelefone());
+        $insert->execute($bind);
 
         if ($insert != FALSE) {
             echo "<script>alert('Aluno cadastrado com sucesso!');location.href=\"../view/cadastro_aluno.php\"</script> ";
@@ -51,12 +48,17 @@ class Aluno extends Pessoa {
     }
 
     public function apagar() {
-
-        if (isset($_SESSION['alunos_matriculados'][$this->getMatricula()])) {
-            echo "<script>alert('Aluno não pode ser deletado, devido a uma matricula ativa!');location.href=\"../view/cadastro_aluno.php\"</script> ";
+        
+        $sql = "select *from aluno inner join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where id = '".$this->getMatricula()."'";
+        $insert = $this->conexao->query($sql);
+        
+        if ($insert->rowCount() > 0) {
+            echo "<script>alert('Aluno não pode ser deletado!');location.href=\"../view/cadastro_aluno.php\"</script> ";
         } else {
-            unset($_SESSION['alunos'][$this->getMatricula()]);
-            require_once '../controller/NumeroMatriculaController.php';
+            $sql = "delete from aluno where id = :matricula ";
+            $insert = $this->conexao->prepare($sql);
+            $insert->bindParam(':matricula', $this->getMatricula());
+            $insert->execute();
             echo "<script>alert('Aluno apagado com sucesso!');location.href=\"../view/cadastro_aluno.php\"</script> ";
         }
     }
@@ -66,3 +68,5 @@ class Aluno extends Pessoa {
     }
 
 }
+
+// criar atibutos data_altera usuario_altera para servir como log, salvar usuario na sessao
