@@ -9,7 +9,7 @@ require_once '../autoload.php';
 
 $pesquisa = $_POST['pesq_disciplina'];
 
-$sql = "select *from disciplina where nome like '$pesquisa%'";
+$sql = "select *from disciplina where nome like '$pesquisa%' and deletado <> 's'";
 
 $conexao = new Conexao();
 

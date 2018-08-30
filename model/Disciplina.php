@@ -152,10 +152,21 @@ class Disciplina {
         if ($insert->rowCount() > 0) {// se existir disciplina matriclada numa turma
             echo "<script>alert('Disciplina não pode ser deletado!');location.href=\"../view/consulta_disciplina.php\"</script> ";
         } else {
-            $sql = "delete from disciplina where id = :matricula ";
+            $sql = "UPDATE disciplina SET delete = :delete, data_altera = :data_altera, usuario_altera = :usuario_altera WHERE id = :id";
             $insert = $this->conexao->prepare($sql);
-            $insert->bindParam(':matricula', $this->getCodigo());
-            $insert->execute();
+
+            date_default_timezone_set('America/Sao_Paulo');
+            $date = date('Y-m-d H:i');
+
+            $bind = array
+                (
+                ':delete' => 's',
+                ':data_altera' => $date,
+                ':usuario_altera' => $this->getUsuarioAltera(),
+                ':id' => $this->getCodigo()
+            );
+
+            $insert->execute($bind);
             if ($insert != FALSE) {
                 echo "<script>alert('Disciplina apagado com sucesso!');location.href=\"../view/consulta_disciplina.php\"</script> ";
             } else {

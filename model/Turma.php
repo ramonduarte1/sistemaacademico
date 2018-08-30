@@ -25,6 +25,7 @@ class Turma {
             session_start();
         }
     }
+
     function getDataAltera() {
         return $this->dataAltera;
     }
@@ -41,7 +42,7 @@ class Turma {
         $this->usuarioAltera = $usuarioAltera;
     }
 
-        function getCodigo() {
+    function getCodigo() {
         return $this->codigo;
     }
 
@@ -61,15 +62,15 @@ class Turma {
 
         $sql = "INSERT INTO turma (nome,data_altera,usuario_altera) VALUES (:nome,:data_altera,:usuario_altera)";
         $insert = $this->conexao->prepare($sql);
-                
+
         date_default_timezone_set('America/Sao_Paulo');
         $date = date('Y-m-d H:i');
-        
+
         $bind = array
             (
             ':nome' => $this->getNome(),
             ':data_altera' => $date,
-            ':usuario_altera'=> $this->getUsuarioAltera()
+            ':usuario_altera' => $this->getUsuarioAltera()
         );
 
         $insert->execute($bind);
@@ -85,16 +86,16 @@ class Turma {
         $sql = "UPDATE turma SET nome = :nome,data_altera = :data_altera, usuario_altera = :usuario_altera WHERE id = :id";
         $insert = $this->conexao->prepare($sql);
 
-                
+
         date_default_timezone_set('America/Sao_Paulo');
         $date = date('Y-m-d H:i');
-        
+
         $bind = array
             (
             ':nome' => $this->getNome(),
             ':id' => $this->getCodigo(),
             ':data_altera' => $date,
-            ':usuario_altera'=> $this->getUsuarioAltera()
+            ':usuario_altera' => $this->getUsuarioAltera()
         );
 
         $insert->execute($bind);
@@ -107,16 +108,27 @@ class Turma {
     }
 
     public function apagar() {
-        $sql = "select *from turma inner join turma_disciplina on (turma.id = turma_disciplina.turma_id) where id = '" . $this->getCodigo() . "'";
+        $sql = "select *from turma inner join turma_disciplina on (turma.id = turma_disciplina.turma_id) where deletado <> 's' and id = '" . $this->getCodigo() . "'";
         $insert = $this->conexao->query($sql);
 
         if ($insert->rowCount() > 0) {// se existir disciplina matriclada na turma
             echo "<script>alert('Turma não pode ser deletado!');location.href=\"../view/consulta_turma.php\"</script> ";
         } else {
-            $sql = "delete from turma where id = :matricula ";
+            $sql = "UPDATE turma SET deletado = :deletado,data_altera = :data_altera, usuario_altera = :usuario_altera WHERE id = :id";
             $insert = $this->conexao->prepare($sql);
-            $insert->bindParam(':matricula', $this->getCodigo());
-            $insert->execute();
+            
+            date_default_timezone_set('America/Sao_Paulo');
+            $date = date('Y-m-d H:i');
+
+            $bind = array
+                (
+                ':deletado' => 's',
+                ':data_altera' => $date,
+                ':usuario_altera' => $this->getUsuarioAltera(),
+                ':id' => $this->getCodigo()
+            );
+            $insert->execute($bind);
+
             if ($insert != FALSE) {
                 echo "<script>alert('Turma apagado com sucesso!');location.href=\"../view/consulta_turma.php\"</script> ";
             } else {

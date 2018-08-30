@@ -13,9 +13,9 @@ require_once '../autoload.php';
 $pesquisa = $_POST['pesq_aluno'];
 
 if ($_POST['checkbox'] == 1) {//matriculados
-    $sql = "select *from aluno inner join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno.nome like '$pesquisa%'";
+    $sql = "select *from aluno inner join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno.nome like '$pesquisa%' and aluno.deletado = 'n'";
 } else {//nao matriculado
-    $sql = "select *from aluno left join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno_disciplina.aluno_id is null and aluno.nome like '$pesquisa%'";
+    $sql = "select *from aluno left join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno_disciplina.aluno_id is null and aluno.nome like '$pesquisa%' and aluno.deletado = 'n'";
 }
 
 $conexao = new Conexao();

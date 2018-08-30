@@ -24,7 +24,6 @@ class Aluno extends Pessoa {
         $this->conexao = new Conexao();
     }
 
-
     function getTurma_id() {
         return $this->turma_id;
     }
@@ -67,10 +66,19 @@ class Aluno extends Pessoa {
         if ($insert->rowCount() > 0) {// se o aluno tiver matricula ativa
             echo "<script>alert('Aluno não pode ser deletado!');location.href=\"../view/consulta_aluno.php\"</script> ";
         } else {
-            $sql = "delete from aluno where id = :matricula ";
+            $sql = "UPDATE aluno SET delete = :delete, usuario_altera = :usuario_altera, data_altera= :data_altera WHERE id = :id";
             $insert = $this->conexao->prepare($sql);
-            $insert->bindParam(':matricula', $this->getMatricula());
-            $insert->execute();
+
+            date_default_timezone_set('America/Sao_Paulo');
+            $date = date('Y-m-d H:i');
+
+            $bind = array(
+                'delete' => 's',
+                'usuario_altera' => $this->getUsuarioAltera(),
+                'data_altera' => $date,
+                'id' => $this->getMatricula()
+            );
+            $insert->execute($bind);
             if ($insert != FALSE) {
                 echo "<script>alert('Aluno apagado com sucesso!');location.href=\"../view/consulta_aluno.php\"</script> ";
             } else {
@@ -83,10 +91,10 @@ class Aluno extends Pessoa {
         $sql = "UPDATE aluno SET nome = :nome ,email = :email ,endereco= :endereco, "
                 . "telefone= :telefone , usuario_altera = :usuario_altera, data_altera= :data_altera WHERE id = :id";
         $insert = $this->conexao->prepare($sql);
-        
+
         date_default_timezone_set('America/Sao_Paulo');
         $date = date('Y-m-d H:i');
-        
+
         $bind = array(
             'nome' => $this->getNome(),
             'email' => $this->getEmail(),

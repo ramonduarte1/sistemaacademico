@@ -79,10 +79,19 @@ class Professor extends Pessoa {
         if ($insert->rowCount() > 0) {// se o aluno tiver matricula ativa
             echo "<script>alert('Professor não pode ser deletado!');location.href=\"../view/consulta_professor.php\"</script> ";
         } else {
-            $sql = "delete from professor where id = :matricula ";
+            $sql = "UPDATE professor SET delete = :delete, usuario_altera = :usuario_altera, data_altera = :data_altera WHERE id = :id";
             $insert = $this->conexao->prepare($sql);
-            $insert->bindParam(':matricula', $this->getMatricula());
-            $insert->execute();
+
+            date_default_timezone_set('America/Sao_Paulo');
+            $date = date('Y-m-d H:i');
+
+            $bind = array(
+                'delete' => 's',
+                'usuario_altera' => $this->getUsuarioAltera(),
+                'data_altera' => $date,
+                'id' => $this->getMatricula()
+            );
+            $insert->execute($bind);
             if ($insert != FALSE) {
                 echo "<script>alert('Professor apagado com sucesso!');location.href=\"../view/consulta_professor.php\"</script> ";
             } else {
