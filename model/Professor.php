@@ -17,17 +17,27 @@ class Professor extends Pessoa {
 
     function __construct() {
         $this->conexao = new Conexao();
+        if (!session_status()) {
+            session_start();
+        }
     }
 
     public function cadastrar() {
-        $sql = "INSERT INTO professor (nome,email,endereco,telefone) VALUES (:nome,:email,:endereco,:telefone)"; //'".$this->getNome()."'
+        $sql = "INSERT INTO professor (nome,email,endereco,telefone,usuario_altera,data_altera) VALUES (:nome,:email,:endereco,:telefone,:usuario_altera,:data_altera)";
         $insert = $this->conexao->prepare($sql);
-        $insert->bindParam(':nome', $this->getNome());
-        $insert->bindParam(':email', $this->getEmail());
-        $insert->bindParam(':endereco', $this->getEndereco());
-        $insert->bindParam(':telefone', $this->getTelefone());
 
-        $insert->execute();
+        date_default_timezone_set('America/Sao_Paulo');
+        $date = date('Y-m-d H:i');
+
+        $bind = array(
+            'nome' => $this->getNome(),
+            'email' => $this->getEmail(),
+            'endereco' => $this->getEndereco(),
+            'telefone' => $this->getTelefone(),
+            'usuario_altera' => $this->getUsuarioAltera(),
+            'data_altera' => $date
+        );
+        $insert->execute($bind);
 
         if ($insert != FALSE) {
             echo "<script>alert('Professor cadastrado com sucesso!');location.href=\"../view/cadastro_professor.php\"</script> ";
@@ -37,15 +47,20 @@ class Professor extends Pessoa {
     }
 
     public function atualizar() {
-        $sql = "UPDATE professor SET nome = :nome ,email = :email ,endereco= :endereco, telefone= :telefone WHERE id = :id";
+        $sql = "UPDATE professor SET nome = :nome ,email = :email ,endereco= :endereco, telefone= :telefone, usuario_altera = :usuario_altera, data_altera = :data_altera WHERE id = :id";
         $insert = $this->conexao->prepare($sql);
+
+        date_default_timezone_set('America/Sao_Paulo');
+        $date = date('Y-m-d H:i');
 
         $bind = array(
             'nome' => $this->getNome(),
             'email' => $this->getEmail(),
             'endereco' => $this->getEndereco(),
             'telefone' => $this->getTelefone(),
-            'id' => $this->getMatricula()
+            'id' => $this->getMatricula(),
+            'usuario_altera' => $this->getUsuarioAltera(),
+            'data_altera' => $date
         );
         $insert->execute($bind);
 

@@ -14,19 +14,23 @@ and open the template in the editor.
     <body>
         <?php
         session_start();
-        if (!isset($_SESSION['matricula'])) {
-            require_once '../controller/NumeroMatriculaController.php';
+        if ((!isset($_SESSION['login']) == true) and ( !isset($_SESSION['senha']) == true)) {
+            unset($_SESSION['login']);
+            unset($_SESSION['senha']);
+            echo "<script>alert('Area restrita!');location.href=\"../index.php\"</script> ";
         }
+        $logado = $_SESSION['login'];
+
         include 'menu.php';
         ?>
         <h2 class="centralizado">Cadastro Aluno</h2><br><br>
 
         <form action="../controller/AlunoController.php" method="post">
             <table>
-                <tr>
+<!--                <tr>
                     <td class="direita">Matricula</td>
                     <td><input readonly="" name="matricula" value="<?php echo $_SESSION['matricula'] ?>" size="4"></td>
-                </tr>
+                </tr>-->
                 <tr>
                     <td class="direita">Nome</td>
                     <td>

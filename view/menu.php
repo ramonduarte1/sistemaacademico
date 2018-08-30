@@ -29,4 +29,5 @@ echo '<ul>
         </li>
           <li><a href="matricular_aluno.php">Matricular</a></li>
           <li><a href="lancar_notas.php">Lançar Notas</a></li>
+          <li><a href="../controller/Logout.php">sair</a></li>
       </ul><br><br>';

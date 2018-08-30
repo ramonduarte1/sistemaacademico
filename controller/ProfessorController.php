@@ -38,11 +38,13 @@ class ProfessorController {
     }
 
     private function incluir() {
+       
         $this->professor->setMatricula($_POST['matricula']);
         $this->professor->setNome($_POST['nome']);
         $this->professor->setEmail($_POST['email']);
         $this->professor->setEndereco($_POST['endereco']);
         $this->professor->setTelefone($_POST['telefone']);
+        $this->professor->setUsuarioAltera($_SESSION['login']);
 
         if (isset($_POST['apagar'])) {
             $this->apagar = $_POST['apagar'];

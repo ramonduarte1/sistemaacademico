@@ -18,8 +18,26 @@ class Pessoa {
     private $email;
     private $endereco;
     private $telefone;
+    private $usuarioAltera;
+    private $dataAltera;
 
-    function getTelefone() {
+    function getUsuarioAltera() {
+        return $this->usuarioAltera;
+    }
+
+    function getDataAltera() {
+        return $this->dataAltera;
+    }
+
+    function setUsuarioAltera($usuarioAltera) {
+        $this->usuarioAltera = $usuarioAltera;
+    }
+
+    function setDataAltera($dataAltera) {
+        $this->dataAltera = $dataAltera;
+    }
+
+        function getTelefone() {
         return $this->telefone;
     }
 
@@ -27,7 +45,7 @@ class Pessoa {
         $this->telefone = $telefone;
     }
 
-        function getMatricula() {
+    function getMatricula() {
         return $this->matricula;
     }
 

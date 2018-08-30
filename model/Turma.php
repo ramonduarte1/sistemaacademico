@@ -15,6 +15,8 @@ class Turma {
 
     private $codigo;
     private $nome;
+    private $dataAltera;
+    private $usuarioAltera;
     private $conexao;
 
     function __construct() {
@@ -23,8 +25,23 @@ class Turma {
             session_start();
         }
     }
+    function getDataAltera() {
+        return $this->dataAltera;
+    }
 
-    function getCodigo() {
+    function getUsuarioAltera() {
+        return $this->usuarioAltera;
+    }
+
+    function setDataAltera($dataAltera) {
+        $this->dataAltera = $dataAltera;
+    }
+
+    function setUsuarioAltera($usuarioAltera) {
+        $this->usuarioAltera = $usuarioAltera;
+    }
+
+        function getCodigo() {
         return $this->codigo;
     }
 
@@ -42,11 +59,17 @@ class Turma {
 
     public function cadastrar() {
 
-        $sql = "INSERT INTO turma (nome) VALUES (:nome)";
+        $sql = "INSERT INTO turma (nome,data_altera,usuario_altera) VALUES (:nome,:data_altera,:usuario_altera)";
         $insert = $this->conexao->prepare($sql);
+                
+        date_default_timezone_set('America/Sao_Paulo');
+        $date = date('Y-m-d H:i');
+        
         $bind = array
             (
-            ':nome' => $this->getNome()
+            ':nome' => $this->getNome(),
+            ':data_altera' => $date,
+            ':usuario_altera'=> $this->getUsuarioAltera()
         );
 
         $insert->execute($bind);
@@ -59,13 +82,19 @@ class Turma {
     }
 
     public function atualizar() {
-        $sql = "UPDATE turma SET nome = :nome WHERE id = :id";
+        $sql = "UPDATE turma SET nome = :nome,data_altera = :data_altera, usuario_altera = :usuario_altera WHERE id = :id";
         $insert = $this->conexao->prepare($sql);
 
+                
+        date_default_timezone_set('America/Sao_Paulo');
+        $date = date('Y-m-d H:i');
+        
         $bind = array
             (
             ':nome' => $this->getNome(),
-            ':id' => $this->getCodigo()
+            ':id' => $this->getCodigo(),
+            ':data_altera' => $date,
+            ':usuario_altera'=> $this->getUsuarioAltera()
         );
 
         $insert->execute($bind);

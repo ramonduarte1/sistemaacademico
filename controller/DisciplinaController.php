@@ -38,6 +38,7 @@ class DisciplinaController {
         $this->discplina->setCodigo($_POST['matricula']);
         $this->discplina->setNome($_POST['nome']);
         $this->discplina->setCargaHoraria($_POST['carga_horaria']);
+        $this->discplina->setUsuarioAltera($_SESSION['login']);
 
         if (isset($_POST['apagar'])) {
             $this->acao = $_POST['apagar'];

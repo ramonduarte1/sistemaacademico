@@ -31,6 +31,13 @@ and open the template in the editor.
     <body>
         <?php
         session_start();
+        if ((!isset($_SESSION['login']) == true) and ( !isset($_SESSION['senha']) == true)) {
+            unset($_SESSION['login']);
+            unset($_SESSION['senha']);
+            echo "<script>alert('Area restrita!');location.href=\"../index.php\"</script> ";
+        }
+        $logado = $_SESSION['login'];
+        
         include 'menu.php';
         ?>
         <h2 class="centralizado">Pesquisar Disciplinas</h2><br><br>

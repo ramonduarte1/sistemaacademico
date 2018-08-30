@@ -16,6 +16,8 @@ class Disciplina {
     private $codigo;
     private $nome;
     private $cargaHoraria;
+    private $usuarioAltera;
+    private $dataAltera;
     private $conexao;
     private $nota1;
     private $nota2;
@@ -26,6 +28,22 @@ class Disciplina {
         if (!isset($_SESSION)) {
             session_start();
         }
+    }
+
+    function getUsuarioAltera() {
+        return $this->usuarioAltera;
+    }
+
+    function getDataAltera() {
+        return $this->dataAltera;
+    }
+
+    function setUsuarioAltera($usuarioAltera) {
+        $this->usuarioAltera = $usuarioAltera;
+    }
+
+    function setDataAltera($dataAltera) {
+        $this->dataAltera = $dataAltera;
     }
 
     function getNota1() {
@@ -77,14 +95,20 @@ class Disciplina {
     }
 
     public function cadastrar() {
-        $sql = "INSERT INTO disciplina (nome,carga_horaria) VALUES (:nome,:carga_horaria)";
+        $sql = "INSERT INTO disciplina (nome,carga_horaria,data_altera,usuario_altera) VALUES (:nome,:carga_horaria,:data_altera,:usuario_altera)";
         $insert = $this->conexao->prepare($sql);
-      
+
+        date_default_timezone_set('America/Sao_Paulo');
+        $date = date('Y-m-d H:i');
+
+
         $bind = array
             (
-                ':nome' => $this->getNome(),
-                ':carga_horaria' => $this->getCargaHoraria(),
-            );
+            ':nome' => $this->getNome(),
+            ':carga_horaria' => $this->getCargaHoraria(),
+            ':data_altera' => $date,
+            ':usuario_altera' => $this->getUsuarioAltera()
+        );
 
         $insert->execute($bind);
 
@@ -96,15 +120,20 @@ class Disciplina {
     }
 
     public function atualizar() {
-        $sql = "UPDATE disciplina SET nome = :nome ,carga_horaria = :carga_horaria WHERE id = :id";
+        $sql = "UPDATE disciplina SET nome = :nome ,carga_horaria = :carga_horaria, data_altera = :data_altera, usuario_altera = :usuario_altera WHERE id = :id";
         $insert = $this->conexao->prepare($sql);
-      
+
+        date_default_timezone_set('America/Sao_Paulo');
+        $date = date('Y-m-d H:i');
+
         $bind = array
             (
-                ':nome' => $this->getNome(),
-                ':carga_horaria' => $this->getCargaHoraria(),
-                ':id' => $this->getCodigo()
-            );
+            ':nome' => $this->getNome(),
+            ':carga_horaria' => $this->getCargaHoraria(),
+            ':id' => $this->getCodigo(),
+            ':data_altera' => $date,
+            ':usuario_altera' => $this->getUsuarioAltera()
+        );
 
         $insert->execute($bind);
 

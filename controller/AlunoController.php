@@ -17,7 +17,7 @@ class AlunoController {
 
     private $aluno;
     private $acao;
-    
+
     function __construct() {
         if (!isset($_SESSION)) {
             session_start();
@@ -25,9 +25,9 @@ class AlunoController {
         $this->aluno = new Aluno();
         $this->incluir();
 
-        if($this->acao == 'atualizar'){
+        if ($this->acao == 'atualizar') {
             $this->aluno->atualizar();
-        }elseif ($this->acao === 'apagar') {
+        } elseif ($this->acao === 'apagar') {
             $this->aluno->apagar();
         } else {
             $this->aluno->cadastrar();
@@ -35,12 +35,15 @@ class AlunoController {
     }
 
     private function incluir() {
+
         $this->aluno->setMatricula($_POST['matricula']);
         $this->aluno->setNome($_POST['nome']);
         $this->aluno->setEmail($_POST['email']);
         $this->aluno->setEndereco($_POST['endereco']);
         $this->aluno->setTelefone($_POST['telefone']);
-        //$this->aluno->setTurma_id($_POST['turma_id']);
+        $this->aluno->setUsuarioAltera($_SESSION['login']);
+        $this->aluno->setDataAltera($data);
+       //$this->aluno->setTurma_id($_POST['turma_id']);
 
         if (isset($_POST['apagar'])) {
             $this->acao = $_POST['apagar'];

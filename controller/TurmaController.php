@@ -37,6 +37,7 @@ class TurmaController {
     private function incluir() {
         $this->turma->setCodigo($_POST['matricula']);
         $this->turma->setNome($_POST['nome']);
+        $this->turma->setUsuarioAltera($_SESSION['login']);
 
         if (isset($_POST['apagar'])) {
             $this->acao = $_POST['apagar'];

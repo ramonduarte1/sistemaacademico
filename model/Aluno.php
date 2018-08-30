@@ -14,8 +14,6 @@
 class Aluno extends Pessoa {
 
     private $turma_id;
-    private $usuarioAltera;
-    private $dataAtltera;
     private $conexao;
 
     function __construct() {
@@ -26,6 +24,7 @@ class Aluno extends Pessoa {
         $this->conexao = new Conexao();
     }
 
+
     function getTurma_id() {
         return $this->turma_id;
     }
@@ -34,33 +33,24 @@ class Aluno extends Pessoa {
         $this->turma_id = $turma_id;
     }
 
-    function getUsuarioAltera() {
-        return $this->usuarioAltera;
-    }
-
-    function getDataAtltera() {
-        return $this->dataAtltera;
-    }
-
-    function setUsuarioAltera($usuarioAltera) {
-        $this->usuarioAltera = $usuarioAltera;
-    }
-
-    function setDataAtltera($dataAtltera) {
-        $this->dataAtltera = $dataAtltera;
-    }
-
     public function cadastrar() {
-        $sql = "INSERT INTO aluno (nome,email,endereco,telefone) VALUES (:nome,:email,:endereco,:telefone)";
+        $sql = "INSERT INTO aluno (nome,email,endereco,telefone,usuario_altera,data_altera) VALUES (:nome,:email,:endereco,:telefone,:usuario_altera,:data_altera)";
         $insert = $this->conexao->prepare($sql);
+
+        date_default_timezone_set('America/Sao_Paulo');
+        $date = date('Y-m-d H:i');
 
         $bind = array(
             'nome' => $this->getNome(),
             'email' => $this->getEmail(),
             'endereco' => $this->getEndereco(),
-            'telefone' => $this->getTelefone()
+            'telefone' => $this->getTelefone(),
+            'usuario_altera' => $this->getUsuarioAltera(),
+            'data_altera' => $date
         );
         $insert->execute($bind);
+
+
 
         if ($insert != FALSE) {
             echo "<script>alert('Aluno cadastrado com sucesso!');location.href=\"../view/cadastro_aluno.php\"</script> ";
@@ -90,15 +80,21 @@ class Aluno extends Pessoa {
     }
 
     public function atualizar() {
-        $sql = "UPDATE aluno SET nome = :nome ,email = :email ,endereco= :endereco, telefone= :telefone WHERE id = :id";
+        $sql = "UPDATE aluno SET nome = :nome ,email = :email ,endereco= :endereco, "
+                . "telefone= :telefone , usuario_altera = :usuario_altera, data_altera= :data_altera WHERE id = :id";
         $insert = $this->conexao->prepare($sql);
-
+        
+        date_default_timezone_set('America/Sao_Paulo');
+        $date = date('Y-m-d H:i');
+        
         $bind = array(
             'nome' => $this->getNome(),
             'email' => $this->getEmail(),
             'endereco' => $this->getEndereco(),
             'telefone' => $this->getTelefone(),
-            'id' => $this->getMatricula()
+            'id' => $this->getMatricula(),
+            'usuario_altera' => $this->getUsuarioAltera(),
+            'data_altera' => $date
         );
         $insert->execute($bind);
 
