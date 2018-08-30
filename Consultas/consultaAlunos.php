@@ -21,8 +21,12 @@ if ($_POST['checkbox'] == 1) {//matriculados
 $conexao = new Conexao();
 $alunos = $conexao->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
-foreach ($alunos as $aluno) {
-    echo "  <form action='../controller/AlunoController.php' method='post'>
+if (count($alunos) < 1) {
+    echo "<script>alert('Nenhum registro encontrado!')</script> ";
+} else {
+
+    foreach ($alunos as $aluno) {
+        echo "  <form action='../controller/AlunoController.php' method='post'>
                 <table>
                    <tr>
                        <th>Matricula</th>
@@ -37,6 +41,7 @@ foreach ($alunos as $aluno) {
                        <td><input required name='email' type='text' value='" . $aluno['email'] . "'></td>
                        <td><input required name='endereco' type='text' value='" . $aluno['endereco'] . "'></td>
                        <td><input required name='telefone' onkeypress=\"mascara(this, '## #####-####')\" maxlength=\"13\" type='text' value='" . $aluno['telefone'] . "' ></td>
+                       <input type='hidden' name='atualizar' value='atualizar'>                       
                        <td><button>salvar</button></td>
                        </form>
                        <td>
@@ -48,6 +53,5 @@ foreach ($alunos as $aluno) {
                        </td>
                    </tr>
                 </table>";
+    }
 }
-
-      

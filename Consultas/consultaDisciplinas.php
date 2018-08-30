@@ -28,6 +28,7 @@ foreach ($disciplinas as $disciplina) {
                    <td><input size='4' readonly name='matricula' value='" . $disciplina['id'] . "'></td>
                    <td><input required name='nome' type='text' value='" . $disciplina['nome'] . "'></td>
                    <td><input required name='carga_horaria' type='text' value='" . $disciplina['carga_horaria'] . "'></td>
+                   <input name='atualizar' type='hidden' value='atualizar'>
                    <td><button>salvar</button></td>
            </form>
                   <td>

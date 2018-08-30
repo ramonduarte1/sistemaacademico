@@ -51,11 +51,15 @@ class Aluno extends Pessoa {
     }
 
     public function cadastrar() {
-        $sql = "INSERT INTO aluno (nome,email,endereco,telefone) VALUES (?,?,?,?)";
+        $sql = "INSERT INTO aluno (nome,email,endereco,telefone) VALUES (:nome,:email,:endereco,:telefone)";
         $insert = $this->conexao->prepare($sql);
 
-        $bind = array('nome' => $this->getNome(), 'email' => $this->getEmail(), 'endereco' => $this->getEndereco(),
-            'telefone' => $this->getTelefone());
+        $bind = array(
+            'nome' => $this->getNome(),
+            'email' => $this->getEmail(),
+            'endereco' => $this->getEndereco(),
+            'telefone' => $this->getTelefone()
+        );
         $insert->execute($bind);
 
         if ($insert != FALSE) {
@@ -77,12 +81,32 @@ class Aluno extends Pessoa {
             $insert = $this->conexao->prepare($sql);
             $insert->bindParam(':matricula', $this->getMatricula());
             $insert->execute();
-            echo "<script>alert('Aluno apagado com sucesso!');location.href=\"../view/consulta_aluno.php\"</script> ";
+            if ($insert != FALSE) {
+                echo "<script>alert('Aluno apagado com sucesso!');location.href=\"../view/consulta_aluno.php\"</script> ";
+            } else {
+                echo "<script>alert('Ocorreu um erro!');location.href=\"../view/consulta_aluno.php\"</script> ";
+            }
         }
     }
 
-    public function incluirNotas() {
-        
+    public function atualizar() {
+        $sql = "UPDATE aluno SET nome = :nome ,email = :email ,endereco= :endereco, telefone= :telefone WHERE id = :id";
+        $insert = $this->conexao->prepare($sql);
+
+        $bind = array(
+            'nome' => $this->getNome(),
+            'email' => $this->getEmail(),
+            'endereco' => $this->getEndereco(),
+            'telefone' => $this->getTelefone(),
+            'id' => $this->getMatricula()
+        );
+        $insert->execute($bind);
+
+        if ($insert != FALSE) {
+            echo "<script>alert('Aluno alterado com sucesso!');location.href=\"../view/consulta_aluno.php\"</script> ";
+        } else {
+            echo "<script>alert('Ocorreu um erro ao alterar!');location.href=\"../view/consulta_aluno.php\"</script> ";
+        }
     }
 
 }

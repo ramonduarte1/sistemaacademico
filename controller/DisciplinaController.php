@@ -11,12 +11,12 @@
  *
  * @author usuario
  */
-require_once '../autoload.php';//require_once '../model/Disciplina.php';
+require_once '../autoload.php'; //require_once '../model/Disciplina.php';
 
 class DisciplinaController {
 
     private $discplina;
-    private $apagar;
+    private $acao;
 
     function __construct() {
         if (!isset($_SESSION)) {
@@ -24,15 +24,14 @@ class DisciplinaController {
         }
         $this->discplina = new Disciplina();
         $this->incluir();
-
-        if ($this->apagar === 'apagar') {
+        
+        if ($this->acao === 'atualizar') {
+            $this->discplina->atualizar();
+        }else if ($this->acao === 'apagar') {
             $this->discplina->apagar();
-           
         } else {
             $this->discplina->cadastrar();
-         
         }
-        
     }
 
     private function incluir() {
@@ -41,7 +40,10 @@ class DisciplinaController {
         $this->discplina->setCargaHoraria($_POST['carga_horaria']);
 
         if (isset($_POST['apagar'])) {
-            $this->apagar = $_POST['apagar'];
+            $this->acao = $_POST['apagar'];
+        }
+        if (isset($_POST['atualizar'])) {
+            $this->acao = $_POST['atualizar'];
         }
     }
 

@@ -16,8 +16,8 @@ require_once '../autoload.php';
 class AlunoController {
 
     private $aluno;
-    private $apagar;
-
+    private $acao;
+    
     function __construct() {
         if (!isset($_SESSION)) {
             session_start();
@@ -25,7 +25,9 @@ class AlunoController {
         $this->aluno = new Aluno();
         $this->incluir();
 
-        if ($this->apagar === 'apagar') {
+        if($this->acao == 'atualizar'){
+            $this->aluno->atualizar();
+        }elseif ($this->acao === 'apagar') {
             $this->aluno->apagar();
         } else {
             $this->aluno->cadastrar();
@@ -41,7 +43,10 @@ class AlunoController {
         //$this->aluno->setTurma_id($_POST['turma_id']);
 
         if (isset($_POST['apagar'])) {
-            $this->apagar = $_POST['apagar'];
+            $this->acao = $_POST['apagar'];
+        }
+        if (isset($_POST['atualizar'])) {
+            $this->acao = $_POST['atualizar'];
         }
     }
 

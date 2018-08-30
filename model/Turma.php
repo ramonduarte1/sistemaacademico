@@ -44,9 +44,12 @@ class Turma {
 
         $sql = "INSERT INTO turma (nome) VALUES (:nome)";
         $insert = $this->conexao->prepare($sql);
-        $insert->bindParam(':nome', $this->getNome());
+        $bind = array
+            (
+            ':nome' => $this->getNome()
+        );
 
-        $insert->execute();
+        $insert->execute($bind);
 
         if ($insert != FALSE) {
             echo "<script>alert('Inserido com sucesso!');location.href=\"../view/cadastro_turma.php\"</script> ";
@@ -55,25 +58,40 @@ class Turma {
         }
     }
 
+    public function atualizar() {
+        $sql = "UPDATE turma SET nome = :nome WHERE id = :id";
+        $insert = $this->conexao->prepare($sql);
+
+        $bind = array
+            (
+            ':nome' => $this->getNome(),
+            ':id' => $this->getCodigo()
+        );
+
+        $insert->execute($bind);
+
+        if ($insert != FALSE) {
+            echo "<script>alert('Turma alterada com sucesso!');location.href=\"../view/consulta_turma.php\"</script> ";
+        } else {
+            echo "<script>alert('Ocorreu um erro ao alterar!');location.href=\"../view/consulta_turma.php\"</script> ";
+        }
+    }
+
     public function apagar() {
-        if (isset($_SESSION['alunos_matriculados'])) {
+        $sql = "select *from turma inner join turma_disciplina on (turma.id = turma_disciplina.turma_id) where id = '" . $this->getCodigo() . "'";
+        $insert = $this->conexao->query($sql);
 
-            foreach ($_SESSION['alunos_matriculados'] as $matAluno => $value) {
-                //echo 'key: '.$matAluno.'<br>';
-                $flag = 0;
-                foreach ($_SESSION['alunos_matriculados'][$matAluno]['turma'] as $codigo => $turma) {
-                    //echo 'se '.$codigo.' === '.$this->getCodigo().'<br>';
-
-                    if ($codigo == $this->getCodigo()) {
-                        $flag++;
-                        echo "<script>alert('Turma não pode ser deletada, em uso!');location.href=\"../view/consulta_turma.php\"</script> ";
-                    }
-                }
-            }
-            if ($flag == 0) { // se nao entrou no if flag continua 0
-                unset($_SESSION['turmas'][$this->getCodigo()]);
-                require_once '../controller/NumeroMatriculaController.php';
-                echo "<script>alert('Turma deletada com sucesso!');location.href=\"../view/consulta_turma.php\"</script> ";
+        if ($insert->rowCount() > 0) {// se existir disciplina matriclada na turma
+            echo "<script>alert('Turma não pode ser deletado!');location.href=\"../view/consulta_turma.php\"</script> ";
+        } else {
+            $sql = "delete from turma where id = :matricula ";
+            $insert = $this->conexao->prepare($sql);
+            $insert->bindParam(':matricula', $this->getCodigo());
+            $insert->execute();
+            if ($insert != FALSE) {
+                echo "<script>alert('Turma apagado com sucesso!');location.href=\"../view/consulta_turma.php\"</script> ";
+            } else {
+                echo "<script>alert('Ocorreu um erro!');location.href=\"../view/consulta_turma.php\"</script> ";
             }
         }
     }

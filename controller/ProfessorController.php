@@ -17,6 +17,7 @@ class ProfessorController {
 
     private $professor;
     private $apagar;
+    private $atualizar;
 
     function __construct() {
         if (!isset($_SESSION)) {
@@ -25,7 +26,9 @@ class ProfessorController {
 
         $this->professor = new Professor();
         $this->incluir();
-        if ($this->apagar === 'apagar') {
+        if($this->atualizar === 'atualizar'){
+            $this->professor->atualizar();
+        }else if ($this->apagar === 'apagar') {
             $this->professor->apagar();
             echo "<script>alert('Professor apagado com sucesso!');location.href=\"../view/consulta_professor.php\"</script> ";
         } else {
@@ -43,6 +46,9 @@ class ProfessorController {
 
         if (isset($_POST['apagar'])) {
             $this->apagar = $_POST['apagar'];
+        }
+        if(isset($_POST['atualizar'])){
+            $this->atualizar = $_POST['atualizar'];
         }
         
     }

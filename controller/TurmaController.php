@@ -11,12 +11,12 @@
  *
  * @author usuario
  */
-require_once '../autoload.php';//require_once '../model/Turma.php';
+require_once '../autoload.php'; //require_once '../model/Turma.php';
 
 class TurmaController {
 
     private $turma;
-    private $apagar;
+    private $acao;
 
     function __construct() {
         if (!isset($_SESSION['turmas'])) {
@@ -24,9 +24,11 @@ class TurmaController {
         }
         $this->turma = new Turma();
         $this->incluir();
-        if ($this->apagar === 'apagar') {
+
+        if ($this->acao == 'atualizar') {
+            $this->turma->atualizar();
+        } else if ($this->acao === 'apagar') {
             $this->turma->apagar();
-            
         } else {
             $this->turma->cadastrar();
         }
@@ -35,8 +37,12 @@ class TurmaController {
     private function incluir() {
         $this->turma->setCodigo($_POST['matricula']);
         $this->turma->setNome($_POST['nome']);
+
         if (isset($_POST['apagar'])) {
-            $this->apagar = $_POST['apagar'];
+            $this->acao = $_POST['apagar'];
+        }
+        if (isset($_POST['atualizar'])) {
+            $this->acao = $_POST['atualizar'];
         }
     }
 

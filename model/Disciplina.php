@@ -78,10 +78,15 @@ class Disciplina {
 
     public function cadastrar() {
         $sql = "INSERT INTO disciplina (nome,carga_horaria) VALUES (:nome,:carga_horaria)";
-        $insert = $this->conexao->prepare($sql); 
-        $insert->bindParam(':nome', $this->getNome());
-        $insert->bindParam(':carga_horaria', $this->getCargaHoraria());
-        $insert->execute();
+        $insert = $this->conexao->prepare($sql);
+      
+        $bind = array
+            (
+                ':nome' => $this->getNome(),
+                ':carga_horaria' => $this->getCargaHoraria(),
+            );
+
+        $insert->execute($bind);
 
         if ($insert != FALSE) {
             echo "<script>alert('Disciplina cadastrada com sucesso!');location.href=\"../view/cadastro_disciplina.php\"</script> ";
@@ -93,38 +98,39 @@ class Disciplina {
     public function atualizar() {
         $sql = "UPDATE disciplina SET nome = :nome ,carga_horaria = :carga_horaria WHERE id = :id";
         $insert = $this->conexao->prepare($sql);
-        $insert->bindParam(':nome', $this->getNome());
-        $insert->bindParam(':carga_horaria', $this->getCargaHoraria());
-        $insert->bindParam(':id', $this->getCodigo());
-        
-        $insert->execute();
+      
+        $bind = array
+            (
+                ':nome' => $this->getNome(),
+                ':carga_horaria' => $this->getCargaHoraria(),
+                ':id' => $this->getCodigo()
+            );
+
+        $insert->execute($bind);
 
         if ($insert != FALSE) {
-            echo "<script>alert('Disciplina alterada com sucesso!');location.href=\"../view/cadastro_disciplina.php\"</script> ";
+            echo "<script>alert('Disciplina alterada com sucesso!');location.href=\"../view/consulta_disciplina.php\"</script> ";
         } else {
-            echo "<script>alert('Ocorreu um erro ao alterar!');location.href=\"../view/cadastro_disciplina.php\"</script> ";
+            echo "<script>alert('Ocorreu um erro ao alterar!');location.href=\"../view/consulta_disciplina.php\"</script> ";
         }
     }
 
     public function apagar() {
 
-        if (isset($_SESSION['alunos_matriculados'])) {
-            $flag = 0;
-            foreach ($_SESSION['alunos_matriculados'] as $matAluno => $value) {
-                //echo 'key: '.$matAluno.'<br>';
-                foreach ($_SESSION['alunos_matriculados'][$matAluno]['disciplina'] as $codigo => $disciplina) {
-                    //echo 'se '.$codigo.' === '.$this->getCodigo().'<br>';
+        $sql = "select *from disciplina inner join turma_disciplina on (disciplina.id = turma_disciplina.disciplina_id) where id = '" . $this->getCodigo() . "'";
+        $insert = $this->conexao->query($sql);
 
-                    if ($codigo == $this->getCodigo()) {
-                        $flag++;
-                        echo "<script>alert('Disciplina não pode ser deletada!');location.href=\"../view/consulta_disciplina.php\"</script> ";
-                    }
-                }
-            }
-            if ($flag == 0) { // se nao entrou no if flag continua 0
-                unset($_SESSION['disciplinas'][$this->getCodigo()]);
-                require_once '../controller/NumeroMatriculaController.php';
-                echo "<script>alert('Disciplina deletada com sucesso!');location.href=\"../view/consulta_disciplina.php\"</script> ";
+        if ($insert->rowCount() > 0) {// se existir disciplina matriclada numa turma
+            echo "<script>alert('Disciplina não pode ser deletado!');location.href=\"../view/consulta_disciplina.php\"</script> ";
+        } else {
+            $sql = "delete from disciplina where id = :matricula ";
+            $insert = $this->conexao->prepare($sql);
+            $insert->bindParam(':matricula', $this->getCodigo());
+            $insert->execute();
+            if ($insert != FALSE) {
+                echo "<script>alert('Disciplina apagado com sucesso!');location.href=\"../view/consulta_disciplina.php\"</script> ";
+            } else {
+                echo "<script>alert('Ocorreu um erro!');location.href=\"../view/consulta_disciplina.php\"</script> ";
             }
         }
     }

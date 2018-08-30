@@ -27,6 +27,7 @@ foreach ($turmas as $turma) {
            <tr>
                  <td><input size='4' readonly name='matricula' value='" . $turma['id'] . "'></td>
                  <td><input required name='nome' type='text' value='" . $turma['nome'] . "'></td>
+                 <input name='atualizar' type='hidden' value='atualizar'>
                  <td><button>salvar</button></td>
         </form>
                  <td>

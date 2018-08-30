@@ -10,8 +10,11 @@ $conexao = new Conexao();
 
 $professores = $conexao->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
-foreach ($professores as $professor) {
-    echo "
+if (count($professores) < 1) {
+    echo "<script>alert('Nenhum registro encontrado!')</script> ";
+} else {
+    foreach ($professores as $professor) {
+        echo "
                     <form action='../controller/ProfessorController.php' method='post'>
                     <table>
                        <tr>
@@ -27,6 +30,7 @@ foreach ($professores as $professor) {
                            <td><input required name='email' type='text' value='" . $professor['email'] . "'></td>
                            <td><input required name='endereco' type='text' value='" . $professor['endereco'] . "'></td>
                            <td><input required name='telefone' onkeypress=\"mascara(this, '## #####-####')\" maxlength=\"13\" type='text' value='" . $professor['telefone'] . "'></td>
+                           <input name='atualizar' type='hidden' value='atualizar'>
                            <td><button>salvar</button></td>
                            </form>
                            <td>
@@ -38,6 +42,5 @@ foreach ($professores as $professor) {
                            </td>
                        </tr>
                     </table>";
+    }
 }
-
-//ok
