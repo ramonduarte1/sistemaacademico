@@ -15,6 +15,7 @@ class Disciplina {
 
     private $codigo;
     private $nome;
+    private $professor_id;
     private $cargaHoraria;
     private $usuarioAltera;
     private $dataAltera;
@@ -28,6 +29,13 @@ class Disciplina {
         if (!isset($_SESSION)) {
             session_start();
         }
+    }
+    function getProfessor_id() {
+        return $this->professor_id;
+    }
+
+    function setProfessor_id($professor_id) {
+        $this->professor_id = $professor_id;
     }
 
     function getUsuarioAltera() {
