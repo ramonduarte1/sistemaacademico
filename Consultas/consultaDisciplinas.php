@@ -14,9 +14,11 @@ $sql = "select *from disciplina where nome like '$pesquisa%' and deletado <> 's'
 $conexao = new Conexao();
 
 $disciplinas = $conexao->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-
-foreach ($disciplinas as $disciplina) {
-    echo "
+if (count($disciplinas) < 1) {
+    echo "<script>alert('Nenhum registro encontrado!')</script> ";
+} else {
+    foreach ($disciplinas as $disciplina) {
+        echo "
            <form action='../controller/DisciplinaController.php' method='post'>
            <table>
               <tr>
@@ -40,4 +42,5 @@ foreach ($disciplinas as $disciplina) {
                   </td>
               </tr>
            </table>";
+    }
 }

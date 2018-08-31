@@ -160,7 +160,7 @@ class Disciplina {
         if ($insert->rowCount() > 0) {// se existir disciplina matriclada numa turma
             echo "<script>alert('Disciplina não pode ser deletado!');location.href=\"../view/consulta_disciplina.php\"</script> ";
         } else {
-            $sql = "UPDATE disciplina SET delete = :delete, data_altera = :data_altera, usuario_altera = :usuario_altera WHERE id = :id";
+            $sql = "UPDATE disciplina SET deletado = :deletado, data_altera = :data_altera, usuario_altera = :usuario_altera WHERE id = :id";
             $insert = $this->conexao->prepare($sql);
 
             date_default_timezone_set('America/Sao_Paulo');
@@ -168,7 +168,7 @@ class Disciplina {
 
             $bind = array
                 (
-                ':delete' => 's',
+                ':deletado' => 's',
                 ':data_altera' => $date,
                 ':usuario_altera' => $this->getUsuarioAltera(),
                 ':id' => $this->getCodigo()

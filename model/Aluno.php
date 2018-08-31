@@ -60,25 +60,25 @@ class Aluno extends Pessoa {
 
     public function apagar() {
 
-        $sql = "select *from aluno inner join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where id = '" . $this->getMatricula() . "'";
+        $sql = "select *from aluno inner join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where id = '" . $this->getMatricula() . "' and deletado ='n' ";
         $insert = $this->conexao->query($sql);
 
         if ($insert->rowCount() > 0) {// se o aluno tiver matricula ativa
             echo "<script>alert('Aluno não pode ser deletado!');location.href=\"../view/consulta_aluno.php\"</script> ";
         } else {
-            $sql = "UPDATE aluno SET delete = :delete, usuario_altera = :usuario_altera, data_altera= :data_altera WHERE id = :id";
-            $insert = $this->conexao->prepare($sql);
+        $sql = "UPDATE aluno SET deletado =:deletado, usuario_altera = :usuario_altera, data_altera= :data_altera WHERE id = :id";
+        $insert = $this->conexao->prepare($sql);
 
-            date_default_timezone_set('America/Sao_Paulo');
-            $date = date('Y-m-d H:i');
+        date_default_timezone_set('America/Sao_Paulo');
+        $date = date('Y-m-d H:i');
 
-            $bind = array(
-                'delete' => 's',
-                'usuario_altera' => $this->getUsuarioAltera(),
-                'data_altera' => $date,
-                'id' => $this->getMatricula()
-            );
-            $insert->execute($bind);
+        $bind = array(
+            ':deletado' => 's',
+            ':usuario_altera' => $this->getUsuarioAltera(),
+            ':data_altera' => $date,
+            ':id' => $this->getMatricula()
+        );
+        $insert->execute($bind);
             if ($insert != FALSE) {
                 echo "<script>alert('Aluno apagado com sucesso!');location.href=\"../view/consulta_aluno.php\"</script> ";
             } else {

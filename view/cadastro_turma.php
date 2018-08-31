@@ -19,7 +19,17 @@ and open the template in the editor.
             echo "<script>alert('Area restrita!');location.href=\"../index.php\"</script> ";
         }
         $logado = $_SESSION['login'];
-        
+
+        require_once '../autoload.php';
+
+
+        $sql = "select *from disciplina where deletado = 'n'";
+
+        $conexao = new Conexao();
+
+        $disciplinas = $conexao->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        //var_dump($disciplinas);
+
         include 'menu.php';
         ?>
         <h2 class="centralizado">Cadastro Turma</h2><br><br>
@@ -28,11 +38,21 @@ and open the template in the editor.
 <!--                <tr>
                     <td class="direita">Matricula</td>
                     <td><input readonly="" name="matricula" value="<?php echo $_SESSION['matricula'] ?>" size="4"></td>
-                </tr>-->
+            </tr>-->
                 <tr>
                     <td class="direita">Nome</td>
                     <td>
                         <input type="text" required name="nome" size="50">
+                    </td>
+                </tr>
+                <tr >
+                    <td>Turno</td>
+                    <td>
+                        <select name="turno">
+                            <option value="manha">Manhã</option>
+                            <option value="tarde">Tarde</option>
+                            <option value="noite">Noite</option>
+                        </select>
                     </td>
                 </tr>
                 <tr>
@@ -42,6 +62,39 @@ and open the template in the editor.
                     </td>
                 </tr>
             </table>
-        </form>
+
+            <?php
+            if (count($disciplinas) < 1) {
+                echo 'Nenhuma Disciplina Cadastrada!';
+            } else {
+                ?>
+
+                <form action='../controller/DisciplinaController.php' method='post'>
+                    <table>
+                        <tr>
+                            <th>Matricula</th>
+                            <th>Nome</th>
+                            <th>Carga Horaria</th>
+                            <th></th>
+                        </tr>
+                        <?php foreach ($disciplinas as $disciplina) {
+                            ?>
+
+
+                            <tr>
+                                <td><input size='4' readonly name='matricula' value="<?php echo $disciplina['id'] ?> "></td>
+                                <td><input required name='nome' type='text' value="<?php echo $disciplina['nome'] ?> "></td>
+                                <td><input required name='carga_horaria' type='text' value="<?php echo $disciplina['carga_horaria'] ?> "></td>
+                                <td><input type='checkbox' ></td>
+                                </form>
+                            </tr>
+
+                        <?php }
+                        ?>
+                    </table>
+
+                </form>
+            <?php }
+            ?>
     </body>
 </html>
