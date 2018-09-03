@@ -5,29 +5,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-echo '<ul>
+//form_Modulo_menu
+function menuPrincipal() {
+    $html = <<<HTML
+       <ul>
         <li><a href="index.php">Home</a></li>
         <li class="dropdown">
           <a href="javascript:void(0)" class="dropbtn">Cadastro</a>
           <div class="dropdown-content">
-            <a href="cadastro_aluno.php">Aluno</a>
-            <a href="cadastro_professor.php">Professor</a>
-            <a href="cadastro_disciplina.php">Disciplina</a>
-            <a href="cadastro_turma.php">Turma</a>
+            <a onclick="xajax_menuAluno('pesquisa')">Aluno</a>
+            <a onclick="xajax_verificaCredenciais()">Professor</a>
+            <a onclick="xajax_salvarAluno(xajax.getFormValues('formLogin'))">Disciplina</a>
+            <a onclick="xajax_verificaCredenciais(xajax.getFormValues('formLogin'))">Turma</a>
           </div>
         </li>
-        <li class="dropdown">
-          <a href="javascript:void(0)" class="dropbtn">Consulta</a>
-          <div class="dropdown-content">
-            <a href="consulta_aluno.php">Aluno</a>
-            <a href="consulta_professor.php">Professor</a>
-            <a href="consulta_disciplina.php">Disciplina</a>
-            <a href="consulta_turma.php">Turma</a>
-            <a href="consulta_turma_aluno.php">Aluno por Turma</a>
-            <a href="consulta_boletinho.php">Boletinho</a>
-          </div>
-        </li>
-          <li><a href="matricular_aluno.php">Matricular</a></li>
-          <li><a href="lancar_notas.php">Lançar Notas</a></li>
-          <li><a href="../controller/Logout.php">sair</a></li>
-      </ul><br><br>';
+          <li><a href="#" onclick="xajax_verificaCredenciais(xajax.getFormValues('formLogin'))">Matricular</a></li>
+          <li><a href="#" onclick="xajax_verificaCredenciais(xajax.getFormValues('formLogin'))">Lançar Notas</a></li>
+          <li><a href="#" onclick="xajax_verificaCredenciais(xajax.getFormValues('formLogin'))">sair</a></li>
+      </ul>
+HTML;
+    
+    $obj_response = new xajaxResponse();
+
+    $obj_response->assign("conteudo", "innerHTML", $html);
+
+    return $obj_response;
+}

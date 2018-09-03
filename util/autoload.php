@@ -13,7 +13,9 @@ function __autoload($class_name) {
         'ajax/',
         'controller/',
         'model/',
-        'view'
+        'view',
+        'util',
+        'lib'
     );
     $caminhos = array(
         '',

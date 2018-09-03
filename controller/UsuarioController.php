@@ -11,27 +11,27 @@
  *
  * @author ramon
  */
-require_once '../autoload.php';
-
 class UsuarioController {
 
     private $usuario;
+    private $objResponse;
 
     function __construct() {
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-        $this->usuario = new Usuario();
-        $this->incluir();
-        $this->usuario->verificaLogin();
+        $this->objResponse = new xajaxResponse(); //instancia o xajax
     }
 
-    private function incluir() {
-        $this->usuario->setLogin($_POST['login']);
-        $this->usuario->setSenha($_POST['senha']);
+    public function verificaCredenciais($form) {
+
+        $this->usuario = new Usuario();
+        $this->usuario->setLogin($form['login']);
+        $this->usuario->setSenha($form['senha']);
+        if ($this->usuario->verificaLogin() == 0) {
+            $this->objResponse->alert('usuario ou senha invalido');
+        } else {
+            $this->objResponse->call('xajax_menuPrincipal');
+        }
+
+        return $this->objResponse;
     }
-    
 
 }
-
-new UsuarioController();

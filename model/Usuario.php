@@ -11,7 +11,6 @@
  *
  * @author usuario
  */
-require_once '../autoload.php';
 class Usuario {
 
     private $id;
@@ -55,12 +54,12 @@ class Usuario {
         $consulta = $this->conexao->query($sql)->fetchAll();
  
         if (count($consulta) < 1) {
-            echo "<script>alert('usuario ou senha invalida!');location.href=\"../index.php\"</script> ";
+            return 0;
         } else {
             $_SESSION['login'] = $consulta[0]['login'];
             $_SESSION['senha'] = $consulta[0]['senha'];
                         
-           echo "<script>;location.href=\"../view/index.php\"</script> ";
+           return 1;
         }
     }
 }

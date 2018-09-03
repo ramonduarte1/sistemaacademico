@@ -32,7 +32,7 @@ class Aluno extends Pessoa {
         $this->turma_id = $turma_id;
     }
 
-    public function cadastrar() {
+    public function salvaNoBanco() {
         $sql = "INSERT INTO aluno (nome,email,endereco,telefone,usuario_altera,data_altera) VALUES (:nome,:email,:endereco,:telefone,:usuario_altera,:data_altera)";
         $insert = $this->conexao->prepare($sql);
 
@@ -44,7 +44,7 @@ class Aluno extends Pessoa {
             'email' => $this->getEmail(),
             'endereco' => $this->getEndereco(),
             'telefone' => $this->getTelefone(),
-            'usuario_altera' => $this->getUsuarioAltera(),
+            'usuario_altera' => $_SESSION['login'],
             'data_altera' => $date
         );
         $insert->execute($bind);
@@ -52,9 +52,9 @@ class Aluno extends Pessoa {
 
 
         if ($insert != FALSE) {
-            echo "<script>alert('Aluno cadastrado com sucesso!');location.href=\"../view/cadastro_aluno.php\"</script> ";
+            return "Aluno cadastrado com sucesso!";
         } else {
-            echo "<script>alert('Ocorreu um erro ao cadastrar!');location.href=\"../view/cadastro_aluno.php\"</script> ";
+            return "Ocorreu um erro ao cadastrar!";
         }
     }
 
@@ -66,23 +66,23 @@ class Aluno extends Pessoa {
         if ($insert->rowCount() > 0) {// se o aluno tiver matricula ativa
             echo "<script>alert('Aluno não pode ser deletado!');location.href=\"../view/consulta_aluno.php\"</script> ";
         } else {
-        $sql = "UPDATE aluno SET deletado =:deletado, usuario_altera = :usuario_altera, data_altera= :data_altera WHERE id = :id";
-        $insert = $this->conexao->prepare($sql);
+            $sql = "UPDATE aluno SET deletado =:deletado, usuario_altera = :usuario_altera, data_altera= :data_altera WHERE id = :id";
+            $insert = $this->conexao->prepare($sql);
 
-        date_default_timezone_set('America/Sao_Paulo');
-        $date = date('Y-m-d H:i');
+            date_default_timezone_set('America/Sao_Paulo');
+            $date = date('Y-m-d H:i');
 
-        $bind = array(
-            ':deletado' => 's',
-            ':usuario_altera' => $this->getUsuarioAltera(),
-            ':data_altera' => $date,
-            ':id' => $this->getMatricula()
-        );
-        $insert->execute($bind);
+            $bind = array(
+                ':deletado' => 's',
+                ':usuario_altera' => $this->getUsuarioAltera(),
+                ':data_altera' => $date,
+                ':id' => $this->getMatricula()
+            );
+            $insert->execute($bind);
             if ($insert != FALSE) {
-                echo "<script>alert('Aluno apagado com sucesso!');location.href=\"../view/consulta_aluno.php\"</script> ";
+                return "Aluno apagado com sucesso!";
             } else {
-                echo "<script>alert('Ocorreu um erro!');location.href=\"../view/consulta_aluno.php\"</script> ";
+                return "Ocorreu um erro!";
             }
         }
     }
@@ -107,10 +107,14 @@ class Aluno extends Pessoa {
         $insert->execute($bind);
 
         if ($insert != FALSE) {
-            echo "<script>alert('Aluno alterado com sucesso!');location.href=\"../view/consulta_aluno.php\"</script> ";
+            return "Aluno alterado com sucesso!";
         } else {
-            echo "<script>alert('Ocorreu um erro ao alterar!');location.href=\"../view/consulta_aluno.php\"</script> ";
+            return "Ocorreu um erro ao alterar!";
         }
+    }
+    public function retornaAlunos($busca){
+//        $sql = "select *from aluno inner join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where id = '" . $this->getMatricula() . "' and deletado ='n' ";
+//        $insert = $this->conexao->query($sql);
     }
 
 }

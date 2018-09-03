@@ -11,48 +11,62 @@
  *
  * @author ramon
  */
-require_once '../autoload.php';
-
 class AlunoController {
 
     private $aluno;
     private $acao;
+    private $objResponse;
 
     function __construct() {
         if (!isset($_SESSION)) {
             session_start();
         }
-        $this->aluno = new Aluno();
-        $this->incluir();
 
-        if ($this->acao == 'atualizar') {
-            $this->aluno->atualizar();
-        } elseif ($this->acao === 'apagar') {
-            $this->aluno->apagar();
-        } else {
-            $this->aluno->cadastrar();
-        }
+        $this->objResponse = new xajaxResponse(); //instancia o xajax
+    }
+    public function pesquisaAluno($form){
+        $aluno = new Aluno();
+        
     }
 
-    private function incluir() {
+    public function salvarAluno($form) {
 
-        $this->aluno->setMatricula($_POST['matricula']);
-        $this->aluno->setNome($_POST['nome']);
-        $this->aluno->setEmail($_POST['email']);
-        $this->aluno->setEndereco($_POST['endereco']);
-        $this->aluno->setTelefone($_POST['telefone']);
-        $this->aluno->setUsuarioAltera($_SESSION['login']);
-        $this->aluno->setDataAltera($data);
-       //$this->aluno->setTurma_id($_POST['turma_id']);
+        $this->aluno = new Aluno();
+        $this->aluno->setNome($form['nome']);
+        $this->aluno->setTelefone($form['telefone']);
+        $this->aluno->setEmail($form['email']);
+        $this->aluno->setEndereco($form['endereco']);
 
-        if (isset($_POST['apagar'])) {
-            $this->acao = $_POST['apagar'];
-        }
-        if (isset($_POST['atualizar'])) {
-            $this->acao = $_POST['atualizar'];
-        }
+        $result = $this->aluno->salvaNoBanco();
+
+        $this->objResponse->alert($result);
+        return $this->objResponse;
+    }
+
+    public function atualizarAluno($form) {
+
+        $this->aluno = new Aluno();
+        $this->aluno->setMatricula($form['matricula']);
+        $this->aluno->setNome($form['nome']);
+        $this->aluno->setTelefone($form['telefone']);
+        $this->aluno->setEmail($form['email']);
+        $this->aluno->setEndereco($form['endereco']);
+
+        $result = $this->aluno->salvaNoBanco();
+
+        $this->objResponse->alert($result);
+        return $this->objResponse;
+    }
+
+    public function apagarAluno($form) {
+
+        $this->aluno = new Aluno();
+        $this->aluno->setMatricula($form['matricula']);
+
+        $result = $this->aluno->apagar();
+
+        $this->objResponse->alert($result);
+        return $this->objResponse;
     }
 
 }
-
-new AlunoController();

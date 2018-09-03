@@ -33,44 +33,34 @@ and open the template in the editor.
         include 'menu.php';
         ?>
         <h2 class="centralizado">Cadastro Turma</h2><br><br>
-        <form action="../controller/TurmaController.php" method="post">
+        <!--        <form action="../controller/TurmaController.php" method="post">-->
+        <form action='../controller/teste.php' method='post'>
             <table>
-<!--                <tr>
-                    <td class="direita">Matricula</td>
-                    <td><input readonly="" name="matricula" value="<?php echo $_SESSION['matricula'] ?>" size="4"></td>
-            </tr>-->
-                <tr>
-                    <td class="direita">Nome</td>
-                    <td>
-                        <input type="text" required name="nome" size="50">
-                    </td>
-                </tr>
-                <tr >
-                    <td>Turno</td>
-                    <td>
-                        <select name="turno">
-                            <option value="manha">Manhã</option>
-                            <option value="tarde">Tarde</option>
-                            <option value="noite">Noite</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <button>salvar</button>
-                    </td>
-                </tr>
-            </table>
 
-            <?php
-            if (count($disciplinas) < 1) {
-                echo 'Nenhuma Disciplina Cadastrada!';
-            } else {
-                ?>
+                <table>
+                    <tr>
+                        <th colspan="2">Nome</th>
+                        <th>Turno</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="text" required name="nome" size="29">
+                        </td>
+                        <td class="centralizado">
+                            <select name="turno">
+                                <option value="manha">Manhã</option>
+                                <option value="tarde">Tarde</option>
+                                <option value="noite">Noite</option>
+                            </select>
+                        </td>
+                    </tr>
 
-                <form action='../controller/DisciplinaController.php' method='post'>
-                    <table>
+                    <?php
+                    if (count($disciplinas) < 1) {
+                        echo 'Nenhuma Disciplina Cadastrada!';
+                    } else {
+                        ?>
+
                         <tr>
                             <th>Matricula</th>
                             <th>Nome</th>
@@ -79,22 +69,24 @@ and open the template in the editor.
                         </tr>
                         <?php foreach ($disciplinas as $disciplina) {
                             ?>
-
-
                             <tr>
                                 <td><input size='4' readonly name='matricula' value="<?php echo $disciplina['id'] ?> "></td>
                                 <td><input required name='nome' type='text' value="<?php echo $disciplina['nome'] ?> "></td>
                                 <td><input required name='carga_horaria' type='text' value="<?php echo $disciplina['carga_horaria'] ?> "></td>
-                                <td><input type='checkbox' ></td>
-                                </form>
+                                <td><input class="centralizado" type='checkbox' name="disciplinas[]" value="<?php echo $disciplina['id'] ?>"></td>
                             </tr>
 
                         <?php }
                         ?>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td><button class="direita">Salvar</button></td>
+                        </tr>
                     </table>
 
-                </form>
-            <?php }
-            ?>
+            </form>
+
+        <?php }
+        ?>
     </body>
 </html>

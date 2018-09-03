@@ -27,10 +27,6 @@ and open the template in the editor.
 
         <form action="../controller/AlunoController.php" method="post">
             <table>
-<!--                <tr>
-                    <td class="direita">Matricula</td>
-                    <td><input readonly="" name="matricula" value="<?php echo $_SESSION['matricula'] ?>" size="4"></td>
-                </tr>-->
                 <tr>
                     <td class="direita">Nome</td>
                     <td>
