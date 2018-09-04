@@ -19,10 +19,14 @@ class XajaxUtil {
         $this->xajax->register(XAJAX_FUNCTION, 'menuPrincipal');
         $this->xajax->register(XAJAX_FUNCTION, 'menuAluno');
         $this->xajax->register(XAJAX_FUNCTION, 'menuProfessor');
+        $this->xajax->register(XAJAX_FUNCTION, 'menuDisciplina');
+        $this->xajax->register(XAJAX_FUNCTION, 'menuTurma');
+        $this->xajax->register(XAJAX_FUNCTION, 'menuLancaNota');
 
         //registra metodos
         $login = new UsuarioController();
         $this->xajax->register(XAJAX_FUNCTION, array("verificaCredenciais", $login, "verificaCredenciais")); //metodo
+        $this->xajax->register(XAJAX_FUNCTION, array("sair", $login, "sair")); //metodo
 
         $aluno = new AlunoController();
         $this->xajax->register(XAJAX_FUNCTION, array("salvarAluno", $aluno, "salvarAluno"));
@@ -35,6 +39,12 @@ class XajaxUtil {
         $this->xajax->register(XAJAX_FUNCTION, array("pesquisaProfessor", $professor, "pesquisaProfessor"));
         $this->xajax->register(XAJAX_FUNCTION, array("apagarProfessor", $professor, "apagarProfessor"));
         $this->xajax->register(XAJAX_FUNCTION, array("atualizarProfessor", $professor, "atualizarProfessor"));
+
+        $disciplina = new DisciplinaController();
+        $this->xajax->register(XAJAX_FUNCTION, array("salvarDisciplina", $disciplina, "salvarDisciplina"));
+        $this->xajax->register(XAJAX_FUNCTION, array("pesquisarDisciplina", $disciplina, "pesquisarDisciplina"));
+        $this->xajax->register(XAJAX_FUNCTION, array("apagarDisciplina", $disciplina, "apagarDisciplina"));
+        $this->xajax->register(XAJAX_FUNCTION, array("atualizarDisciplina", $disciplina, "atualizarDisciplina"));
 
         $this->xajax->processRequest();
         $this->xajax_js = $this->xajax->getJavascript("./lib");

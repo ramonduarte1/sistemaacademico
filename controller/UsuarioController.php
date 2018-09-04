@@ -33,5 +33,11 @@ class UsuarioController {
 
         return $this->objResponse;
     }
+    
+    public function sair(){
+        unset($_SESSION['login']);
+        unset($_SESSION['senha']);
+        echo "<script>alert('Area restrita!');location.href=\"../index.php\"</script> ";
+    }
 
 }

@@ -30,6 +30,7 @@ class Disciplina {
             session_start();
         }
     }
+
     function getProfessor_id() {
         return $this->professor_id;
     }
@@ -102,7 +103,7 @@ class Disciplina {
         $this->nome = $nome;
     }
 
-    public function cadastrar() {
+    public function salvarNoBanco() {
         $sql = "INSERT INTO disciplina (nome,carga_horaria,data_altera,usuario_altera) VALUES (:nome,:carga_horaria,:data_altera,:usuario_altera)";
         $insert = $this->conexao->prepare($sql);
 
@@ -121,9 +122,9 @@ class Disciplina {
         $insert->execute($bind);
 
         if ($insert != FALSE) {
-            echo "<script>alert('Disciplina cadastrada com sucesso!');location.href=\"../view/cadastro_disciplina.php\"</script> ";
+            return "Disciplina cadastrada com sucesso!";
         } else {
-            echo "<script>alert('Ocorreu um erro ao cadastrar!');location.href=\"../view/cadastro_disciplina.php\"</script> ";
+            return "Ocorreu um erro ao cadastrar!";
         }
     }
 
@@ -146,9 +147,9 @@ class Disciplina {
         $insert->execute($bind);
 
         if ($insert != FALSE) {
-            echo "<script>alert('Disciplina alterada com sucesso!');location.href=\"../view/consulta_disciplina.php\"</script> ";
+            return "Disciplina cadastrada com sucesso!";
         } else {
-            echo "<script>alert('Ocorreu um erro ao alterar!');location.href=\"../view/consulta_disciplina.php\"</script> ";
+            return "Ocorreu um erro ao cadastrar!";
         }
     }
 
@@ -176,11 +177,39 @@ class Disciplina {
 
             $insert->execute($bind);
             if ($insert != FALSE) {
-                echo "<script>alert('Disciplina apagado com sucesso!');location.href=\"../view/consulta_disciplina.php\"</script> ";
+                return "Disciplina cadastrada com sucesso!";
             } else {
-                echo "<script>alert('Ocorreu um erro!');location.href=\"../view/consulta_disciplina.php\"</script> ";
+                return "Ocorreu um erro ao cadastrar!";
             }
         }
+    }
+
+    public function retornaDisciplinas($tipo, $pesquisa) {
+
+        if ($tipo == '1') {// disciplinas matriculados
+            $sql = "select *from disciplina inner join turma_disciplina on (disciplina.id = turma_disciplina.disciplina_id) where disciplina.nome like '%$pesquisa%' and disciplina.deletado = 'n'";
+        } else {
+            $sql = "select *from disciplina left join turma_disciplina on (disciplina.id = turma_disciplina.disciplina_id) where turma_disciplina.disciplina_id is null and disciplina.nome like '%$pesquisa%' and disciplina.deletado = 'n'";
+        }
+        $array = array();
+        $insert = $this->conexao->query($sql);
+        foreach ($insert as $disciplina) {
+            array_push($array, $disciplina);
+        }
+        $a = 1;
+        return $array;
+    }
+
+    public function retornaDisciplina() {
+        $id = $this->getMatricula();
+        $sql = "select *from disciplina left join turma_disciplina on (disciplina.id = turma_disciplina.disciplina_id) where turma_disciplina.disciplina_id is null and disciplina.id = '$id' and disciplina.deletado = 'n'";
+
+        $insert = $this->conexao->query($sql);
+        $array = array();
+        foreach ($insert as $disciplina) {
+            array_push($array, $disciplina);
+        }
+        return $array;
     }
 
 }

@@ -6,6 +6,8 @@ require './view/login.php';
 require './view/menu.php';
 require './view/menuAluno.php';
 require './view/menuProfessor.php';
+require './view/menuDisciplina.php';
+require './view/menuTurma.php';
 
 require './util/XajaxUtil.php';
 

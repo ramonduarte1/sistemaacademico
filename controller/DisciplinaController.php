@@ -11,43 +11,61 @@
  *
  * @author usuario
  */
-require_once '../autoload.php'; //require_once '../model/Disciplina.php';
-
 class DisciplinaController {
 
     private $discplina;
-    private $acao;
+    private $objResponse;
 
     function __construct() {
         if (!isset($_SESSION)) {
             session_start();
         }
-        $this->discplina = new Disciplina();
-        $this->incluir();
-        
-        if ($this->acao === 'atualizar') {
-            $this->discplina->atualizar();
-        }else if ($this->acao === 'apagar') {
-            $this->discplina->apagar();
-        } else {
-            $this->discplina->cadastrar();
-        }
+
+        $this->objResponse = new xajaxResponse(); //instancia o xajax
     }
 
-    private function incluir() {
-        $this->discplina->setCodigo($_POST['matricula']);
-        $this->discplina->setNome($_POST['nome']);
-        $this->discplina->setCargaHoraria($_POST['carga_horaria']);
-        $this->discplina->setUsuarioAltera($_SESSION['login']);
+    public function pesquisaDisciplina($form) {
+        $disciplina = new Disciplina();
+        $result = $disciplina->retornaDisciplinas($form['radio'], $form['pesq_disciplina']);
 
-        if (isset($_POST['apagar'])) {
-            $this->acao = $_POST['apagar'];
-        }
-        if (isset($_POST['atualizar'])) {
-            $this->acao = $_POST['atualizar'];
-        }
+        $this->objResponse->alert($result);
+        return $this->objResponse;
+    }
+
+    public function salvarDisciplina($form) {
+
+        $this->discplina = new Disciplina();
+        $this->discplina->setNome($form['nome']);
+        $this->discplina->setCargaHoraria($form['carga_horaria']);
+
+        $result = $this->discplina->salvarNoBanco();
+
+        $this->objResponse->alert($result);
+        return $this->objResponse;
+    }
+
+    public function atualizarDisciplina($form) {
+
+        $this->discplina = new Disciplina();
+        $this->discplina->setCodigo($form['id']);
+        $this->discplina->setNome($form['nome']);
+        $this->discplina->setCargaHoraria($form['carga_horaria']);
+
+        $result = $this->discplina->atualizar();
+
+        $this->objResponse->alert($result);
+        return $this->objResponse;
+    }
+
+    public function apagarDisciplina($form) {
+
+        $this->discplina = new Disciplina();
+        $this->discplina->setCodigo($form['matricula']);
+
+        $result = $this->discplina->apagar();
+
+        $this->objResponse->alert($result);
+        return $this->objResponse;
     }
 
 }
-
-new DisciplinaController();

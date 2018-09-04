@@ -13,15 +13,15 @@ function menuPrincipal() {
         <li class="dropdown">
           <a href="javascript:void(0)" class="dropbtn">Cadastro</a>
           <div class="dropdown-content">
-            <a onclick="xajax_menuAluno('pesquisa')">Aluno</a>
-            <a onclick="xajax_menuProfessor('pesquisa')">Professor</a>
-            <a onclick="xajax_salvarAluno(xajax.getFormValues('formLogin'))">Disciplina</a>
-            <a onclick="xajax_verificaCredenciais(xajax.getFormValues('formLogin'))">Turma</a>
+            <a href="#" onclick="xajax_menuAluno('pesquisa')">Aluno</a>
+            <a href="#" onclick="xajax_menuProfessor('pesquisa')">Professor</a>
+            <a href="#" onclick="xajax_menuDisciplina('pesquisa')">Disciplina</a>
+            <a href="#" onclick="xajax_menuTurma('pesquisa')">Turma</a>
           </div>
         </li>
-          <li><a href="#" onclick="xajax_verificaCredenciais(xajax.getFormValues('formLogin'))">Matricular</a></li>
-          <li><a href="#" onclick="xajax_verificaCredenciais(xajax.getFormValues('formLogin'))">Lançar Notas</a></li>
-          <li><a href="#" onclick="xajax_verificaCredenciais(xajax.getFormValues('formLogin'))">sair</a></li>
+          <li><a href="#" onclick="xajax_menuMatricula()">Matricular</a></li>
+          <li><a href="#" onclick="xajax_menuLancaNota()">Lançar Notas</a></li>
+          <li><a href="#" onclick="xajax_sair()">sair</a></li>
       </ul>
 HTML;
     
