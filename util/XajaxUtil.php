@@ -18,21 +18,24 @@ class XajaxUtil {
         $this->xajax->register(XAJAX_FUNCTION, 'exibeLogin');
         $this->xajax->register(XAJAX_FUNCTION, 'menuPrincipal');
         $this->xajax->register(XAJAX_FUNCTION, 'menuAluno');
+        $this->xajax->register(XAJAX_FUNCTION, 'menuProfessor');
 
         //registra metodos
         $login = new UsuarioController();
         $this->xajax->register(XAJAX_FUNCTION, array("verificaCredenciais", $login, "verificaCredenciais")); //metodo
-        
+
         $aluno = new AlunoController();
-        $this->xajax->register(XAJAX_FUNCTION, array("salvarAluno",$aluno,"salvarAluno"));
-        $this->xajax->register(XAJAX_FUNCTION, array("pesquisaAluno",$aluno,"pesquisaAluno"));
-        $this->xajax->register(XAJAX_FUNCTION, array("apagarAluno",$aluno,"apagarAluno"));
-        $this->xajax->register(XAJAX_FUNCTION, array("atualizarAluno",$aluno,"atualizarAluno"));
-//
-//        $paciente = new PacienteController();
-//        $this->xajax->register(XAJAX_FUNCTION, array("salvarPaciente", $paciente, "salvarPaciente")); //metodo
-//        $this->xajax->register(XAJAX_FUNCTION, array("apagarPaciente", $paciente, "apagarPaciente"));
-                
+        $this->xajax->register(XAJAX_FUNCTION, array("salvarAluno", $aluno, "salvarAluno"));
+        $this->xajax->register(XAJAX_FUNCTION, array("pesquisaAluno", $aluno, "pesquisaAluno"));
+        $this->xajax->register(XAJAX_FUNCTION, array("apagarAluno", $aluno, "apagarAluno"));
+        $this->xajax->register(XAJAX_FUNCTION, array("atualizarAluno", $aluno, "atualizarAluno"));
+
+        $professor = new ProfessorController();
+        $this->xajax->register(XAJAX_FUNCTION, array("salvarProfessor", $professor, "salvarProfessor"));
+        $this->xajax->register(XAJAX_FUNCTION, array("pesquisaProfessor", $professor, "pesquisaProfessor"));
+        $this->xajax->register(XAJAX_FUNCTION, array("apagarProfessor", $professor, "apagarProfessor"));
+        $this->xajax->register(XAJAX_FUNCTION, array("atualizarProfessor", $professor, "atualizarProfessor"));
+
         $this->xajax->processRequest();
         $this->xajax_js = $this->xajax->getJavascript("./lib");
     }

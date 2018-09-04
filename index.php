@@ -5,6 +5,7 @@ require './lib/xajax_core/xajax.inc.php';
 require './view/login.php';
 require './view/menu.php';
 require './view/menuAluno.php';
+require './view/menuProfessor.php';
 
 require './util/XajaxUtil.php';
 

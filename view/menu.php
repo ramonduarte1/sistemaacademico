@@ -14,7 +14,7 @@ function menuPrincipal() {
           <a href="javascript:void(0)" class="dropbtn">Cadastro</a>
           <div class="dropdown-content">
             <a onclick="xajax_menuAluno('pesquisa')">Aluno</a>
-            <a onclick="xajax_verificaCredenciais()">Professor</a>
+            <a onclick="xajax_menuProfessor('pesquisa')">Professor</a>
             <a onclick="xajax_salvarAluno(xajax.getFormValues('formLogin'))">Disciplina</a>
             <a onclick="xajax_verificaCredenciais(xajax.getFormValues('formLogin'))">Turma</a>
           </div>

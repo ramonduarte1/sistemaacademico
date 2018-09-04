@@ -22,7 +22,7 @@ class Professor extends Pessoa {
         }
     }
 
-    public function cadastrar() {
+    public function salvaNoBanco() {
         $sql = "INSERT INTO professor (nome,email,endereco,telefone,usuario_altera,data_altera) VALUES (:nome,:email,:endereco,:telefone,:usuario_altera,:data_altera)";
         $insert = $this->conexao->prepare($sql);
 
@@ -40,9 +40,9 @@ class Professor extends Pessoa {
         $insert->execute($bind);
 
         if ($insert != FALSE) {
-            echo "<script>alert('Professor cadastrado com sucesso!');location.href=\"../view/cadastro_professor.php\"</script> ";
+            return "Professor cadastrado com sucesso!";
         } else {
-            echo "<script>alert('Ocorreu um erro ao cadastrar!');location.href=\"../view/cadastro_professor.php\"</script> ";
+            return "Ocorreu um erro ao cadastrar!";
         }
     }
 
@@ -65,9 +65,9 @@ class Professor extends Pessoa {
         $insert->execute($bind);
 
         if ($insert != FALSE) {
-            echo "<script>alert('Professor alterado com sucesso!');location.href=\"../view/consulta_professor.php\"</script> ";
+            return "Professor alterado com sucesso!";
         } else {
-            echo "<script>alert('Ocorreu um erro ao alterar!');location.href=\"../view/consulta_professor.php\"</script> ";
+            return "Ocorreu um erro ao alterar!";
         }
     }
 
@@ -93,11 +93,39 @@ class Professor extends Pessoa {
             );
             $insert->execute($bind);
             if ($insert != FALSE) {
-                echo "<script>alert('Professor apagado com sucesso!');location.href=\"../view/consulta_professor.php\"</script> ";
+                return "Professor apagado com sucesso!";
             } else {
-                echo "<script>alert('Ocorreu um erro!');location.href=\"../view/consulta_professor.php\"</script> ";
+                echo "Ocorreu um erro!";
             }
         }
+    }
+
+    public function retornaProfessores($tipo, $pesquisa) {
+
+        if ($tipo == '1') {// professor matriculados
+            $sql = "select *from professor inner join turma_professor on (professor.id = turma_professor.professor_id) where professor.nome like '%$pesquisa%' and professor.deletado = 'n'";
+        } else {
+            $sql = "select *from professor left join turma_professor on (professor.id = turma_professor.professor_id) where turma_professor.professor_id is null and professor.nome like '%$pesquisa%' and professor.deletado = 'n'";
+        }
+        $array = array();
+        $insert = $this->conexao->query($sql);
+        foreach ($insert as $professor) {
+            array_push($array, $professor);
+        }
+
+        return $array;
+    }
+
+    public function retornaProfessor() {
+        $id = $this->getMatricula();
+        $sql = "select *from professor left join turma_professor on (professor.id = turma_professor.professor_id) where turma_professor.professor_id is null and professor.id = '$id' and professor.deletado = 'n'";
+
+        $insert = $this->conexao->query($sql);
+        $array = array();
+        foreach ($insert as $professor) {
+            array_push($array, $professor);
+        }
+        return $array;
     }
 
 }
