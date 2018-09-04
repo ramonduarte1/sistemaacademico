@@ -26,6 +26,8 @@ class XajaxUtil {
         $aluno = new AlunoController();
         $this->xajax->register(XAJAX_FUNCTION, array("salvarAluno",$aluno,"salvarAluno"));
         $this->xajax->register(XAJAX_FUNCTION, array("pesquisaAluno",$aluno,"pesquisaAluno"));
+        $this->xajax->register(XAJAX_FUNCTION, array("apagarAluno",$aluno,"apagarAluno"));
+        $this->xajax->register(XAJAX_FUNCTION, array("atualizarAluno",$aluno,"atualizarAluno"));
 //
 //        $paciente = new PacienteController();
 //        $this->xajax->register(XAJAX_FUNCTION, array("salvarPaciente", $paciente, "salvarPaciente")); //metodo

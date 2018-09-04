@@ -49,8 +49,6 @@ class Aluno extends Pessoa {
         );
         $insert->execute($bind);
 
-
-
         if ($insert != FALSE) {
             return "Aluno cadastrado com sucesso!";
         } else {
@@ -112,9 +110,33 @@ class Aluno extends Pessoa {
             return "Ocorreu um erro ao alterar!";
         }
     }
-    public function retornaAlunos($busca){
-//        $sql = "select *from aluno inner join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where id = '" . $this->getMatricula() . "' and deletado ='n' ";
-//        $insert = $this->conexao->query($sql);
+
+    public function retornaAlunos($tipo, $pesquisa) {
+
+        if ($tipo == '1') {// alunos matriculados
+            $sql = "select *from aluno inner join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno.nome like '%$pesquisa%' and aluno.deletado = 'n'";
+        } else {
+            $sql = "select *from aluno left join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno_disciplina.aluno_id is null and aluno.nome like '%$pesquisa%' and aluno.deletado = 'n'";
+        }
+        $array = array();
+        $insert = $this->conexao->query($sql);
+        foreach ($insert as $aluno) {
+            array_push($array, $aluno);
+        }
+
+        return $array;
+    }
+
+    public function retornaAluno() {
+        $id = $this->getMatricula();
+        $sql = "select *from aluno left join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno_disciplina.aluno_id is null and aluno.id = '$id' and aluno.deletado = 'n'";
+
+        $insert = $this->conexao->query($sql);
+        $array = array();
+        foreach ($insert as $aluno) {
+            array_push($array, $aluno);
+        }
+        return $array;
     }
 
 }

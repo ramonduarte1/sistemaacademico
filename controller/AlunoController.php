@@ -24,9 +24,13 @@ class AlunoController {
 
         $this->objResponse = new xajaxResponse(); //instancia o xajax
     }
-    public function pesquisaAluno($form){
+
+    public function pesquisaAluno($form) {
         $aluno = new Aluno();
-        
+        $result = $aluno->retornaAlunos($form['radio'] , $form['pesq_aluno']);
+    
+        $this->objResponse->alert($result);
+        return $this->objResponse;
     }
 
     public function salvarAluno($form) {
@@ -52,7 +56,7 @@ class AlunoController {
         $this->aluno->setEmail($form['email']);
         $this->aluno->setEndereco($form['endereco']);
 
-        $result = $this->aluno->salvaNoBanco();
+        $result = $this->aluno->atualizar();
 
         $this->objResponse->alert($result);
         return $this->objResponse;
