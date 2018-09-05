@@ -1,8 +1,132 @@
 <?php
 
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
+function menuTurma($tipo, $form) {
+
+    $obj_response = new xajaxResponse();
+//, xajax.getFormValues('formPesquisa')
+    if ($tipo == 'pesquisa') {
+        $html = <<<HTML
+        <h2 class="centralizado">Cadastro Turma</h2><br><br>
+        <table border="0">
+            <tr>
+                <td colspan="3">
+                <form id="formPesquisa" name="formPesquisa">
+                    <input required="" type="text" size="50" id="pesq_turma" name="pesq_turma">
+                </form>
+                </td>
+                <td>
+                     <input type="button" value="Pesquisar" onclick="xajax_menuTurma('filtrar', xajax.getFormValues('formPesquisa'))">
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2">Filtros</td>
+                <td>
+                    <input type="radio" id="radio" value="1" name="radio" checked> Nome
+                </td>
+                <td>
+                    <input type="radio" id="radio" value="2" name="radio"> Matricula
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="radio" id="radio" value="3" name="radio" >Professor
+                </td>
+                <td>
+                    <input type="radio" id="radio" value="4" name="radio" >Aluno
+                </td>
+            </tr>
+                <tr>
+                <td></td>
+                <td class="centralizado"><input type="button" value="Novo" onclick="xajax_menuTurma('novo')"></td>
+                <td class="centralizado"><input type="button" value="Limpar" onclick="xajax_menuTurma('pesquisa')"></td>
+            </tr>
+        </table>
+        <hr/>
+        <br>
+        <div id="retorno" name="retorno"></div>
+        <div id="retornoDisciplinas" name="retornoDisciplinas"></div>
+HTML;
+        $obj_response->assign("conteudoPagina", "innerHTML", $html);
+    }
+
+    if ($tipo == 'filtrar') {
+        $turma = new Turma();
+        $turmas = $turma->retornaTurmas($form['radio'], $form['pesq_turma']);
+
+        $html = '';
+        foreach ($turmas as $t) {
+            $html .= '<form class="centralizado" id="' . formIdTurma . $t['id'] . '" name="' . formIdTurma . $t['id'] . '" action="" method="post">
+                        <input readonly id="matricula" name="matricula" value="' . $t['id'] . ' " size="4">
+                        <input readonly id="nome" name="nome" value="' . $t['nome'] . '">
+                        <input type="button" value="Editar" onclick="xajax_menuTurma(\'editar\',xajax.getFormValues(' . formIdTurma . $t['id'] . '))">
+                        <input type="button" value="Apagar" onclick="xajax_apagarTurma(xajax.getFormValues(' . formIdTurma . $t['id'] . '))">
+                      </form>';
+        }
+
+
+        $obj_response->assign("retorno", "innerHTML", $html);
+    }
+
+    if ($tipo == 'editar') {
+        $turma = new Turma();
+        $matricula = $form['matricula'];
+        $turma->setCodigo($matricula);
+        $t = $turma->retornaTurma();
+        
+        $html = <<<HTML
+            <form id="formTurma" name="formTurma" method="post">
+                <table>
+                    <tr>
+                        <td class="direita">Codigo</td>
+                        <td>
+                            <input type="text" required name="matricula" size="4" value="{$t[0]['id']}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="direita">Nome</td>
+                        <td>
+                            <input type="text" required name="nome" size="50" value="{$t[0]['nome']}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="direita">Carga Horaria</td>
+                        <td><input type="text" required name="carga_horaria" size="50" value="{$t[0]['carga_horaria']}"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="button" value="Salvar" onclick="xajax_atualizarTurma(xajax.getFormValues('formTurma'))"></td>
+                    </tr>
+                </table>
+           </form>
+HTML;
+        $obj_response->assign("retorno", "innerHTML", $html);
+    }
+
+    if ($tipo == 'novo') {
+        $html = <<<HTML
+            <form id="formTurma" name="formTurma" method="post">
+                <table>
+                    <tr>
+                        <td class="direita">Nome*</td>
+                        <td>
+                            <input type="text" required id="nome" name="nome" size="50">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="button" value="Salvar" onclick="xajax_salvarTurma(xajax.getFormValues('formTurma'))"></td>
+                    </tr>
+                </table>
+           </form>
+HTML;
+        $obj_response->assign("retorno", "innerHTML", $html);
+    }
+
+    return $obj_response;
+}

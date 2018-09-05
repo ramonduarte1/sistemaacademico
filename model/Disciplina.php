@@ -145,7 +145,7 @@ class Disciplina {
         );
 
         $insert->execute($bind);
-
+        $a = 1;
         if ($insert != FALSE) {
             return "Disciplina cadastrada com sucesso!";
         } else {
@@ -159,7 +159,7 @@ class Disciplina {
         $insert = $this->conexao->query($sql);
 
         if ($insert->rowCount() > 0) {// se existir disciplina matriclada numa turma
-            echo "<script>alert('Disciplina não pode ser deletado!');location.href=\"../view/consulta_disciplina.php\"</script> ";
+            return "Disciplina não pode ser deletado!";
         } else {
             $sql = "UPDATE disciplina SET deletado = :deletado, data_altera = :data_altera, usuario_altera = :usuario_altera WHERE id = :id";
             $insert = $this->conexao->prepare($sql);
@@ -177,7 +177,7 @@ class Disciplina {
 
             $insert->execute($bind);
             if ($insert != FALSE) {
-                return "Disciplina cadastrada com sucesso!";
+                return "Disciplina deletado com sucesso!";
             } else {
                 return "Ocorreu um erro ao cadastrar!";
             }
@@ -201,8 +201,8 @@ class Disciplina {
     }
 
     public function retornaDisciplina() {
-        $id = $this->getMatricula();
-        $sql = "select *from disciplina left join turma_disciplina on (disciplina.id = turma_disciplina.disciplina_id) where turma_disciplina.disciplina_id is null and disciplina.id = '$id' and disciplina.deletado = 'n'";
+        $id = $this->getCodigo();
+        $sql = "select *from disciplina where id = '$id' and disciplina.deletado = 'n'";
 
         $insert = $this->conexao->query($sql);
         $array = array();

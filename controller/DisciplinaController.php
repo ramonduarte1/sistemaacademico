@@ -47,7 +47,7 @@ class DisciplinaController {
     public function atualizarDisciplina($form) {
 
         $this->discplina = new Disciplina();
-        $this->discplina->setCodigo($form['id']);
+        $this->discplina->setCodigo($form['matricula']);
         $this->discplina->setNome($form['nome']);
         $this->discplina->setCargaHoraria($form['carga_horaria']);
 

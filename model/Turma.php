@@ -21,7 +21,7 @@ class Turma {
 
     function __construct() {
         $this->conexao = new Conexao();
-        if (!isset($_SESSION['turmas'])) {
+        if (!isset($_SESSION)) {
             session_start();
         }
     }
@@ -58,7 +58,7 @@ class Turma {
         $this->nome = $nome;
     }
 
-    public function cadastrar() {
+    public function salvarNoBanco() {
 
         $sql = "INSERT INTO turma (nome,data_altera,usuario_altera) VALUES (:nome,:data_altera,:usuario_altera)";
         $insert = $this->conexao->prepare($sql);
@@ -76,9 +76,9 @@ class Turma {
         $insert->execute($bind);
 
         if ($insert != FALSE) {
-            echo "<script>alert('Inserido com sucesso!');location.href=\"../view/cadastro_turma.php\"</script> ";
+            return "Inserido com sucesso!";
         } else {
-            echo "<script>alert('Ocorreu um erro ao inserir!');location.href=\"../view/cadastro_turma.php\"</script> ";
+            return "Ocorreu um erro ao inserir!";
         }
     }
 
@@ -101,22 +101,22 @@ class Turma {
         $insert->execute($bind);
 
         if ($insert != FALSE) {
-            echo "<script>alert('Turma alterada com sucesso!');location.href=\"../view/consulta_turma.php\"</script> ";
+            return "Turma alterada com sucesso!";
         } else {
-            echo "<script>alert('Ocorreu um erro ao alterar!');location.href=\"../view/consulta_turma.php\"</script> ";
+            return "Ocorreu um erro ao alterar!";
         }
     }
 
     public function apagar() {
-        $sql = "select *from turma inner join turma_disciplina on (turma.id = turma_disciplina.turma_id) where deletado <> 's' and id = '" . $this->getCodigo() . "'";
+        $sql = "select *from turma inner join turma_disciplina on (turma.id = turma_disciplina.turma_id) where deletado = 'n' and id = '" . $this->getCodigo() . "'";
         $insert = $this->conexao->query($sql);
 
-        if ($insert->rowCount() > 0) {// se existir disciplina matriclada na turma
-            echo "<script>alert('Turma não pode ser deletado!');location.href=\"../view/consulta_turma.php\"</script> ";
+        if ($insert->rowCount() > 0) {// se existir turma com matriculas ativa
+            return "Turma não pode ser deletado!";
         } else {
             $sql = "UPDATE turma SET deletado = :deletado,data_altera = :data_altera, usuario_altera = :usuario_altera WHERE id = :id";
             $insert = $this->conexao->prepare($sql);
-            
+
             date_default_timezone_set('America/Sao_Paulo');
             $date = date('Y-m-d H:i');
 
@@ -130,11 +130,39 @@ class Turma {
             $insert->execute($bind);
 
             if ($insert != FALSE) {
-                echo "<script>alert('Turma apagado com sucesso!');location.href=\"../view/consulta_turma.php\"</script> ";
+                return "Turma apagado com sucesso!";
             } else {
-                echo "<script>alert('Ocorreu um erro!');location.href=\"../view/consulta_turma.php\"</script> ";
+                return "Ocorreu um erro!";
             }
         }
+    }
+
+    public function retornaTurmas($tipo, $pesquisa) {
+
+        if ($tipo == '1') {// disciplinas matriculados
+            $sql = "select *from turma inner join turma_disciplina on (turma.id = turma_disciplina.turma_id) where turma.nome like '%$pesquisa%' and turma.deletado = 'n'";
+        } else {
+            $sql = "select *from turma left join turma_disciplina on (turma.id = turma_disciplina.turma_id) where turma_disciplina.turma_id is null and turma.nome like '%$pesquisa%' and turma.deletado = 'n'";
+        }
+        $array = array();
+        $insert = $this->conexao->query($sql);
+        foreach ($insert as $disciplina) {
+            array_push($array, $disciplina);
+        }
+        $a = 1;
+        return $array;
+    }
+
+    public function retornaTurma() {
+        $id = $this->getCodigo();
+        $sql = "select *from turma where id = '$id' and disciplina.deletado = 'n'";
+
+        $insert = $this->conexao->query($sql);
+        $array = array();
+        foreach ($insert as $disciplina) {
+            array_push($array, $disciplina);
+        }
+        return $array;
     }
 
 }

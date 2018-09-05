@@ -11,7 +11,7 @@ function menuDisciplina($tipo, $form) {
 //, xajax.getFormValues('formPesquisa')
     if ($tipo == 'pesquisa') {
         $html = <<<HTML
-        <h2 class="centralizado">Cadastro Disciplinas</h2><br><br>
+        <h2 class="centralizado">Cadastro Disciplina</h2><br><br>
         <table border="0">
             <tr>
                 <td colspan="3">
@@ -63,7 +63,7 @@ HTML;
                         <input readonly id="matricula" name="matricula" value="' . $d['id'] . ' " size="4">
                         <input readonly id="nome" name="nome" value="' . $d['nome'] . '">
                         <input type="button" value="Editar" onclick="xajax_menuDisciplina(\'editar\',xajax.getFormValues(' . formIdDisciplina . $d['id'] . '))">
-                        <input type="button" value="Apagar" onclick="xajax_menuDisciplina(xajax.getFormValues(' . formIdDisciplina . $d['id'] . '))">
+                        <input type="button" value="Apagar" onclick="xajax_apagarDisciplina(xajax.getFormValues(' . formIdDisciplina . $d['id'] . '))">
                       </form>';
         }
 
@@ -76,7 +76,7 @@ HTML;
         $matricula = $form['matricula'];
         $disciplina->setCodigo($matricula);
         $d = $disciplina->retornaDisciplina();
-
+        $a = 1;
 
         $html = <<<HTML
             <form id="formDisciplina" name="formDisciplina" method="post">
@@ -137,5 +137,4 @@ HTML;
 
     return $obj_response;
 }
-
 // retornar uma listagem dos alunos em grid quando clicar no aluno abre a manutencao do usuario

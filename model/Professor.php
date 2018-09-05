@@ -118,7 +118,7 @@ class Professor extends Pessoa {
 
     public function retornaProfessor() {
         $id = $this->getMatricula();
-        $sql = "select *from professor left join turma_professor on (professor.id = turma_professor.professor_id) where turma_professor.professor_id is null and professor.id = '$id' and professor.deletado = 'n'";
+        $sql = "select *from professor where id = '$id' and professor.deletado = 'n'";
 
         $insert = $this->conexao->query($sql);
         $array = array();

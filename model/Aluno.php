@@ -78,7 +78,7 @@ class Aluno extends Pessoa {
             );
             $insert->execute($bind);
             if ($insert != FALSE) {
-                return "Aluno apagado com sucesso!";
+                return "Aluno deletado com sucesso!";
             } else {
                 return "Ocorreu um erro!";
             }
@@ -129,7 +129,7 @@ class Aluno extends Pessoa {
 
     public function retornaAluno() {
         $id = $this->getMatricula();
-        $sql = "select *from aluno left join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno_disciplina.aluno_id is null and aluno.id = '$id' and aluno.deletado = 'n'";
+        $sql = "select *from aluno where id = '$id' and aluno.deletado = 'n'";
 
         $insert = $this->conexao->query($sql);
         $array = array();
