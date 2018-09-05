@@ -98,8 +98,8 @@ HTML;
                         </td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td><input type=\"button\" value=\"Salvar\" onclick=\"xajax_atualizarTurma(xajax.getFormValues('formTurma'))\"></td>
+                        <td colspan='2'></td>
+                        <td><input class='direita' type=\"button\" value=\"Salvar\" onclick=\"xajax_atualizarTurma(xajax.getFormValues('formTurma'))\"></td>
                     </tr>
                     <table border=\"1\">
                     <tr><th colspan='3'>Disciplinas</th></tr>
@@ -110,8 +110,7 @@ HTML;
 
         foreach ($disciplinas as $disciplina) {
 
-            $html .= "
-                       <tr>
+            $html .= " <tr>
                             <td>{$disciplina['id']}</td>
                             <td>{$disciplina['nome']}</td>";
 
@@ -166,6 +165,7 @@ HTML;
 </form>";
 
         $obj_response->assign("retorno", "innerHTML", $html);
+
     }
 
     return $obj_response;

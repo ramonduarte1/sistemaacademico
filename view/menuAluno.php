@@ -23,23 +23,32 @@ function menuAluno($tipo, $form) {
                     <input type="button" value="Pesquisar" onclick="xajax_menuAluno('filtrar', xajax.getFormValues('formPesquisa'))">
                 </td>
             </tr>
+           <table border='0'>
             <tr>
-                <td></td>
                 <td class="esquerda">
-                    <input type="radio" id="radio" value="1" name="radio"> Pesquisar apenas alunos matriculados
+                    <input type="radio" id="radio" value="1" name="radio"> Matriculado por nome
+                </td>
+                <td class="esquerda">
+                    <input type="radio" id="radio" value="2" name="radio" > Matriculado por matricula
                 </td>
             </tr>
             <tr>
-                <td></td>
                 <td class="esquerda">
-                    <input type="radio" id="radio" value="2" name="radio" checked> Pesquisar apenas alunos não matriculado
+                    <input type="radio" id="radio" value="3" name="radio" checked> Não matriculado por nome
+                </td>
+                <td class="esquerda">
+                    <input type="radio" id="radio" value="4" name="radio" > Não matriculado por matricula
                 </td>
             </tr>
-            <tr>
-                <td><input type="button" value="Novo" onclick="xajax_menuAluno('novo')"></td>
-                <td><input type="button" value="Limpar" onclick="xajax_menuAluno('pesquisa')"></td>
-            </tr>
+           </table>
         </table>
+                <hr />
+                <div class='centralizado'>
+                     <input  type="button" value="Novo" onclick="xajax_menuAluno('novo')">
+                     <input  type="button" value="Limpar" onclick="xajax_menuAluno('pesquisa')">
+                </div>
+                
+            </tr>
         </form>
         <hr />
         <br>
@@ -51,14 +60,14 @@ HTML;
     if ($tipo == 'filtrar') {
         $aluno = new Aluno();
         $alunos = $aluno->retornaAlunos($form['radio'], $form['pesq_aluno']);
-
+        $a = 1;
         $html = '';
         foreach ($alunos as $a) {
-            $html .= '<form class="centralizado" id="'.formIdAluno.$a['id'].'" name="formIdAluno" action="" method="post">
-                        <input readonly id="matricula" name="matricula" value="'.$a['id'] .' " size="4">
+            $html .= '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="formIdAluno" action="" method="post">
+                        <input readonly id="matricula" name="matricula" value="' . $a['id'] . ' " size="4">
                         <input readonly id="nome" name="nome" value="' . $a['nome'] . '">
-                        <input readonly type="button" value="Editar" onclick="xajax_menuAluno(\'editar\',xajax.getFormValues('.formIdAluno.$a['id'].'))">
-                        <input readonly type="button" value="Apagar" onclick="xajax_apagarAluno(xajax.getFormValues('.formIdAluno.$a['id'].'))">
+                        <input readonly type="button" value="Editar" onclick="xajax_menuAluno(\'editar\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
+                        <input readonly type="button" value="Apagar" onclick="xajax_apagarAluno(xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
                       </form>';
         }
 

@@ -58,6 +58,7 @@ class TurmaController {
         $result = $this->turma->salvarNoBanco();
 
         $this->objResponse->alert($result);
+        $this->objResponse->clear('formTurma', 'reset');
         return $this->objResponse;
     }
 

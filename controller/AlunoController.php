@@ -44,6 +44,7 @@ class AlunoController {
         $result = $this->aluno->salvaNoBanco();
 
         $this->objResponse->alert($result);
+        
         return $this->objResponse;
     }
 
