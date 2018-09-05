@@ -15,15 +15,21 @@ class Turma {
 
     private $codigo;
     private $nome;
+    private $disciplinas;
     private $dataAltera;
     private $usuarioAltera;
     private $conexao;
 
     function __construct() {
         $this->conexao = new Conexao();
+        $this->disciplinas = array();
         if (!isset($_SESSION)) {
             session_start();
         }
+    }
+
+    function getDisciplinas() {
+        return $this->disciplinas;
     }
 
     function getDataAltera() {
@@ -58,6 +64,10 @@ class Turma {
         $this->nome = $nome;
     }
 
+    function setDisciplinas($disciplinas) {
+        $this->disciplinas = $disciplinas;
+    }
+
     public function salvarNoBanco() {
 
         $sql = "INSERT INTO turma (nome,data_altera,usuario_altera) VALUES (:nome,:data_altera,:usuario_altera)";
@@ -75,7 +85,28 @@ class Turma {
 
         $insert->execute($bind);
 
-        if ($insert != FALSE) {
+        $sql = "SELECT last_value from turma_id_seq";
+        $utimoIdTurma = $this->conexao->query($sql);
+        foreach ($utimoIdTurma as $value) {
+            $idTurma = $value;
+        }
+
+        if ($insert != FALSE) { // se tiver inserido a turma  salva tambem na tabela turma_disciplina
+            foreach ($this->getDisciplinas() as $idDisciplina) {
+                $sql = "INSERT INTO turma_disciplina VALUES (:turma_id,:disciplina_id)";
+                $insert = $this->conexao->prepare($sql);
+
+                date_default_timezone_set('America/Sao_Paulo');
+                $date = date('Y-m-d H:i');
+
+                $bind = array
+                    (
+                    ':turma_id' => $idTurma[0],
+                    ':disciplina_id' => $idDisciplina
+                );
+
+                $insert->execute($bind);
+            }
             return "Inserido com sucesso!";
         } else {
             return "Ocorreu um erro ao inserir!";
@@ -83,7 +114,7 @@ class Turma {
     }
 
     public function atualizar() {
-        $sql = "UPDATE turma SET nome = :nome,data_altera = :data_altera, usuario_altera = :usuario_altera WHERE id = :id";
+        $sql = "UPDATE turma SET nome = :nome, data_altera = :data_altera, usuario_altera = :usuario_altera WHERE id = :id";
         $insert = $this->conexao->prepare($sql);
 
 
@@ -101,6 +132,26 @@ class Turma {
         $insert->execute($bind);
 
         if ($insert != FALSE) {
+            //apaga o registro anterior para gravar as novas disciplinas
+            $sql = "delete from turma_disciplina where turma_id = ".$this->getCodigo()."";
+            $this->conexao->query($sql);
+
+            foreach ($this->getDisciplinas() as $idDisciplina) {
+                $sql = "INSERT INTO turma_disciplina VALUES (:turma_id,:disciplina_id)";
+                $insert = $this->conexao->prepare($sql);
+
+                date_default_timezone_set('America/Sao_Paulo');
+                $date = date('Y-m-d H:i');
+
+                $bind = array
+                    (
+                    ':turma_id' => $this->getCodigo(),
+                    ':disciplina_id' => $idDisciplina
+                );
+
+                $insert->execute($bind);
+            }
+
             return "Turma alterada com sucesso!";
         } else {
             return "Ocorreu um erro ao alterar!";
@@ -140,27 +191,26 @@ class Turma {
     public function retornaTurmas($tipo, $pesquisa) {
 
         if ($tipo == '1') {// disciplinas matriculados
-            $sql = "select *from turma inner join turma_disciplina on (turma.id = turma_disciplina.turma_id) where turma.nome like '%$pesquisa%' and turma.deletado = 'n'";
+            $sql = "select distinct id,nome from turma inner join turma_disciplina on (turma.id = turma_disciplina.turma_id) where turma.nome like '%$pesquisa%' and turma.deletado = 'n'";
         } else {
             $sql = "select *from turma left join turma_disciplina on (turma.id = turma_disciplina.turma_id) where turma_disciplina.turma_id is null and turma.nome like '%$pesquisa%' and turma.deletado = 'n'";
         }
         $array = array();
         $insert = $this->conexao->query($sql);
-        foreach ($insert as $disciplina) {
-            array_push($array, $disciplina);
+        foreach ($insert as $turma) {
+            array_push($array, $turma);
         }
-        $a = 1;
         return $array;
     }
 
     public function retornaTurma() {
         $id = $this->getCodigo();
-        $sql = "select *from turma where id = '$id' and disciplina.deletado = 'n'";
+        $sql = "select *from turma where id = '$id' and deletado = 'n'";
 
         $insert = $this->conexao->query($sql);
         $array = array();
-        foreach ($insert as $disciplina) {
-            array_push($array, $disciplina);
+        foreach ($insert as $turma) {
+            array_push($array, $turma);
         }
         return $array;
     }

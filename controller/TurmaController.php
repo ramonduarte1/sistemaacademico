@@ -31,11 +31,30 @@ class TurmaController {
         return $this->objResponse;
     }
 
+//
+//    public function salvarTurma($form) {
+//
+//        $this->turma = new Turma();
+//        $this->turma->setNome($form['nome']);
+//
+//        $result = $this->turma->salvarNoBanco();
+//
+//        $this->objResponse->alert($result);
+//        return $this->objResponse;
+//    }
+
     public function salvarTurma($form) {
 
         $this->turma = new Turma();
         $this->turma->setNome($form['nome']);
 
+        $disciplinas = array();
+
+        foreach ($form['disciplinas'] as $id) {
+            array_push($disciplinas, $id);
+        }
+
+        $this->turma->setDisciplinas($disciplinas);
         $result = $this->turma->salvarNoBanco();
 
         $this->objResponse->alert($result);
@@ -47,8 +66,15 @@ class TurmaController {
         $this->turma = new Turma();
         $this->turma->setCodigo($form['matricula']);
         $this->turma->setNome($form['nome']);
+        
+        $disciplinas = array();
+        foreach ($form['disciplinas'] as $id) {
+            array_push($disciplinas, $id);
+        }
 
-        $result = $this->discplina->atualizar();
+        $this->turma->setDisciplinas($disciplinas);
+
+        $result = $this->turma->atualizar();
 
         $this->objResponse->alert($result);
         return $this->objResponse;

@@ -212,4 +212,25 @@ class Disciplina {
         return $array;
     }
 
+    public function retornaTodasDisciplinas() {
+        $id = $this->getCodigo();
+        $sql = "select *from disciplina where deletado = 'n'";
+        $insert = $this->conexao->query($sql);
+        $array = array();
+        foreach ($insert as $disciplina) {
+            array_push($array, $disciplina);
+        }
+        return $array;
+    }
+
+    public function retornaDisciplinasPorTurma($id) {
+         $sql = "select turma_disciplina.disciplina_id from turma inner join turma_disciplina on (turma.id = turma_disciplina.turma_id and turma.id = ".$id.")";
+        $insert = $this->conexao->query($sql);
+        $array = array();
+        foreach ($insert as $disciplina) {
+            array_push($array, $disciplina);
+        }
+        return $array;
+    }
+
 }

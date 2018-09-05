@@ -13,12 +13,11 @@ function menuTurma($tipo, $form) {
     if ($tipo == 'pesquisa') {
         $html = <<<HTML
         <h2 class="centralizado">Cadastro Turma</h2><br><br>
-        <table border="0">
+        <form id="formPesquisa" name="formPesquisa">     
+            <table border="0">
             <tr>
                 <td colspan="3">
-                <form id="formPesquisa" name="formPesquisa">
                     <input required="" type="text" size="50" id="pesq_turma" name="pesq_turma">
-                </form>
                 </td>
                 <td>
                      <input type="button" value="Pesquisar" onclick="xajax_menuTurma('filtrar', xajax.getFormValues('formPesquisa'))">
@@ -47,6 +46,7 @@ function menuTurma($tipo, $form) {
                 <td class="centralizado"><input type="button" value="Limpar" onclick="xajax_menuTurma('pesquisa')"></td>
             </tr>
         </table>
+       </form>
         <hr/>
         <br>
         <div id="retorno" name="retorno"></div>
@@ -78,53 +78,93 @@ HTML;
         $matricula = $form['matricula'];
         $turma->setCodigo($matricula);
         $t = $turma->retornaTurma();
-        
-        $html = <<<HTML
-            <form id="formTurma" name="formTurma" method="post">
-                <table>
+
+        $d = new Disciplina();
+        $disciplinas = $d->retornaTodasDisciplinas();
+        $matriculadas = $d->retornaDisciplinasPorTurma($form['matricula']);
+
+        $html = "<form id=\"formTurma\" name=\"formTurma\" method=\"post\">
+                <table border=\"0\">
                     <tr>
-                        <td class="direita">Codigo</td>
+                        <td class=\"direita\">Codigo</td>
                         <td>
-                            <input type="text" required name="matricula" size="4" value="{$t[0]['id']}">
+                            <input type=\"text\" readonly name=\"matricula\" id=\"matricula\" size=\"4\" value=\"{$t[0]['id']}\">
                         </td>
                     </tr>
                     <tr>
-                        <td class="direita">Nome</td>
+                        <td class=\"direita\">Nome</td>
                         <td>
-                            <input type="text" required name="nome" size="50" value="{$t[0]['nome']}">
+                            <input type=\"text\" required name=\"nome\" id=\"nome\" size=\"50\" value=\"{$t[0]['nome']}\">
                         </td>
-                    </tr>
-                    <tr>
-                        <td class="direita">Carga Horaria</td>
-                        <td><input type="text" required name="carga_horaria" size="50" value="{$t[0]['carga_horaria']}"></td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td><input type="button" value="Salvar" onclick="xajax_atualizarTurma(xajax.getFormValues('formTurma'))"></td>
+                        <td><input type=\"button\" value=\"Salvar\" onclick=\"xajax_atualizarTurma(xajax.getFormValues('formTurma'))\"></td>
                     </tr>
-                </table>
-           </form>
-HTML;
+                    <table border=\"1\">
+                    <tr><th colspan='3'>Disciplinas</th></tr>
+                      <tr>
+                        <th>Codigo</th>
+                        <th colspan='2'>Disciplina</th>
+                      </tr>";
+
+        foreach ($disciplinas as $disciplina) {
+
+            $html .= "
+                       <tr>
+                            <td>{$disciplina['id']}</td>
+                            <td>{$disciplina['nome']}</td>";
+
+            if (in_array($disciplina['id'], array_column($matriculadas, 'disciplina_id'))) { //verifica se essa disciplina estar matriculada nessa turma
+                $html .= "<td><input class=\"centralizado\" type='checkbox' name=\"disciplinas[]\" value=" . $disciplina['id'] . " checked></td>"; //se true deixa marcado
+            } else {
+                $html .= "<td><input class=\"centralizado\" type='checkbox' name=\"disciplinas[]\" value=" . $disciplina['id'] . "></td>";
+            }
+        }
+
+
+        $html .= "</tr></table>";
+
+        $html .= '</table>
+               </form>';
+
         $obj_response->assign("retorno", "innerHTML", $html);
     }
 
     if ($tipo == 'novo') {
-        $html = <<<HTML
-            <form id="formTurma" name="formTurma" method="post">
-                <table>
-                    <tr>
-                        <td class="direita">Nome*</td>
-                        <td>
-                            <input type="text" required id="nome" name="nome" size="50">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><input type="button" value="Salvar" onclick="xajax_salvarTurma(xajax.getFormValues('formTurma'))"></td>
-                    </tr>
-                </table>
-           </form>
-HTML;
+        $d = new Disciplina();
+        $disciplinas = $d->retornaTodasDisciplinas();
+
+        $html = "<form id=\"formTurma\" name=\"formTurma\" method=\"post\">
+                    <table border=\"1\">
+                        <tr>
+                            <td class=\"direita\">Nome*</td>
+                            <td colspan=\"2\">
+                                <input type=\"text\" required id=\"nome\" name=\"nome\" size=\"50\">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td colspan=\"2\"><input type=\"button\" value=\"Salvar\" onclick=\"xajax_salvarTurma(xajax.getFormValues('formTurma'))\"></td>
+                        </tr>";
+
+        $html .= "<tr>
+                            <th>Matricula</th>
+                            <th>Nome</th>
+                            <th></th>
+                     </tr>";
+        foreach ($disciplinas as $disciplina) {
+
+            $html .= "<tr>
+                                <td>{$disciplina['id']}</td>
+                                <td>{$disciplina['nome']}</td>
+                                <td><input class=\"centralizado\" type='checkbox' name=\"disciplinas[]\" value=" . $disciplina['id'] . "></td>
+            </tr>";
+        }
+
+        $htm .= "   </table>
+</form>";
+
         $obj_response->assign("retorno", "innerHTML", $html);
     }
 
