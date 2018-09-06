@@ -11,39 +11,21 @@
  *
  * @author usuario
  */
-
 class MatriculaController {
 
+    private $matricula;
+    private $objResponse;
 
     function __construct() {
-        session_start();
-        $this->incluir();
+        $this->objResponse = new xajaxResponse(); //instancia o xajax
     }
 
-    private function incluir() {
-        if (isset($_POST['apagar_turma'])) {
-            unset($_SESSION['aluno_disciplina']['turmas'][$_POST['turma_deletar']]);
-            echo "<script>alert('Disciplina removida com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
-        }
-        if (isset($_POST['apagar'])) {
-            unset($_SESSION['aluno_disciplina']['disciplina'][$_POST['disciplina_deletar']]);
-            echo "<script>alert('Disciplina removida com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
-        }
-        if (isset($_POST['disciplina'])) {
-            $_SESSION['aluno_disciplina']['disciplina'][$_POST['disciplina']] = $_POST['disciplina'];
-            echo "<script>alert('Disciplina inserida com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";//alert('Disciplina inserida com sucesso!');
-        }
-        if (isset($_POST['turma'])) {
-            $_SESSION['aluno_disciplina']['turmas'][$_POST['turma']] = $_POST['turma'];
-            //var_dump($_SESSION['aluno_disciplina']);
-            echo "<script>alert('Turma inserida com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
-        }
-        if (isset($_POST['matricula'])) {
-            $_SESSION['aluno_disciplina']['aluno'] = $_POST['matricula'];
-            echo "<script>alert('Aluno inserido com sucesso!');window.setTimeout(\"history.back(-2)\", 0)</script> ";
-        }
+    public function salvarTurmaAluno($form) {
+
+        $this->matricula = new Matricula();
+        $retorno =$this->matricula->salvar();
+        $this->objResponse->alert($retorno);
+        return $this->objResponse;
     }
 
 }
-
-new MatriculaController();

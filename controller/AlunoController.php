@@ -27,8 +27,8 @@ class AlunoController {
 
     public function pesquisaAluno($form) {
         $aluno = new Aluno();
-        $result = $aluno->retornaAlunos($form['radio'] , $form['pesq_aluno']);
-    
+        $result = $aluno->retornaAlunos($form['radio'], $form['pesq_aluno']);
+
         $this->objResponse->alert($result);
         return $this->objResponse;
     }
@@ -44,8 +44,32 @@ class AlunoController {
         $result = $this->aluno->salvaNoBanco();
 
         $this->objResponse->alert($result);
-        
+
         return $this->objResponse;
+    }
+
+    public function adicionarTurma($form) {
+        $this->aluno = new Aluno();
+        $this->aluno->setMatricula($form['matricula_aluno']);
+        $this->aluno->setTurma_id($form['codigo_turma']);
+        
+        $sql = "UPDATE aluno SET turma_id = " . $this->aluno->getTurma_id(). ", usuario_altera = :usuario_altera, data_altera = :data_altera WHERE id =" . $this->aluno->getMatricula() . " ";
+        $insert = $this->conexao->prepare($sql);
+
+        date_default_timezone_set('America/Sao_Paulo');
+        $date = date('Y-m-d H:i');
+
+        $bind = array(
+            ':usuario_altera' => $_SESSION['login'],
+            ':data_altera' => $date
+        );
+        $insert->execute($bind);
+
+        if ($insert != FALSE) {
+            return "Sucesso!";
+        } else {
+            return "Ocorreu um erro!";
+        }
     }
 
     public function atualizarAluno($form) {

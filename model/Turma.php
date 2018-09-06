@@ -190,11 +190,12 @@ class Turma {
 
     public function retornaTurmas($tipo, $pesquisa) {
 
-        if ($tipo == '1') {// disciplinas matriculados
-            $sql = "select distinct id,nome from turma inner join turma_disciplina on (turma.id = turma_disciplina.turma_id) where turma.nome like '%$pesquisa%' and turma.deletado = 'n'";
-        } else {
-            $sql = "select *from turma left join turma_disciplina on (turma.id = turma_disciplina.turma_id) where turma_disciplina.turma_id is null and turma.nome like '%$pesquisa%' and turma.deletado = 'n'";
+        if ($tipo == '1') {// nome
+            $sql = "select *from turma where turma.nome like '%$pesquisa%' and turma.deletado = 'n'";
         }
+        if ($tipo == '2') {// codigo
+            $sql = "select *from turma where turma.id = ".$pesquisa." and turma.deletado = 'n'";
+        } 
         $array = array();
         $insert = $this->conexao->query($sql);
         foreach ($insert as $turma) {
@@ -214,5 +215,6 @@ class Turma {
         }
         return $array;
     }
+    
 
 }

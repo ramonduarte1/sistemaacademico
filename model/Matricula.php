@@ -11,47 +11,60 @@
  *
  * @author usuario
  */
-require_once 'Aluno.php';
-require_once 'Turma.php';
-require_once 'Disciplina.php';
-
 class Matricula {
+
     private $aluno;
-    private $turmas;
-    private $disciplinas;
-    
-    function __construct($aluno, $turmas, $disciplinas) {
+    private $turma;
+
+    function __construct() {
         $this->aluno = new Aluno();
-        $this->turmas = array();
-        $this->disciplinas = array();
-        $this->aluno = $aluno;
-        array_push($this->turmas, $turmas);
-        array_push($this->disciplinas, $disciplinas);
+        $this->turma = new Turma();
+
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+    }
+
+    public function matriculaAluno($matricula) {
+        $_SESSION['matricula']['aluno'] = $matricula;
+        $this->aluno->setMatricula($matricula);
+
+        return $this->aluno->retornaAluno();
+    }
+
+    public function codigoTurma($codigo) {
+        $_SESSION['matricula']['turma'] = $codigo;
+        $this->turma->setCodigo($codigo);
+        return $this->turma->retornaTurma();
+    }
+
+    public function retornaAluno() {
+        $this->aluno->setMatricula($_SESSION['matricula']['aluno']);
+        $a = 1;
+        return $this->aluno->retornaAluno();
+    }
+
+    public function salvar() {
+        $this->aluno->setMatricula($_SESSION['matricula']['aluno']);
+        $this->turma->setCodigo($_SESSION['matricula']['turma']);
         
-    }
-    function getAluno() {
-        return $this->aluno;
-    }
+        $sql = "UPDATE aluno SET turma_id = " . $this->turma->getCodigo() . ", usuario_altera = :usuario_altera, data_altera = :data_altera WHERE id =" . $this->aluno->getMatricula() . " ";
+        $insert = $this->conexao->prepare($sql);
+        
+        date_default_timezone_set('America/Sao_Paulo');
+        $date = date('Y-m-d H:i');
 
-    function getTurmas() {
-        return $this->turmas;
-    }
+        $bind = array(
+            ':usuario_altera' => $_SESSION['login'],
+            ':data_altera' => $date
+        );
+        $insert->execute($bind);
 
-    function getDisciplinas() {
-        return $this->disciplinas;
+        if ($insert != FALSE) {
+            return "Sucesso!";
+        } else {
+            return "Ocorreu um erro!";
+        }
     }
-
-    function setAluno($aluno) {
-        $this->aluno = $aluno;
-    }
-
-    function setTurmas($turmas) {
-        $this->turmas = $turmas;
-    }
-
-    function setDisciplinas($disciplinas) {
-        $this->disciplinas = $disciplinas;
-    }
-
 
 }

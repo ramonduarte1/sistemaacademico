@@ -22,6 +22,7 @@ class XajaxUtil {
         $this->xajax->register(XAJAX_FUNCTION, 'menuDisciplina');
         $this->xajax->register(XAJAX_FUNCTION, 'menuTurma');
         $this->xajax->register(XAJAX_FUNCTION, 'menuLancaNota');
+        $this->xajax->register(XAJAX_FUNCTION, 'menuMatricula');
 
         //registra metodos
         $login = new UsuarioController();
@@ -33,6 +34,7 @@ class XajaxUtil {
         $this->xajax->register(XAJAX_FUNCTION, array("pesquisaAluno", $aluno, "pesquisaAluno"));
         $this->xajax->register(XAJAX_FUNCTION, array("apagarAluno", $aluno, "apagarAluno"));
         $this->xajax->register(XAJAX_FUNCTION, array("atualizarAluno", $aluno, "atualizarAluno"));
+        $this->xajax->register(XAJAX_FUNCTION, array("adicionarTurma", $aluno, "adicionarTurma"));
 
         $professor = new ProfessorController();
         $this->xajax->register(XAJAX_FUNCTION, array("salvarProfessor", $professor, "salvarProfessor"));
@@ -45,13 +47,14 @@ class XajaxUtil {
         $this->xajax->register(XAJAX_FUNCTION, array("pesquisarDisciplina", $disciplina, "pesquisarDisciplina"));
         $this->xajax->register(XAJAX_FUNCTION, array("apagarDisciplina", $disciplina, "apagarDisciplina"));
         $this->xajax->register(XAJAX_FUNCTION, array("atualizarDisciplina", $disciplina, "atualizarDisciplina"));
-        
+
         $turma = new TurmaController();
         $this->xajax->register(XAJAX_FUNCTION, array("salvarTurma", $turma, "salvarTurma"));
         $this->xajax->register(XAJAX_FUNCTION, array("pesquisarTurma", $turma, "pesquisarTurma"));
         $this->xajax->register(XAJAX_FUNCTION, array("apagarTurma", $turma, "apagarTurma"));
         $this->xajax->register(XAJAX_FUNCTION, array("atualizarTurma", $turma, "atualizarTurma"));
-        
+
+
         $this->xajax->processRequest();
         $this->xajax_js = $this->xajax->getJavascript("./lib");
     }

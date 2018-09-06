@@ -112,21 +112,19 @@ class Aluno extends Pessoa {
     }
 
     public function retornaAlunos($tipo, $pesquisa) {
-
+        $a = 1;
         if ($tipo == '1') {// alunos matriculados por nome
             $sql = "select *from aluno inner join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno.nome like '%$pesquisa%' and aluno.deletado = 'n'";
         }
         if ($tipo == '2') {// alunos matriculados por matricula
-            $sql = "select *from aluno inner join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno.id = ".$pesquisa." and aluno.deletado = 'n'";
+            $sql = "select *from aluno inner join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno.id = " . $pesquisa . " and aluno.deletado = 'n'";
         }
         if ($tipo == '3') {// alunos nao matriculados por nome
             $sql = "select *from aluno left join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno_disciplina.aluno_id is null and aluno.nome like '%$pesquisa%' and aluno.deletado = 'n'";
         }
         if ($tipo == '4') {// alunos nao matriculados por matricula
-            $sql = "select *from aluno left join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno_disciplina.aluno_id is null and aluno.id = ".$pesquisa." and aluno.deletado = 'n'";
-        } else {
-            $sql = "select *from aluno left join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno_disciplina.aluno_id is null and aluno.nome like '%$pesquisa%' and aluno.deletado = 'n'";
-        }
+            $sql = "select *from aluno left join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno_disciplina.aluno_id is null and aluno.id = " . $pesquisa . " and aluno.deletado = 'n'";
+        } 
         $array = array();
         $insert = $this->conexao->query($sql);
         foreach ($insert as $aluno) {

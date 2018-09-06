@@ -8,6 +8,7 @@ require './view/menuAluno.php';
 require './view/menuProfessor.php';
 require './view/menuDisciplina.php';
 require './view/menuTurma.php';
+require './view/menuMatricula.php';
 
 require './util/XajaxUtil.php';
 
@@ -31,10 +32,10 @@ $xajax_js = $xajaxUtilitario->getXajax_js();
                 <noscript>
                 <?php
                 echo
-                '<fieldset>
-                    <h3>Seu navegador está com o JavaScript desativado, por favor ative para o melhor funcionamento do sistema.</h3>
-                    Depois de ativar o JavaScript clique <a href=\'index.php\'>aqui</a>.
-                </fieldset>';
+                    '<fieldset>
+                        <h3>Seu navegador está com o JavaScript desativado, por favor ative para o melhor funcionamento do sistema.</h3>
+                        Depois de ativar o JavaScript clique <a href=\'index.php\'>aqui</a>.
+                    </fieldset>';
                 ?>
                 </noscript>
             </div>
