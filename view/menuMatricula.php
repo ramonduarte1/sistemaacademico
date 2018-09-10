@@ -115,8 +115,7 @@ HTML;
         $matricula = new Matricula();
 
         $aluno = $matricula->retornaAluno();//retorna o aluno que estar com o id salva na session
-        $html = '<form id="formAlunoTurma" name="formAlunoTurma" method="post">
-                <table border="1">  
+        $html = '<table border="1">  
                   <tr>
                     <th>Matricula</th>
                     <th colspan="2">Nome</th>
@@ -125,9 +124,7 @@ HTML;
             $html .= '
                   <tr>
                     <td class="centralizado">' . $a['id'] . '</td>
-                    <input type="hidden" id="matricula_aluno" name="matricula_aluno" value="' . $a['id'] . ' ">
                     <td colspan="2">' . $a['nome'] . '</td>
-                    <input type="hidden" id="nome_aluno" name="nome_aluno" value="' . $a['nome'] . '">
                   </tr>';
         }
 
@@ -143,9 +140,7 @@ HTML;
         foreach ($turma as $t) {
             $html .= '<tr>
                         <td class="centralizado">' . $t['id'] . '</td>
-                            <input type="hidden" id="codigo_turma" name="codigo_turma" value="' . $t['id'] . ' ">
                         <td colspan="2" class="centralizado">' . $t['nome'] . '</td>
-                            <input type="hidden" id="nome_turma" name="nome_turma" value="' . $t['nome'] . '">
                       </tr>';
         }
 
@@ -160,16 +155,12 @@ HTML;
         foreach ($disciplinas as $disciplina) {
             $html .= '<tr>
                         <td class="centralizado">' . $disciplina['id'] . '</td>
-                            <input type="hidden" id="matricula" name="matricula" value="' . $disciplina['id'] . ' " size="4">
                         <td>' . $disciplina['nome'] . '</td>
-                            <input type="hidden" id="nome" name="nome" value="' . $disciplina['nome'] . '" size="20">
                         <td class="centralizado">' . $disciplina['carga_horaria'] . '</td>
-                            <input type="hidden" id="carga_horaria" name="carga_horaria" value="' . $disciplina['carga_horaria'] . '" size="4">
                       </tr>';
         }
         $html .= '</table>';
-        $html .= '<button onclick="xajax_adicionarTurma(xajax.getFormValues(\'formAlunoTurma\'))">Matricular</button> 
-            </form>';
+        $html .= '<button onclick="xajax_adicionarTurma()">Matricular</button>';
         $obj_response->assign("retorno_turma", "innerHTML", $html);
     }
 

@@ -23,6 +23,7 @@ class XajaxUtil {
         $this->xajax->register(XAJAX_FUNCTION, 'menuTurma');
         $this->xajax->register(XAJAX_FUNCTION, 'menuLancaNota');
         $this->xajax->register(XAJAX_FUNCTION, 'menuMatricula');
+        $this->xajax->register(XAJAX_FUNCTION, 'menuRelatorio');
 
         //registra metodos
         $login = new UsuarioController();
@@ -53,6 +54,9 @@ class XajaxUtil {
         $this->xajax->register(XAJAX_FUNCTION, array("pesquisarTurma", $turma, "pesquisarTurma"));
         $this->xajax->register(XAJAX_FUNCTION, array("apagarTurma", $turma, "apagarTurma"));
         $this->xajax->register(XAJAX_FUNCTION, array("atualizarTurma", $turma, "atualizarTurma"));
+
+        $alunoDisciplina = new AlunoDisciplinaController();
+        $this->xajax->register(XAJAX_FUNCTION, array("incluirNotas", $alunoDisciplina, "incluirNotas"));
 
 
         $this->xajax->processRequest();

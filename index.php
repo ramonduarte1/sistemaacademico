@@ -9,11 +9,13 @@ require './view/menuProfessor.php';
 require './view/menuDisciplina.php';
 require './view/menuTurma.php';
 require './view/menuMatricula.php';
+require './view/menuRelatorio.php';
+require './view/menuLancaNota.php';
 
 require './util/XajaxUtil.php';
 
 session_start();
-//var_dump($_SESSION);
+
 $xajaxUtilitario = new XajaxUtil();
 $xajax_js = $xajaxUtilitario->getXajax_js();
 ?>

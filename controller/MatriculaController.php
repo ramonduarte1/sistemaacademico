@@ -23,7 +23,7 @@ class MatriculaController {
     public function salvarTurmaAluno($form) {
 
         $this->matricula = new Matricula();
-        $retorno =$this->matricula->salvar();
+        $retorno = $this->matricula->salvar();
         $this->objResponse->alert($retorno);
         return $this->objResponse;
     }

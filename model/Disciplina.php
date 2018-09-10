@@ -199,6 +199,8 @@ class Disciplina {
         $a = 1;
         return $array;
     }
+    
+    
 
     public function retornaDisciplina() {
         $id = $this->getCodigo();
@@ -224,8 +226,9 @@ class Disciplina {
     }
 
     public function retornaDisciplinasPorTurma($id) {
-        $sql = "SELECT disciplina.id, disciplina.nome, disciplina.carga_horaria FROM turma INNER JOIN turma_disciplina ON turma.id = turma_disciplina.turma_id 
-                  and turma_disciplina.turma_id = " . $id . " INNER JOIN disciplina ON turma_disciplina.disciplina_id = disciplina.id";
+        $sql = "select *from disciplina inner join  turma_disciplina on disciplina.id = turma_disciplina.disciplina_id where turma_disciplina.turma_id ='" . $id. "'";
+//        $sql = "SELECT disciplina.id, disciplina.nome, disciplina.carga_horaria FROM turma INNER JOIN turma_disciplina ON turma.id = turma_disciplina.turma_id 
+//                  and turma_disciplina.turma_id = " . $id . " INNER JOIN disciplina ON turma_disciplina.disciplina_id = disciplina.id";
         $insert = $this->conexao->query($sql);
         $array = array();
         foreach ($insert as $disciplina) {

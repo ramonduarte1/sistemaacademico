@@ -14,14 +14,13 @@
 class AlunoController {
 
     private $aluno;
-    private $acao;
     private $objResponse;
 
     function __construct() {
         if (!isset($_SESSION)) {
             session_start();
         }
-
+        $aluno = new Aluno();
         $this->objResponse = new xajaxResponse(); //instancia o xajax
     }
 
@@ -36,6 +35,7 @@ class AlunoController {
     public function salvarAluno($form) {
 
         $this->aluno = new Aluno();
+
         $this->aluno->setNome($form['nome']);
         $this->aluno->setTelefone($form['telefone']);
         $this->aluno->setEmail($form['email']);
@@ -50,26 +50,11 @@ class AlunoController {
 
     public function adicionarTurma($form) {
         $this->aluno = new Aluno();
-        $this->aluno->setMatricula($form['matricula_aluno']);
-        $this->aluno->setTurma_id($form['codigo_turma']);
+        $this->aluno->setMatricula($_SESSION['matricula']['aluno']);
+        $this->aluno->setTurma_id($_SESSION['matricula']['turma']);
+        $this->objResponse->alert($this->aluno->adicionarTurma());
+        return $this->objResponse;
         
-        $sql = "UPDATE aluno SET turma_id = " . $this->aluno->getTurma_id(). ", usuario_altera = :usuario_altera, data_altera = :data_altera WHERE id =" . $this->aluno->getMatricula() . " ";
-        $insert = $this->conexao->prepare($sql);
-
-        date_default_timezone_set('America/Sao_Paulo');
-        $date = date('Y-m-d H:i');
-
-        $bind = array(
-            ':usuario_altera' => $_SESSION['login'],
-            ':data_altera' => $date
-        );
-        $insert->execute($bind);
-
-        if ($insert != FALSE) {
-            return "Sucesso!";
-        } else {
-            return "Ocorreu um erro!";
-        }
     }
 
     public function atualizarAluno($form) {

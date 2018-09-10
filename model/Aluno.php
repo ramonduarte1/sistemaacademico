@@ -111,6 +111,28 @@ class Aluno extends Pessoa {
         }
     }
 
+    public function adicionarTurma() {
+        $sql = "UPDATE aluno SET turma_id = " . $this->getTurma_id() . ", usuario_altera = :usuario_altera, data_altera = :data_altera WHERE id =" . $this->getMatricula() . " ";
+        $insert = $this->conexao->prepare($sql);
+
+        date_default_timezone_set('America/Sao_Paulo');
+        $date = date('Y-m-d H:i');
+
+        $bind = array(
+            ':usuario_altera' => $_SESSION['login'],
+            ':data_altera' => $date
+        );
+        $insert->execute($bind);
+/// ja deixar gravado na tabela aluno_disciplina para no controle apenas usar o update
+        if ($insert != FALSE) {
+            unset($_SESSION['matricula']);
+
+            return "Sucesso!";
+        } else {
+            return "Ocorreu um erro!";
+        }
+    }
+
     public function retornaAlunos($tipo, $pesquisa) {
         $a = 1;
         if ($tipo == '1') {// alunos matriculados por nome
@@ -124,7 +146,7 @@ class Aluno extends Pessoa {
         }
         if ($tipo == '4') {// alunos nao matriculados por matricula
             $sql = "select *from aluno left join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno_disciplina.aluno_id is null and aluno.id = " . $pesquisa . " and aluno.deletado = 'n'";
-        } 
+        }
         $array = array();
         $insert = $this->conexao->query($sql);
         foreach ($insert as $aluno) {
@@ -138,6 +160,40 @@ class Aluno extends Pessoa {
         $id = $this->getMatricula();
         $sql = "select *from aluno where id = '$id' and aluno.deletado = 'n'";
 
+        $insert = $this->conexao->query($sql);
+        $array = array();
+        foreach ($insert as $aluno) {
+            array_push($array, $aluno);
+        }
+        return $array;
+    }
+
+    public function pesqMenuMatricula($form) {
+        if ($form['radio'] == 1) {
+            $sql = "select *from aluno where nome like '%" . $form['pesq_aluno'] . "%' and aluno.deletado = 'n' and turma_id notnull";
+        }
+        if ($form['radio'] == 2) {
+            $sql = "select *from aluno where id = " . $form['pesq_aluno'] . " and aluno.deletado = 'n'";
+        }
+        if ($form['radio'] == 3) {
+            $sql = "select *from aluno where turma_id = " . $form['pesq_aluno'] . " and aluno.deletado = 'n'";
+        }
+
+        $insert = $this->conexao->query($sql);
+        $array = array();
+        foreach ($insert as $aluno) {
+            array_push($array, $aluno);
+        }
+        return $array;
+    }
+
+    public function matriculados($form) {
+        if ($form['radio'] == 1) {
+            $sql = "select *from aluno where turma_id notnull and aluno.deletado = 'n'";
+        }
+        if ($form['radio'] == 2) {
+            $sql = "select *from aluno where turma_id is null and aluno.deletado = 'n'";
+        }
         $insert = $this->conexao->query($sql);
         $array = array();
         foreach ($insert as $aluno) {
