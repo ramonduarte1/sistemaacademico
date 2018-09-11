@@ -54,11 +54,11 @@ HTML;
 
         $html = '';
         foreach ($professores as $p) {
-            $html .= '<form class="centralizado" id="'.formIdProfessor.$p['id'].'" name="'.formIdProfessor.$p['id'].'" action="" method="post">
-                        <input readonly id="matricula" name="matricula" value="'.$p['id'] .' " size="4">
+            $html .= '<form class="centralizado" id="' . formIdProfessor . $p['id'] . '" name="' . formIdProfessor . $p['id'] . '" action="" method="post">
+                        <input readonly id="matricula" name="matricula" value="' . $p['id'] . ' " size="4">
                         <input readonly id="nome" name="nome" value="' . $p['nome'] . '">
-                        <input readonly type="button" value="Editar" onclick="xajax_menuProfessor(\'editar\',xajax.getFormValues('.formIdProfessor.$p['id'].'))">
-                        <input readonly type="button" value="Apagar" onclick="xajax_apagarProfessor(xajax.getFormValues('.formIdProfessor.$p['id'].'))">
+                        <input readonly type="button" value="Editar" onclick="xajax_menuProfessor(\'editar\',xajax.getFormValues(' . formIdProfessor . $p['id'] . '))">
+                        <input readonly type="button" value="Apagar" onclick="xajax_apagarProfessor(xajax.getFormValues(' . formIdProfessor . $p['id'] . '))">
                       </form>';
         }
 
@@ -111,34 +111,47 @@ HTML;
     }
 
     if ($tipo == 'novo') {
-        $html = <<<HTML
-            <form id="formProfessor" name="formProfessor" method="post">
-                <table>
+        $html = '<form id="formProfessor" name="formProfessor" method="post">
+                <table border="1">
                     <tr>
                         <td class="direita">Nome</td>
-                        <td>
+                        <td colspan="2">
                             <input type="text" required name="nome" size="50">
                         </td>
                     </tr>
                     <tr>
                         <td class="direita">Email</td>
-                        <td><input type="email" required name="email" size="50"></td>
+                        <td colspan="2"><input type="email" required name="email" size="50"></td>
                     </tr>
                     <tr>
                         <td class="direita">Endereço</td>
-                        <td><input type="text" required name="endereco" size="50"></td>
+                        <td colspan="2"><input type="text" required name="endereco" size="50"></td>
                     </tr>
                     <tr>
                         <td class="direita">Telefone</td>
-                        <td><input type="text" required name="telefone" onkeypress="mascara(this, '## #####-####')" maxlength="13"></td>
+                        <td colspan="2"><input type="text" required name="telefone" onkeypress="mascara(this, \'## #####-####\')" maxlength="13"></td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td><input type="button" value="Salvar" onclick="xajax_salvarProfessor(xajax.getFormValues('formProfessor'))"></td>
+                        <td colspan="2"><input type="button" value="Salvar" onclick="xajax_salvarProfessor(xajax.getFormValues(\'formProfessor\'))"></td>
                     </tr>
-                </table>
-           </form>
-HTML;
+                    <tr>
+                        <th colspan="3">Disciplinas</th>
+                    </tr>';
+        $disciplinas = new Disciplina();
+        
+        foreach ($disciplinas->retornaTodasDisciplinas() as $disciplina) {
+
+            $html .= "<tr>
+                                <td>{$disciplina['id']}</td>
+                                <td>{$disciplina['nome']}</td>
+                                <td><input class=\"centralizado\" type='checkbox' name=\"disciplinas[]\" value=" . $disciplina['id'] . "></td>
+                      </tr>";
+        }
+
+        $html .= '</table>
+           </form>';
+
         $obj_response->assign("retorno", "innerHTML", $html);
     }
 

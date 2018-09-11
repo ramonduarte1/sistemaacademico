@@ -8,37 +8,37 @@
 
 function menuLancaNota($tipo, $form) {
     $obj_response = new xajaxResponse();
-//, xajax.getFormValues('formPesquisa')
+
     if ($tipo == 'pesquisa') {
         $html = <<<HTML
         <h2 class="centralizado">Incluir Notas</h2><br><br>
         <form id="formPesquisa" name="formPesquisa" method="post">     
-        <table border="0">
-            <tr>
-                <th>Pesquisa</th>
-                    <td>
-                        <input required="" type="text" size="50" id="pesq_aluno" name="pesq_aluno">
+            <table border="0">
+                <tr>
+                    <th>Pesquisa</th>
+                        <td>
+                            <input required="" type="text" size="50" id="pesq_aluno" name="pesq_aluno">
+                        </td>
+                        <td>
+                            <input type="button" value="Pesquisar" onclick="xajax_menuLancaNota('filtrar', xajax.getFormValues('formPesquisa'))">
+                        </td>
+                </tr>
+               <table border='0'>
+                <tr>
+                    <td class="esquerda">
+                        <input type="radio" id="radio" value="1" name="radio" checked>Nome
                     </td>
-                    <td>
-                        <input type="button" value="Pesquisar" onclick="xajax_menuLancaNota('filtrar', xajax.getFormValues('formPesquisa'))">
+                    <td class="esquerda">
+                        <input type="radio" id="radio" value="2" name="radio" >Matricula
                     </td>
-            </tr>
-           <table border='0'>
-            <tr>
-                <td class="esquerda">
-                    <input type="radio" id="radio" value="1" name="radio" checked>Nome
-                </td>
-                <td class="esquerda">
-                    <input type="radio" id="radio" value="2" name="radio" >Matricula
-                </td>
-                <td class="esquerda">
-                    <input type="radio" id="radio" value="3" name="radio">Turma
-                </td>
-            </tr>
-           </table>
-        </table>
+                    <td class="esquerda">
+                        <input type="radio" id="radio" value="3" name="radio">Turma
+                    </td>
+                </tr>
+               </table>
+            </table>
         </form>
-        <hr />
+        <hr/>
         <br>
         <div id="retorno" name="retorno"></div>
 HTML;
@@ -55,6 +55,7 @@ HTML;
                         <input readonly id="matricula" name="matricula" value="' . $a['id'] . ' " size="4">
                         <input readonly id="nome" name="nome" value="' . $a['nome'] . '">
                         <input readonly type="button" value="Incluir Notas" onclick="xajax_menuLancaNota(\'incluir_notas\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
+                        <input readonly type="button" value="Imprimir Boletinho" onclick="xajax_menuLancaNota(\'incluir_notas\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
                       </form>';
         }
 
@@ -115,9 +116,9 @@ HTML;
                             <input type=\"hidden\" id=\"disciplinas[]\" name=\"disciplinas[]\" value=" . $d['id'] . ">
                         <td>" . $d['nome'] . "</td>
                         <td>" . $d['carga_horaria'] . "</td>
-                        <td><input id=" . $d['disciplina_id'] . n1 . " name=" . $d['disciplina_id'] . n1 . " value=". $d['nota1']." size='4' ></td>
-                        <td><input id=" . $d['disciplina_id'] . n2 . " name=" . $d['disciplina_id'] . n2 . " value=". $d['nota2']." size='4' ></td>
-                        <td><input id=" . $d['disciplina_id'] . n3 . " name=" . $d['disciplina_id'] . n3 . " value=". $d['nota3']." size='4' ></td>
+                        <td><input type='number' min='0' max='10' step=\"0.1\" id=" . $d['disciplina_id'] . n1 . " name=" . $d['disciplina_id'] . n1 . " value=". $d['nota1']." size='2' ></td>
+                        <td><input type='number' min='0' max='10' step=\"0.1\" id=" . $d['disciplina_id'] . n2 . " name=" . $d['disciplina_id'] . n2 . " value=". $d['nota2']." size='2' ></td>
+                        <td><input type='number' min='0' max='10' step=\"0.1\" id=" . $d['disciplina_id'] . n3 . " name=" . $d['disciplina_id'] . n3 . " value=". $d['nota3']." size='2' ></td>
                         <td><input readonly type='text' size='4' value=". $d['media']."></td>
                         <td><input readonly type='text' size='8' value=". $d['situacao']."></td>
                      </tr>";
@@ -139,7 +140,10 @@ HTML;
                     <td colspan = '7'>" . $t[0]['nome'] . "</td>
                     </tr>
                     <tr>
-                    <td colspan = '7'></td>
+                    <td colspan = '6'></td>
+                    <td>
+                        <button onclick=\"imprimeBoletinho()\">Imprimir</button>
+                    </td> 
                     <td>
                         <button onclick =\"xajax_salvaNotas(xajax.getFormValues('formIncluirNotas'))\">Salvar</button>
                     </td>    

@@ -128,12 +128,12 @@ class Aluno extends Pessoa {
 
         $sql = "INSERT INTO aluno_disciplina VALUES (:aluno_id, :disciplina_id, :nota1, :nota2, :nota3,:media)";
         $entrada = $this->conexao->prepare($sql);
-        
+
         $d = new Disciplina();
         $disciplinas = $d->retornaDisciplinasPorTurma($this->getTurma_id());
         foreach ($disciplinas as $key => $codigo) {
 
-           
+
             $bind2 = array
                 (
                 ':aluno_id' => $this->getMatricula(),
@@ -145,22 +145,9 @@ class Aluno extends Pessoa {
             );
             $resposta = $entrada->execute($bind2);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
 /// ja deixar gravado na tabela aluno_disciplina para no controller apenas usar o update
         if ($insert != FALSE && $entrada != FALSE) {
-            unset($_SESSION['matricula']);//quando matricular apaga a sessao matricula
+            unset($_SESSION['matricula']); //quando matricular apaga a sessao matricula
 
             return "Sucesso!";
         } else {
@@ -223,12 +210,30 @@ class Aluno extends Pessoa {
     }
 
     public function matriculados($form) {
-        if ($form['radio'] == 1) {
+        if ($form['radio'] == 1) {//matriculado
             $sql = "select *from aluno where turma_id notnull and aluno.deletado = 'n'";
         }
-        if ($form['radio'] == 2) {
+        if ($form['radio'] == 2) {//nao matriculado
             $sql = "select *from aluno where turma_id is null and aluno.deletado = 'n'";
         }
+        if ($form['radio'] == 3) {
+            $sql = "select *from aluno where turma_id notnull and aluno.deletado = 'n'";
+        }
+        if ($form['radio'] == 4) {
+            $sql = "select *from aluno where turma_id notnull and aluno.deletado = 'n'";
+        }
+        $insert = $this->conexao->query($sql);
+        $array = array();
+        foreach ($insert as $aluno) {
+            array_push($array, $aluno);
+        }
+        return $array;
+    }
+
+    // retorna  o id nome da turma e a quantidade de alunos matriculado na mesma
+    public function retornaQuantPorTurma() {
+        $sql = "select aluno.turma_id, turma.nome, COUNT(aluno.turma_id) AS Qtd from turma inner join  aluno on turma.id = aluno.turma_id 
+            GROUP BY aluno.turma_id, turma.nome HAVING COUNT(aluno.turma_id) > 0 ORDER BY COUNT(aluno.turma_id) DESC";
         $insert = $this->conexao->query($sql);
         $array = array();
         foreach ($insert as $aluno) {

@@ -15,26 +15,26 @@ class ProfessorController {
 
     private $professor;
     private $objResponse;
+    private $disciplinas;
 
     function __construct() {
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-
         $this->objResponse = new xajaxResponse(); //instancia o xajax
+        $this->disciplinas = array();
     }
 
     public function pesquisaProfessor($form) {
         $professor = new Professor();
-        $result = $professor->retornaProfessores($form['radio'] , $form['pesq_professor']);
-    
+        $result = $professor->retornaProfessores($form['radio'], $form['pesq_professor']);
+
         $this->objResponse->alert($result);
         return $this->objResponse;
     }
 
     public function salvarProfessor($form) {
-
+        $this->disciplinas = $form['disciplinas'];
+        
         $this->professor = new Professor();
+        $this->professor->setDisciplinas($this->disciplinas);
         $this->professor->setNome($form['nome']);
         $this->professor->setTelefone($form['telefone']);
         $this->professor->setEmail($form['email']);

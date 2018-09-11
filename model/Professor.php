@@ -14,12 +14,21 @@
 class Professor extends Pessoa {
 
     private $conexao;
+    private $disciplinas;
 
     function __construct() {
         $this->conexao = new Conexao();
         if (!session_status()) {
             session_start();
         }
+    }
+
+    function getDisciplinas() {
+        return $this->disciplinas;
+    }
+
+    function setDisciplinas($disciplinas) {
+        $this->disciplinas = $disciplinas;
     }
 
     public function salvaNoBanco() {
@@ -39,10 +48,31 @@ class Professor extends Pessoa {
         );
         $insert->execute($bind);
 
-        if ($insert != FALSE) {
-            return "Professor cadastrado com sucesso!";
+
+        if ($insert != FALSE) { // se tiver inserido a turma  salva tambem na tabela turma_disciplina
+            
+            $sql = "SELECT last_value from professor_id_seq";
+            $utimoIdProfessor = $this->conexao->query($sql);
+           
+            foreach ($utimoIdProfessor as $value) {
+                $idProfessor = $value;
+            }
+            
+            foreach ($this->getDisciplinas() as $idDisciplina) {
+                $sql = "INSERT INTO professor_disciplina VALUES (:professor_id,:disciplina_id)";
+                $insert = $this->conexao->prepare($sql);
+
+                $bind = array
+                    (
+                    ':professor_id' => $idProfessor[0],
+                    ':disciplina_id' => $idDisciplina
+                );
+
+                $insert->execute($bind);
+            }
+            return "Inserido com sucesso!";
         } else {
-            return "Ocorreu um erro ao cadastrar!";
+            return "Ocorreu um erro ao inserir!";
         }
     }
 

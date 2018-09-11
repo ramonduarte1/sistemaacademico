@@ -23,31 +23,31 @@ function menuAluno($tipo, $form) {
                     <input type="button" value="Pesquisar" onclick="xajax_menuAluno('filtrar', xajax.getFormValues('formPesquisa'))">
                 </td>
             </tr>
-           <table border='0'>
-            <tr>
-                <td class="esquerda">
-                    <input type="radio" id="radio" value="1" name="radio"> Matriculado por nome
-                </td>
-                <td class="esquerda">
-                    <input type="radio" id="radio" value="2" name="radio" > Matriculado por matricula
-                </td>
-            </tr>
-            <tr>
-                <td class="esquerda">
-                    <input type="radio" id="radio" value="3" name="radio" checked> Não matriculado por nome
-                </td>
-                <td class="esquerda">
-                    <input type="radio" id="radio" value="4" name="radio" > Não matriculado por matricula
-                </td>
-            </tr>
-           </table>
+            <table border='0'>
+                <tr>
+                    <td class="esquerda">
+                        <input type="radio" id="radio" value="1" name="radio"> Matriculado por nome
+                    </td>
+                    <td class="esquerda">
+                        <input type="radio" id="radio" value="2" name="radio" > Matriculado por matricula
+                    </td>
+                </tr>
+                <tr>
+                    <td class="esquerda">
+                        <input type="radio" id="radio" value="3" name="radio" checked> Não matriculado por nome
+                    </td>
+                    <td class="esquerda">
+                        <input type="radio" id="radio" value="4" name="radio" > Não matriculado por matricula
+                    </td>
+                </tr>
+            </table>
         </table>
+            <tr>
                 <hr />
                 <div class='centralizado'>
                      <input  type="button" value="Novo" onclick="xajax_menuAluno('novo')">
                      <input  type="button" value="Limpar" onclick="xajax_menuAluno('pesquisa')">
                 </div>
-                
             </tr>
         </form>
         <hr />
@@ -70,8 +70,6 @@ HTML;
                         <input readonly type="button" value="Apagar" onclick="xajax_apagarAluno(xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
                       </form>';
         }
-
-
         $obj_response->assign("retorno", "innerHTML", $html);
     }
 
@@ -80,7 +78,6 @@ HTML;
         $matricula = $form['matricula'];
         $aluno->setMatricula($matricula);
         $a = $aluno->retornaAluno();
-
 
         $html = <<<HTML
             <form id="formAluno" name="formAluno" method="post">
@@ -150,6 +147,5 @@ HTML;
 HTML;
         $obj_response->assign("retorno", "innerHTML", $html);
     }
-
     return $obj_response;
 }

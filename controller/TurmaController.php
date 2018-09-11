@@ -31,18 +31,6 @@ class TurmaController {
         return $this->objResponse;
     }
 
-//
-//    public function salvarTurma($form) {
-//
-//        $this->turma = new Turma();
-//        $this->turma->setNome($form['nome']);
-//
-//        $result = $this->turma->salvarNoBanco();
-//
-//        $this->objResponse->alert($result);
-//        return $this->objResponse;
-//    }
-
     public function salvarTurma($form) {
 
         $this->turma = new Turma();

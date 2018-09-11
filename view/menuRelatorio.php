@@ -30,7 +30,7 @@ function menuRelatorio($tipo, $form) {
                     <input type="radio" id="radio" value="3" name="radio"> Quantidade de Alunos por Turma
                 </td>
                 <td class="esquerda">
-                    <input type="radio" id="radio" value="4" name="radio" > Não matriculado por matricula
+                    <input type="radio" id="radio" value="4" name="radio" > Disciplina por Professor
                 </td>
             </tr>
            </table>
@@ -45,6 +45,7 @@ HTML;
     if ($tipo == 'filtrar') {
         $aluno = new Aluno();
         $alunos = $aluno->matriculados($form['radio']);
+
         if ($form['radio'] == 1) {
             $html = '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="formIdAluno" action="" method="post">
                       <table border="1">
@@ -63,6 +64,7 @@ HTML;
             $html .= '</table>  
                     </form>';
         }
+
         if ($form['radio'] == 2) {
             $html = '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="formIdAluno" action="" method="post">
                       <table border="1">
@@ -74,6 +76,46 @@ HTML;
                 $html .= '<tr>
                             <td class="centralizado">' . $a['id'] . ' </td>
                             <td>' . $a['nome'] . '</td>
+                          </tr>';
+            }
+            $html .= '</table>  
+                    </form>';
+        }
+
+        if ($form['radio'] == 3) {//quantidade de alunos por turmas
+            $a = new Aluno();
+            $quant = $a->retornaQuantPorTurma();
+
+            $html = '<form class="centralizado" id="formIdAluno" name="formIdAluno" action="" method="post">
+                      <table border="1">
+                       <tr>
+                          <th>Codigo</th>
+                          <th>Nome</th>
+                          <th>Alunos</th>
+                       </tr>';
+            foreach ($quant as $q) {
+                $k = 1;
+                $html .= '<tr>
+                            <td class="centralizado">' . $q['turma_id'] . ' </td>
+                            <td class="centralizado">' . $q['nome'] . ' </td>
+                            <td class="centralizado">' . $q['qtd'] . '</td>
+                          </tr>';
+            }
+            $html .= '</table>  
+                    </form>';
+        }
+
+        if ($form['radio'] == 4) {
+            $html = '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="formIdAluno" action="" method="post">
+                      <table border="1">
+                       <tr>
+                          <th>Matricula</th>
+                          <th>Nome</th>
+                       </tr>';
+            foreach ($alunos as $a) {
+                $html .= '<tr>
+                            <td class="centralizado">' . $a['id'] . ' </td>
+                            <td >' . $a['nome'] . '</td>
                           </tr>';
             }
             $html .= '</table>  

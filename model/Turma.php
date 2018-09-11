@@ -85,7 +85,7 @@ class Turma {
 
         $insert->execute($bind);
 
-        $sql = "SELECT last_value from turma_id_seq";
+        $sql = "SELECT last_value from turma_id_seq";//pega o id da turma que acabou de ser inserido
         $utimoIdTurma = $this->conexao->query($sql);
         foreach ($utimoIdTurma as $value) {
             $idTurma = $value;
@@ -95,9 +95,6 @@ class Turma {
             foreach ($this->getDisciplinas() as $idDisciplina) {
                 $sql = "INSERT INTO turma_disciplina VALUES (:turma_id,:disciplina_id)";
                 $insert = $this->conexao->prepare($sql);
-
-                date_default_timezone_set('America/Sao_Paulo');
-                $date = date('Y-m-d H:i');
 
                 $bind = array
                     (

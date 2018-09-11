@@ -24,7 +24,7 @@ function menuPrincipal() {
         </li>
           <li><a href="#" onclick="xajax_menuMatricula('pesquisa')">Matricula</a></li>
           <li><a href="#" onclick="xajax_menuRelatorio('pesquisa')">Relatório</a></li>
-          <li><a href="#" onclick="xajax_menuLancaNota('pesquisa')">Incluir Notas</a></li>
+          <li><a href="#" onclick="xajax_menuLancaNota('pesquisa')">Notas/Boletinho</a></li>
           <li><a href="#" onclick="xajax_sair()">sair</a></li>
       </ul>
 HTML;

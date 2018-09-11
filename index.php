@@ -24,15 +24,25 @@ $xajax_js = $xajaxUtilitario->getXajax_js();
         <link rel="stylesheet" type="text/css" href="web/css.css">
         <meta charset="UTF-8">
         <title></title>
-        <?php echo $xajax_js;?>
+        <?php echo $xajax_js; ?>
+        <script type="text/javascript">
+            function imprimeBoletinho() {
+                var conteudo = document.getElementById('formIncluirNotas').innerHTML,
+                    tela_impressao = window.open('about:blank');
+
+                tela_impressao.document.write(conteudo);
+                tela_impressao.window.print();
+                tela_impressao.window.close();
+            }
+        </script>
     </head>
-    <body onload="xajax_exibeLogin();">
+    <body onload="xajax_menuPrincipal();">
         <div id="pagina">
             <div id="conteudo">
                 <noscript>
                 <?php
                 echo
-                    '<fieldset>
+                '<fieldset>
                         <h3>Seu navegador está com o JavaScript desativado, por favor ative para o melhor funcionamento do sistema.</h3>
                         Depois de ativar o JavaScript clique <a href=\'index.php\'>aqui</a>.
                     </fieldset>';
@@ -44,3 +54,5 @@ $xajax_js = $xajaxUtilitario->getXajax_js();
         </div>
     </body>
 </html>
+<?php
+//dialog xajax para exibir a lista de alunos e turmas?>
