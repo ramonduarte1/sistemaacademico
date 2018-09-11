@@ -123,9 +123,44 @@ class Aluno extends Pessoa {
             ':data_altera' => $date
         );
         $insert->execute($bind);
-/// ja deixar gravado na tabela aluno_disciplina para no controle apenas usar o update
-        if ($insert != FALSE) {
-            unset($_SESSION['matricula']);
+
+
+
+        $sql = "INSERT INTO aluno_disciplina VALUES (:aluno_id, :disciplina_id, :nota1, :nota2, :nota3,:media)";
+        $entrada = $this->conexao->prepare($sql);
+        
+        $d = new Disciplina();
+        $disciplinas = $d->retornaDisciplinasPorTurma($this->getTurma_id());
+        foreach ($disciplinas as $key => $codigo) {
+
+           
+            $bind2 = array
+                (
+                ':aluno_id' => $this->getMatricula(),
+                ':disciplina_id' => $codigo['id'],
+                ':nota1' => 0.0,
+                ':nota2' => 0.0,
+                ':nota3' => 0.0,
+                ':media' => 0.0
+            );
+            $resposta = $entrada->execute($bind2);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/// ja deixar gravado na tabela aluno_disciplina para no controller apenas usar o update
+        if ($insert != FALSE && $entrada != FALSE) {
+            unset($_SESSION['matricula']);//quando matricular apaga a sessao matricula
 
             return "Sucesso!";
         } else {
@@ -136,10 +171,10 @@ class Aluno extends Pessoa {
     public function retornaAlunos($tipo, $pesquisa) {
         $a = 1;
         if ($tipo == '1') {// alunos matriculados por nome
-            $sql = "select *from aluno inner join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno.nome like '%$pesquisa%' and aluno.deletado = 'n'";
+            $sql = "select *from aluno where turma_id notnull and aluno.nome like '%$pesquisa%' and aluno.deletado = 'n'";
         }
         if ($tipo == '2') {// alunos matriculados por matricula
-            $sql = "select *from aluno inner join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno.id = " . $pesquisa . " and aluno.deletado = 'n'";
+            $sql = "select *from aluno where turma_id isnull and  where id = " . $pesquisa . " and aluno.deletado = 'n'";
         }
         if ($tipo == '3') {// alunos nao matriculados por nome
             $sql = "select *from aluno left join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno_disciplina.aluno_id is null and aluno.nome like '%$pesquisa%' and aluno.deletado = 'n'";

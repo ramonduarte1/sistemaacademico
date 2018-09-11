@@ -56,7 +56,7 @@ class XajaxUtil {
         $this->xajax->register(XAJAX_FUNCTION, array("atualizarTurma", $turma, "atualizarTurma"));
 
         $alunoDisciplina = new AlunoDisciplinaController();
-        $this->xajax->register(XAJAX_FUNCTION, array("incluirNotas", $alunoDisciplina, "incluirNotas"));
+        $this->xajax->register(XAJAX_FUNCTION, array("salvaNotas", $alunoDisciplina, "salvaNotas"));
 
 
         $this->xajax->processRequest();

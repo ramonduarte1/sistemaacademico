@@ -67,7 +67,7 @@ HTML;
 
         $a = $aluno->retornaAluno();
 
-        $html = "<form id=\"formIncluirNotas\" name=\"formIncluirNotas\">
+        $html = "<form id=\"formIncluirNotas\" name=\"formIncluirNotas\" method=\"post\">
                  <table class='centralizado' border=\"1\">
                    <tr>
                        <td colspan=\"8\">Aluno</td>
@@ -81,7 +81,7 @@ HTML;
                    </tr>
                    <tr>
                         <td>" . $a[0]['id'] . "</td>
-                            <input type=\"hidden\" id=\"aluno_id\" name=\"aluno_id\" value=".$a[0]['id'].">
+                            <input type=\"hidden\" id=\"aluno_id\" name=\"aluno_id\" value=" . $a[0]['id'] . ">
                         <td>" . $a[0]['nome'] . "</td>
                         <td>" . $a[0]['email'] . "</td>
                         <td colspan='4'>" . $a[0]['endereco'] . "</td>
@@ -100,24 +100,26 @@ HTML;
                         <th>Media</th>
                         <th>Situação</th>
                    </tr>";
-        $disciplinas = new Disciplina();
-        $result = $disciplinas->retornaDisciplinasPorTurma($a[0]['turma_id']);
+        $disciplinas = new AlunoDisciplina();
+        $disciplinas->setAluno_id($form['matricula']);
+        $result = $disciplinas->retornaNotas();
         $disciplinasA = array(); // aqui vai ser usado update pois a tabela (aluno_disciplina) ja deve estar preenchida no momento da matricula 
 
         foreach ($result as $disciplina) {
             array_push($disciplinasA, $disciplina);
         }
         foreach ($disciplinasA as $d) {
+
             $html .= "<tr>
-                        <td>" . $d['id'] . "</td>
-                            <input type=\"hidden\" id=\"disciplinas[]\" name=\"disciplinas[]\" value=".$d['id'].">
+                        <td>" . $d['disciplina_id'] . "</td>
+                            <input type=\"hidden\" id=\"disciplinas[]\" name=\"disciplinas[]\" value=" . $d['id'] . ">
                         <td>" . $d['nome'] . "</td>
                         <td>" . $d['carga_horaria'] . "</td>
-                        <td><input id=".$d['id'].n1." name=".$d['id'].n1." value='0.0' size='4' ></td>
-                        <td><input id=".$d['id'].n2." name=".$d['id'].n2." value='0.0' size='4' ></td>
-                        <td><input id=".$d['id'].n3." name=".$d['id'].n3." value='0.0' size='4' ></td>
-                        <td><input readonly type='text' size='4' ></td>
-                        <td><input readonly type='text' size='8' ></td>
+                        <td><input id=" . $d['disciplina_id'] . n1 . " name=" . $d['disciplina_id'] . n1 . " value=". $d['nota1']." size='4' ></td>
+                        <td><input id=" . $d['disciplina_id'] . n2 . " name=" . $d['disciplina_id'] . n2 . " value=". $d['nota2']." size='4' ></td>
+                        <td><input id=" . $d['disciplina_id'] . n3 . " name=" . $d['disciplina_id'] . n3 . " value=". $d['nota3']." size='4' ></td>
+                        <td><input readonly type='text' size='4' value=". $d['media']."></td>
+                        <td><input readonly type='text' size='8' value=". $d['situacao']."></td>
                      </tr>";
         }
         $turma = new Turma();
@@ -126,24 +128,25 @@ HTML;
         $t = $turma->retornaTurma();
 
         $html .= "<tr>
-        <td colspan = '8'>Turma</td>
-        </tr>
-            <tr>
-                <th>Codigo</th>
-                <th colspan = '7' >Nome</th>
-                </tr>
-                <tr>
-                <td>" . $a[0]['turma_id'] . "</td>
-                <td colspan = '7'>" . $t[0]['nome'] . "</td>
-                </tr>
-                <tr>
-                <td colspan = '7'></td>
-                <td><button onclick =\"xajax_incluirNotas(xajax.getFormValues('formIncluirNotas'))\">Salvar</button>
-                </tr>";
+                     <td colspan = '8'>Turma</td>
+                  </tr>
+                  <tr>
+                    <th>Codigo</th>
+                    <th colspan = '7' >Nome</th>
+                    </tr>
+                    <tr>
+                    <td>" . $a[0]['turma_id'] . "</td>
+                    <td colspan = '7'>" . $t[0]['nome'] . "</td>
+                    </tr>
+                    <tr>
+                    <td colspan = '7'></td>
+                    <td>
+                        <button onclick =\"xajax_salvaNotas(xajax.getFormValues('formIncluirNotas'))\">Salvar</button>
+                    </td>    
+                 </tr>";
 
         $html .= "<table>
                   </form>";
-//$obj_response->alert("ok");
         $obj_response->assign("retorno", "innerHTML", $html);
     }
     return $obj_response;

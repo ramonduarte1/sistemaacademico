@@ -6,7 +6,10 @@
  * and open the template in the editor.
  */
 //form_Modulo_menu
+
 function menuPrincipal() {
+
+
     $html = <<<HTML
        <ul>
         <li><a href="index.php">Home</a></li>
@@ -25,7 +28,7 @@ function menuPrincipal() {
           <li><a href="#" onclick="xajax_sair()">sair</a></li>
       </ul>
 HTML;
-    
+
     $obj_response = new xajaxResponse();
 
     $obj_response->assign("conteudo", "innerHTML", $html);

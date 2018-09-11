@@ -9,42 +9,17 @@
 class AlunoDisciplinaController {
 
     private $objResponse;
-    private $conexao;
-    private $resposta;
-    private $msg;
+    private $alunoDisciplina;
 
     function __construct() {
-        $this->conexao = new Conexao();
         $this->objResponse = new xajaxResponse(); //instancia o xajax
+        $this->alunoDisciplina = new AlunoDisciplina();
     }
 
-    public function incluirNotas($form) {
-        $disciplinas = $form['disciplinas'];
-        $sql = "INSERT INTO aluno_disciplina VALUES (:aluno_id, :disciplina_id, :nota1, :nota2, :nota3,:media)";
-        $insert = $this->conexao->prepare($sql);
+    public function salvaNotas($form) {
+        $this->alunoDisciplina->setForm($form);
+        $this->objResponse->alert($this->alunoDisciplina->incluirNotas());
 
-        foreach ($disciplinas as $key => $codigo) {
-            $media = ($form[$codigo . n1] + $form[$codigo . n2] + $form[$codigo . n3]) / 3.0;
-
-            $bind = array
-                (
-                ':aluno_id' => $form['aluno_id'],
-                ':disciplina_id' => $codigo,
-                ':nota1' => $form[$codigo . n1],
-                ':nota2' => $form[$codigo . n2],
-                ':nota3' => $form[$codigo . n3],
-                ':media' => $media
-            );
-            $this->resposta = $insert->execute($bind);
-        }
-
-        if ($this->resposta != FALSE) {
-            $this->msg = "ok";
-        } else {
-            $this->msg = "erro";
-        }
-
-        $this->objResponse->alert($this->msg);
         return $this->objResponse;
     }
 

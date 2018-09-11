@@ -24,11 +24,9 @@ $xajax_js = $xajaxUtilitario->getXajax_js();
         <link rel="stylesheet" type="text/css" href="web/css.css">
         <meta charset="UTF-8">
         <title></title>
-        <?php
-        echo $xajax_js;
-        ?>
+        <?php echo $xajax_js;?>
     </head>
-    <body onload="xajax_menuPrincipal();">
+    <body onload="xajax_exibeLogin();">
         <div id="pagina">
             <div id="conteudo">
                 <noscript>

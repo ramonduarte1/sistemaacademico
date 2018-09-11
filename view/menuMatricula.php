@@ -151,7 +151,7 @@ HTML;
                     <th>Código</th>
                     <th>Disciplina</th>
                     <th>Carga Horaria</th>
-                  </tr>';
+                   </tr>';
         foreach ($disciplinas as $disciplina) {
             $html .= '<tr>
                         <td class="centralizado">' . $disciplina['id'] . '</td>

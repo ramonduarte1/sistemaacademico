@@ -8,7 +8,7 @@
 
 function menuAluno($tipo, $form) {
     $obj_response = new xajaxResponse();
-//, xajax.getFormValues('formPesquisa')
+
     if ($tipo == 'pesquisa') {
         $html = <<<HTML
         <h2 class="centralizado">Cadastro Aluno</h2><br><br>
@@ -153,5 +153,3 @@ HTML;
 
     return $obj_response;
 }
-
-// retornar uma listagem dos alunos em grid quando clicar no aluno abre a manutencao do usuario
