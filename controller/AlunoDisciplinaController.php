@@ -20,7 +20,7 @@ class AlunoDisciplinaController {
         $this->alunoDisciplina->setForm($form);
         $this->alunoDisciplina->incluirNotas();
         $resp = $this->alunoDisciplina->incluirNotas();
-        $this->objResponse->alert($resp);
+        $this->objResponse->script($resp);
         
         return $this->objResponse;
     }

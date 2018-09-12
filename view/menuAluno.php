@@ -60,20 +60,22 @@ HTML;
     if ($tipo == 'filtrar') {
         $aluno = new Aluno();
         $alunos = $aluno->retornaAlunos($form['radio'], $form['pesq_aluno']);
-        $a = 1;
+
         $html = '';
         foreach ($alunos as $a) {
-            $html .= '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="formIdAluno" action="" method="post">
+            $html .= '<form class="centralizado" id="'.formIdAluno.$a['id'].'" name="'.formIdAluno.$a['id'].'" action="" method="post">
                         <input readonly id="matricula" name="matricula" value="' . $a['id'] . ' " size="4">
                         <input readonly id="nome" name="nome" value="' . $a['nome'] . '">
                         <input readonly type="button" value="Editar" onclick="xajax_menuAluno(\'editar\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
-                        <input readonly type="button" value="Apagar" onclick="xajax_apagarAluno(xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
+                        <input readonly type="button" value="Apagar"  onclick="confirmacao(\'apagar_aluno\');">
+                        <input type="hidden" id="apagar_aluno" name="apagar_aluno"  onclick="xajax_apagarAluno(xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
                       </form>';
         }
         $obj_response->assign("retorno", "innerHTML", $html);
     }
 
     if ($tipo == 'editar') {
+//        onclick="xajax_apagarAluno(xajax.getFormValues(' . formIdAluno . $a['id'] . '))"
         $aluno = new Aluno();
         $matricula = $form['matricula'];
         $aluno->setMatricula($matricula);
@@ -90,20 +92,20 @@ HTML;
                     <tr>
                         <td class="direita">Nome</td>
                         <td>
-                            <input type="text" required name="nome" size="50" value="' . $a[0]['nome'] . '">
+                            <input type="text" required name="nome" id="nome" size="50" value="' . $a[0]['nome'] . '">
                         </td>
                     </tr>
                     <tr>
                         <td class="direita">Email</td>
-                        <td><input type="email" required name="email" size="50" value="' . $a[0]['email'] . '"></td>
+                        <td><input type="email" required name="email" id="email" size="50" value="' . $a[0]['email'] . '"></td>
                     </tr>
                     <tr>
                         <td class="direita">Endereço</td>
-                        <td><input type="text" required name="endereco" size="50" value="' . $a[0]['endereco'] . '"></td>
+                        <td><input type="text" required name="endereco" id="endereco" size="50" value="' . $a[0]['endereco'] . '"></td>
                     </tr>
                     <tr>
                         <td class="direita">Telefone</td>
-                        <td><input type="text" required name="telefone" onkeypress="mascara(this, \'## #####-####\')" maxlength="13" value="' . $a[0]['telefone'] . '"></td>
+                        <td><input type="text" required name="telefone" id="telefone" onkeypress="mascara(this, \'## #####-####\')" maxlength="13" value="' . $a[0]['telefone'] . '"></td>
                     </tr>';
         if ($a[0]['situacao'] == 'trancado') {
             $html .= '

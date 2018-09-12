@@ -122,9 +122,9 @@ class Disciplina {
         $insert->execute($bind);
 
         if ($insert != FALSE) {
-            return "Disciplina cadastrada com sucesso!";
+            return "alert('Disciplina cadastrado com sucesso!');document.getElementById(\"formDisciplina\").reset();";
         } else {
-            return "Ocorreu um erro ao cadastrar!";
+            return "alert('Ocorreu um erro ao cadastrar!');";
         }
     }
 

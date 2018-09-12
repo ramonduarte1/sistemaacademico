@@ -57,11 +57,12 @@ class Aluno extends Pessoa {
             'data_altera' => $date
         );
         $insert->execute($bind);
+        
 
         if ($insert != FALSE) {
-            return "Aluno cadastrado com sucesso!";
+            return "alert('Aluno cadastrado com sucesso!');document.getElementById(\"formAluno\").reset();";
         } else {
-            return "Ocorreu um erro ao cadastrar!";
+            return "alert('Ocorreu um erro ao cadastrar!')";
         }
     }
 
@@ -86,10 +87,11 @@ class Aluno extends Pessoa {
                 ':id' => $this->getMatricula()
             );
             $insert->execute($bind);
+           
             if ($insert != FALSE) {
-                return "Aluno deletado com sucesso!";
+                return "alert('Aluno deletado com sucesso!');document.getElementById(\"formAluno\").reset();";
             } else {
-                return "Ocorreu um erro!";
+                return "alert('Ocorreu um erro!');";
             }
         }
     }
@@ -98,8 +100,8 @@ class Aluno extends Pessoa {
         $sql = "UPDATE aluno SET nome = :nome ,email = :email ,endereco= :endereco, "
                 . "telefone= :telefone , situacao=:trancado, usuario_altera = :usuario_altera, data_altera= :data_altera WHERE id = :id";
         $insert = $this->conexao->prepare($sql);
-        
-        if($this->getTrancado() == null){
+
+        if ($this->getTrancado() == null) {
             $this->setTrancado("ativo");
         }
 
@@ -186,7 +188,7 @@ class Aluno extends Pessoa {
         if ($tipo == '5') {// alunos com matricula trancada
             $sql = "select *from aluno where situacao = 'trancado' and deletado = 'n'";
         }
-        
+
         $array = array();
         $insert = $this->conexao->query($sql);
         foreach ($insert as $aluno) {

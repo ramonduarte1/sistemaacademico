@@ -44,7 +44,7 @@ class AlunoController {
 
         $result = $this->aluno->salvaNoBanco();
 
-        $this->objResponse->alert($result);
+        $this->objResponse->script($result);
 
         return $this->objResponse;
     }
@@ -80,7 +80,7 @@ class AlunoController {
 
         $result = $this->aluno->apagar();
 
-        $this->objResponse->alert($result);
+        $this->objResponse->script($result);
         return $this->objResponse;
     }
 

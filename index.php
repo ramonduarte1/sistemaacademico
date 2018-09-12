@@ -22,18 +22,44 @@ $xajax_js = $xajaxUtilitario->getXajax_js();
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="web/css.css">
+        <style>
+
+        </style>
         <meta charset="UTF-8">
         <title></title>
         <?php echo $xajax_js; ?>
         <script type="text/javascript">
             function imprimeBoletinho() {
                 var conteudo = document.getElementById('formIncluirNotas').innerHTML,
-                    tela_impressao = window.open('about:blank');
+                        tela_impressao = window.open('about:blank');
 
                 tela_impressao.document.write(conteudo);
                 tela_impressao.window.print();
                 tela_impressao.window.close();
             }
+        </script>
+        <script type="text/javascript">
+            function mascara(t, mask) {
+                var i = t.value.length;
+                var saida = mask.substring(1, 0);
+                var texto = mask.substring(i)
+                if (texto.substring(0, 1) != saida) {
+                    t.value += texto.substring(0, 1);
+                }
+            }
+        </script>
+        <script type="text/javascript">
+ 
+       function confirmacao(acao) {
+                var retVal = confirm("Deseja continuar ?");
+                if (retVal == true) {
+                    document.getElementById(acao).click();// pede a confirmacao do usuario se for true passa o campo do input hidden para terminar a rotina
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
         </script>
     </head>
     <body onload="xajax_menuPrincipal();">

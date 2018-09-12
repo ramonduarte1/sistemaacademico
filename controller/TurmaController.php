@@ -45,8 +45,8 @@ class TurmaController {
         $this->turma->setDisciplinas($disciplinas);
         $result = $this->turma->salvarNoBanco();
 
-        $this->objResponse->alert($result);
-        //$this->objResponse->clear('formTurma', 'reset');
+        $this->objResponse->script($result);
+        
         return $this->objResponse;
     }
 

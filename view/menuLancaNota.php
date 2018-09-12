@@ -15,7 +15,7 @@ function menuLancaNota($tipo, $form) {
         <form id="formPesquisa" name="formPesquisa" method="post">     
             <table border="0">
                 <tr>
-                    <th>Pesquisa</th>
+                        <th>Pesquisa</th>
                         <td>
                             <input required="" type="text" size="50" id="pesq_aluno" name="pesq_aluno">
                         </td>
@@ -145,6 +145,10 @@ HTML;
                       <td>
                         <button onclick =\"xajax_salvaNotas(xajax.getFormValues('formIncluirNotas'))\">Salvar</button>
                       </td>    
+                 </tr>
+                 <tr>
+                    <td><button onclick=\"imprimeBoletinho()\">Cancelar Matricula</button></td>
+                    <td colspan=\"7\"></td>
                  </tr>";
 
         $html .= "<table>

@@ -86,9 +86,9 @@ class AlunoDisciplina {
             $resp = $this->conexao->query($sql);
         }
         if ($resp->rowCount() > 0) { //se ocorreu alguma alteração na tabela é pq deu certo 
-            return "Salvo com sucesso!";
+            return "alert('Salvo com sucesso!');";
         } else {
-            return "Erro ao salvar Notas!";
+            return "alert('Erro ao salvar Notas!');";
         }
     }
 

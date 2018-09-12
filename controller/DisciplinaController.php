@@ -40,7 +40,7 @@ class DisciplinaController {
 
         $result = $this->discplina->salvarNoBanco();
 
-        $this->objResponse->alert($result);
+        $this->objResponse->script($result);
         return $this->objResponse;
     }
 

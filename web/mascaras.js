@@ -13,11 +13,3 @@ function mascara(t, mask) {
         t.value += texto.substring(0, 1);
     }
 }
-function imprimeBoletinho() {
-    var conteudo = document.getElementById('formIncluirNotas').innerHTML,
-            tela_impressao = window.open('about:blank');
-
-    tela_impressao.document.write(conteudo);
-    tela_impressao.window.print();
-    tela_impressao.window.close();
-}

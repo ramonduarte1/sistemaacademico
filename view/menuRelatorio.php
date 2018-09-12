@@ -79,11 +79,13 @@ HTML;
                        <tr>
                           <th>Matricula</th>
                           <th>Nome</th>
+                          <th>Situação</th>
                        </tr>';
             foreach ($alunos as $a) {
                 $html .= '<tr>
                             <td class="centralizado">' . $a['id'] . ' </td>
                             <td>' . $a['nome'] . '</td>
+                            <td class="centralizado">' . $a['situacao'] . '</td>
                           </tr>';
             }
             $html .= '</table>  

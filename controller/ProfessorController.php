@@ -42,7 +42,7 @@ class ProfessorController {
 
         $result = $this->professor->salvaNoBanco();
 
-        $this->objResponse->alert($result);
+        $this->objResponse->script($result);
         return $this->objResponse;
     }
 

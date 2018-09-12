@@ -104,9 +104,9 @@ class Turma {
 
                 $insert->execute($bind);
             }
-            return "Inserido com sucesso!";
+            return "alert('Inserido com sucesso!');document.getElementById(\"formTurma\").reset();";
         } else {
-            return "Ocorreu um erro ao inserir!";
+            return "alert('Ocorreu um erro ao inserir!!');";
         }
     }
 
