@@ -71,7 +71,7 @@ HTML;
         $html = "<form id=\"formIncluirNotas\" name=\"formIncluirNotas\" method=\"post\">
                  <table class='centralizado' border=\"1\">
                    <tr>
-                       <td colspan=\"8\">Aluno</td>
+                       <th BGCOLOR=\"#e8e8e8\" colspan=\"8\">Aluno</th>
                    </tr>
                    <tr>
                         <th>Matricula</th>
@@ -89,7 +89,7 @@ HTML;
                         <td>" . $a[0]['telefone'] . "</td>
                    </tr>
                    <tr>
-                        <td colspan=\"8\" >Disciplinas</td>
+                        <th BGCOLOR=\"#e8e8e8\" colspan=\"8\" >Disciplinas</th>
                    </tr>
                    <tr>
                         <th>Codigo</th>
@@ -119,8 +119,8 @@ HTML;
                         <td><input type='number' min='0' max='10' step=\"0.1\" id=" . $d['disciplina_id'] . n1 . " name=" . $d['disciplina_id'] . n1 . " value=". $d['nota1']." size='2' ></td>
                         <td><input type='number' min='0' max='10' step=\"0.1\" id=" . $d['disciplina_id'] . n2 . " name=" . $d['disciplina_id'] . n2 . " value=". $d['nota2']." size='2' ></td>
                         <td><input type='number' min='0' max='10' step=\"0.1\" id=" . $d['disciplina_id'] . n3 . " name=" . $d['disciplina_id'] . n3 . " value=". $d['nota3']." size='2' ></td>
-                        <td><input readonly type='text' size='4' value=". $d['media']."></td>
-                        <td><input readonly type='text' size='8' value=". $d['situacao']."></td>
+                        <td><input readonly type='text' size='5' value=". $d['media']."></td>
+                        <td><input readonly type='text' size='10' value=". $d['situacao']."></td>
                      </tr>";
         }
         $turma = new Turma();
@@ -129,24 +129,22 @@ HTML;
         $t = $turma->retornaTurma();
 
         $html .= "<tr>
-                     <td colspan = '8'>Turma</td>
+                     <th  BGCOLOR=\"#e8e8e8\" colspan = '8'>Turma</th>
                   </tr>
                   <tr>
-                    <th>Codigo</th>
-                    <th colspan = '7' >Nome</th>
-                    </tr>
-                    <tr>
-                    <td>" . $a[0]['turma_id'] . "</td>
-                    <td colspan = '7'>" . $t[0]['nome'] . "</td>
-                    </tr>
-                    <tr>
-                    <td colspan = '6'></td>
-                    <td>
+                      <th>Codigo</th>
+                      <td>" . $a[0]['turma_id'] . "</td>
+                      <th>Nome</th>
+                      <td colspan = '6'>" . $t[0]['nome'] . "</td>
+                  </tr>
+                  <tr>
+                      <td colspan = '6'></td>
+                      <td>
                         <button onclick=\"imprimeBoletinho()\">Imprimir</button>
-                    </td> 
-                    <td>
+                      </td> 
+                      <td>
                         <button onclick =\"xajax_salvaNotas(xajax.getFormValues('formIncluirNotas'))\">Salvar</button>
-                    </td>    
+                      </td>    
                  </tr>";
 
         $html .= "<table>
@@ -155,5 +153,4 @@ HTML;
     }
     return $obj_response;
 }
-
 // retornar uma listagem dos alunos em grid quando clicar no aluno abre a manutencao do usuario

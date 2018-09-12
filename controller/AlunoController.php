@@ -41,6 +41,7 @@ class AlunoController {
         $this->aluno->setEmail($form['email']);
         $this->aluno->setEndereco($form['endereco']);
 
+
         $result = $this->aluno->salvaNoBanco();
 
         $this->objResponse->alert($result);
@@ -54,7 +55,6 @@ class AlunoController {
         $this->aluno->setTurma_id($_SESSION['matricula']['turma']);
         $this->objResponse->alert($this->aluno->adicionarTurma());
         return $this->objResponse;
-        
     }
 
     public function atualizarAluno($form) {
@@ -65,6 +65,7 @@ class AlunoController {
         $this->aluno->setTelefone($form['telefone']);
         $this->aluno->setEmail($form['email']);
         $this->aluno->setEndereco($form['endereco']);
+        $this->aluno->setTrancado($form['trancar']);
 
         $result = $this->aluno->atualizar();
 

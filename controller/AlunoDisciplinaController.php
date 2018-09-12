@@ -19,7 +19,8 @@ class AlunoDisciplinaController {
     public function salvaNotas($form) {
         $this->alunoDisciplina->setForm($form);
         $this->alunoDisciplina->incluirNotas();
-        $this->objResponse->alert($this->alunoDisciplina->incluirNotas());
+        $resp = $this->alunoDisciplina->incluirNotas();
+        $this->objResponse->alert($resp);
         
         return $this->objResponse;
     }

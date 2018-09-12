@@ -50,14 +50,13 @@ class Professor extends Pessoa {
 
 
         if ($insert != FALSE) { // se tiver inserido a turma  salva tambem na tabela turma_disciplina
-            
             $sql = "SELECT last_value from professor_id_seq";
             $utimoIdProfessor = $this->conexao->query($sql);
-           
+
             foreach ($utimoIdProfessor as $value) {
                 $idProfessor = $value;
             }
-            
+
             foreach ($this->getDisciplinas() as $idDisciplina) {
                 $sql = "INSERT INTO professor_disciplina VALUES (:professor_id,:disciplina_id)";
                 $insert = $this->conexao->prepare($sql);
@@ -158,4 +157,19 @@ class Professor extends Pessoa {
         return $array;
     }
 
+    public function retornaDisciplinasDoProfessor() {
+        $id = $this->getMatricula();
+        $sql = "select professor.id id_prof, professor.nome nome_prof , disciplina.id id_disc ,disciplina.nome nome_disc, disciplina.carga_horaria from professor "
+                . "inner join professor_disciplina on (professor.id = professor_disciplina.professor_id) "
+                . "inner join disciplina on (disciplina.id = professor_disciplina.disciplina_id)";
+
+        $consulta = $this->conexao->query($sql);
+        $array = array();
+        foreach ($consulta as $professorD) {
+            array_push($array, $professorD);
+        }
+        return $array;
+    }
+
+//select professor.id, professor.nome , disciplina.id ,disciplina.nome, disciplina.carga_horaria from professor inner join professor_disciplina on (professor.id = professor_disciplina.professor_id) inner join disciplina on (disciplina.id = professor_disciplina.disciplina_id)
 }

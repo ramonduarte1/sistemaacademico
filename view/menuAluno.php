@@ -79,40 +79,51 @@ HTML;
         $aluno->setMatricula($matricula);
         $a = $aluno->retornaAluno();
 
-        $html = <<<HTML
-            <form id="formAluno" name="formAluno" method="post">
+        $html = '<form id="formAluno" name="formAluno" method="post">
                 <table>
                     <tr>
                         <td class="direita">Matricula</td>
                         <td>
-                            <input type="text" required name="matricula" size="4" value="{$a[0]['id']}">
+                            <input type="text" required name="matricula" size="4" value="' . $a[0]['id'] . '">
                         </td>
                     </tr>
                     <tr>
                         <td class="direita">Nome</td>
                         <td>
-                            <input type="text" required name="nome" size="50" value="{$a[0]['nome']}">
+                            <input type="text" required name="nome" size="50" value="' . $a[0]['nome'] . '">
                         </td>
                     </tr>
                     <tr>
                         <td class="direita">Email</td>
-                        <td><input type="email" required name="email" size="50" value="{$a[0]['email']}"></td>
+                        <td><input type="email" required name="email" size="50" value="' . $a[0]['email'] . '"></td>
                     </tr>
                     <tr>
                         <td class="direita">Endereço</td>
-                        <td><input type="text" required name="endereco" size="50" value="{$a[0]['endereco']}"></td>
+                        <td><input type="text" required name="endereco" size="50" value="' . $a[0]['endereco'] . '"></td>
                     </tr>
                     <tr>
                         <td class="direita">Telefone</td>
-                        <td><input type="text" required name="telefone" onkeypress="mascara(this, '## #####-####')" maxlength="13" value="{$a[0]['telefone']}"></td>
-                    </tr>
+                        <td><input type="text" required name="telefone" onkeypress="mascara(this, \'## #####-####\')" maxlength="13" value="' . $a[0]['telefone'] . '"></td>
+                    </tr>';
+        if ($a[0]['situacao'] == 'trancado') {
+            $html .= '
                     <tr>
+                        <td class="direita"><input type="checkbox" checked name="trancar" value="trancado"></td>
+                        <td>Trancar Matricula?</td>
+                    </tr>';
+        } else {
+            $html .= '
+                    <tr>
+                        <td class="direita"><input type="checkbox" name="trancar" value="trancado"></td>
+                        <td>Trancar Matricula?</td>
+                    </tr>';
+        }
+        $html .= '  <tr>
                         <td></td>
-                        <td><input type="button" value="Salvar" onclick="xajax_atualizarAluno(xajax.getFormValues('formAluno'))"></td>
+                        <td><input type="button" value="Salvar" onclick="xajax_atualizarAluno(xajax.getFormValues(\'formAluno\'))"></td>
                     </tr>
                 </table>
-           </form>
-HTML;
+           </form>';
         $obj_response->assign("retorno", "innerHTML", $html);
     }
 

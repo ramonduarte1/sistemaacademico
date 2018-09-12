@@ -69,10 +69,7 @@ class AlunoDisciplina {
 
     public function incluirNotas() {
         $form = $this->getForm();
-
         $disciplinas = $form['disciplinas'];
-        $sql = "UPDATE aluno_disciplina SET nota1 = :n1 , nota2 = :n2 , nota3 = :n3, media = :media, situacao = :situacao WHERE aluno_id = :aluno_id and disciplina_id = :disciplina_id";
-        $insert = $this->conexao->prepare($sql);
 
         foreach ($disciplinas as $key => $codigo) {
             $media = ($form[$codigo . n1] + $form[$codigo . n2] + $form[$codigo . n3]) / 3.0;
@@ -81,26 +78,14 @@ class AlunoDisciplina {
             if ($media >= 7) {
                 $situacao = "Aprovado";
             }if ($media < 7 && $media > 4) {
-                $situacao = "Recuperação";
+                $situacao = "Recuperacao";
             }if ($media < 4) {
                 $situacao = "Reprovado";
             }
-
-            $bind = array
-                (
-                ':aluno_id' => $form['aluno_id'],
-                ':disciplina_id' => $codigo,
-                ':n1' => $form[$codigo . n1],
-                ':n2' => $form[$codigo . n2],
-                ':n3' => $form[$codigo . n3],
-                ':media' => $media,
-                ':situacao' => $situacao
-            );
-
-            $this->resposta = $insert->execute($bind);
+            $sql = "UPDATE aluno_disciplina SET nota1 = " . $form[$codigo . 'n1'] . " , nota2 =" . $form[$codigo . 'n2'] . "  , nota3 = " . $form[$codigo . 'n3'] . ", media = " . $media . ", situacao= '".$situacao."' WHERE aluno_id = " . $form['aluno_id'] . " and disciplina_id = " . $codigo;
+            $resp = $this->conexao->query($sql);
         }
-
-        if ($this->resposta != FALSE) {
+        if ($resp->rowCount() > 0) { //se ocorreu alguma alteração na tabela é pq deu certo 
             return "Salvo com sucesso!";
         } else {
             return "Erro ao salvar Notas!";

@@ -15,6 +15,7 @@ class Aluno extends Pessoa {
 
     private $turma_id;
     private $conexao;
+    private $trancado;
 
     function __construct() {
         if (!session_status()) {
@@ -22,6 +23,14 @@ class Aluno extends Pessoa {
         }
         $this->notas = array();
         $this->conexao = new Conexao();
+    }
+
+    function getTrancado() {
+        return $this->trancado;
+    }
+
+    function setTrancado($trancado) {
+        $this->trancado = $trancado;
     }
 
     function getTurma_id() {
@@ -87,8 +96,12 @@ class Aluno extends Pessoa {
 
     public function atualizar() {
         $sql = "UPDATE aluno SET nome = :nome ,email = :email ,endereco= :endereco, "
-                . "telefone= :telefone , usuario_altera = :usuario_altera, data_altera= :data_altera WHERE id = :id";
+                . "telefone= :telefone , situacao=:trancado, usuario_altera = :usuario_altera, data_altera= :data_altera WHERE id = :id";
         $insert = $this->conexao->prepare($sql);
+        
+        if($this->getTrancado() == null){
+            $this->setTrancado("ativo");
+        }
 
         date_default_timezone_set('America/Sao_Paulo');
         $date = date('Y-m-d H:i');
@@ -98,6 +111,7 @@ class Aluno extends Pessoa {
             'email' => $this->getEmail(),
             'endereco' => $this->getEndereco(),
             'telefone' => $this->getTelefone(),
+            'trancado' => $this->getTrancado(),
             'id' => $this->getMatricula(),
             'usuario_altera' => $this->getUsuarioAltera(),
             'data_altera' => $date
@@ -169,6 +183,10 @@ class Aluno extends Pessoa {
         if ($tipo == '4') {// alunos nao matriculados por matricula
             $sql = "select *from aluno left join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno_disciplina.aluno_id is null and aluno.id = " . $pesquisa . " and aluno.deletado = 'n'";
         }
+        if ($tipo == '5') {// alunos com matricula trancada
+            $sql = "select *from aluno where situacao = 'trancado' and deletado = 'n'";
+        }
+        
         $array = array();
         $insert = $this->conexao->query($sql);
         foreach ($insert as $aluno) {
