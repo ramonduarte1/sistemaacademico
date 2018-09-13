@@ -131,10 +131,12 @@ class Professor extends Pessoa {
 
     public function retornaProfessores($tipo, $pesquisa) {
 
-        if ($tipo == '1') {// professor matriculados
-            $sql = "select *from professor inner join turma_professor on (professor.id = turma_professor.professor_id) where professor.nome like '%$pesquisa%' and professor.deletado = 'n'";
-        } else {
-            $sql = "select *from professor left join turma_professor on (professor.id = turma_professor.professor_id) where turma_professor.professor_id is null and professor.nome like '%$pesquisa%' and professor.deletado = 'n'";
+        if ($tipo == '1') {//professor por nome
+            $sql = "select *from professor where nome like '%$pesquisa%' and professor.deletado = 'n'";
+//          $sql = "select *from professor inner join turma_professor on (professor.id = turma_professor.professor_id) where professor.nome like '%$pesquisa%' and professor.deletado = 'n'";
+        } else {//professor por matricula
+            $sql = "select *from professor where id = '$pesquisa' and professor.deletado = 'n'";
+//          $sql = "select *from professor left join turma_professor on (professor.id = turma_professor.professor_id) where turma_professor.professor_id is null and professor.nome like '%$pesquisa%' and professor.deletado = 'n'";
         }
         $array = array();
         $insert = $this->conexao->query($sql);
@@ -158,7 +160,6 @@ class Professor extends Pessoa {
     }
 
     public function retornaDisciplinasDoProfessor() {
-        $id = $this->getMatricula();
         $sql = "select professor.id id_prof, professor.nome nome_prof , disciplina.id id_disc ,disciplina.nome nome_disc, disciplina.carga_horaria from professor "
                 . "inner join professor_disciplina on (professor.id = professor_disciplina.professor_id) "
                 . "inner join disciplina on (disciplina.id = professor_disciplina.disciplina_id)";

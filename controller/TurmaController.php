@@ -17,9 +17,6 @@ class TurmaController {
     private $objResponse;
 
     function __construct() {
-        if (!isset($_SESSION)) {
-            session_start();
-        }
         $this->objResponse = new xajaxResponse(); //instancia o xajax
     }
 
@@ -62,10 +59,7 @@ class TurmaController {
         }
 
         $this->turma->setDisciplinas($disciplinas);
-
-        $result = $this->turma->atualizar();
-
-        $this->objResponse->alert($result);
+        $this->objResponse->script($this->turma->atualizar());
         return $this->objResponse;
     }
 
@@ -74,9 +68,7 @@ class TurmaController {
         $this->turma = new Turma();
         $this->turma->setCodigo($form['matricula']);
 
-        $result = $this->turma->apagar();
-
-        $this->objResponse->alert($result);
+        $this->objResponse->script($this->turma->apagar());
         return $this->objResponse;
     }
 

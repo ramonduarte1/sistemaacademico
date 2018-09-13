@@ -39,13 +39,12 @@ function menuDisciplina($tipo, $form) {
                 <td>
                     <input type="radio" id="radio" value="4" name="radio" >Aluno
                 </td>
-            </tr>
-                <tr>
-                <td></td>
-                <td class="centralizado"><input type="button" value="Novo" onclick="xajax_menuDisciplina('novo')"></td>
-                <td class="centralizado"><input type="button" value="Limpar" onclick="xajax_menuDisciplina('pesquisa')"></td>
-            </tr>
         </table>
+        <hr/>
+            <div class="centralizado">
+                <input type="button" value="Novo" onclick="xajax_menuDisciplina('novo')">
+                <input type="button" value="Limpar" onclick="xajax_menuDisciplina('pesquisa')">
+            </div>
         <hr/>
         <br>
         <div id="retorno" name="retorno"></div>
@@ -63,7 +62,8 @@ HTML;
                         <input readonly id="matricula" name="matricula" value="' . $d['id'] . ' " size="4">
                         <input readonly id="nome" name="nome" value="' . $d['nome'] . '">
                         <input type="button" value="Editar" onclick="xajax_menuDisciplina(\'editar\',xajax.getFormValues(' . formIdDisciplina . $d['id'] . '))">
-                        <input type="button" value="Apagar" onclick="xajax_apagarDisciplina(xajax.getFormValues(' . formIdDisciplina . $d['id'] . '))">
+                        <input type="button" value="Apagar" onclick="confirmacao(\''.apagar_disciplina. $d['id'].'\');">
+                        <input type="hidden" id="'.'apagar_disciplina' . $d['id'].'" name="'.'apagar_disciplina' . $d['id'].'"  onclick="xajax_apagarDisciplina(xajax.getFormValues(' . formIdDisciplina . $d['id'] . '))">
                       </form>';
         }
 

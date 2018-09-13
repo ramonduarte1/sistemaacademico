@@ -26,20 +26,21 @@ function menuProfessor($tipo, $form) {
             <tr>
                 <td></td>
                 <td class="esquerda">
-                    <input type="radio" id="radio" value="1" name="radio"> Pesquisar apenas alunos matriculados
+                    <input type="radio" id="radio" value="1" name="radio"> Pesquisar por nome
                 </td>
             </tr>
             <tr>
                 <td></td>
                 <td class="esquerda">
-                    <input type="radio" id="radio" value="2" name="radio" checked> Pesquisar apenas alunos não matriculado
+                    <input type="radio" id="radio" value="2" name="radio" checked> Pesquisar por matricula
                 </td>
             </tr>
-            <tr>
-                <td><input type="button" value="Novo" onclick="xajax_menuProfessor('novo')"></td>
-                <td><input type="button" value="Limpar" onclick="xajax_menuProfessor('pesquisa')"></td>
-            </tr>
         </table>
+            <hr />
+                <div class='centralizado'>
+                    <input type="button" value="Novo" onclick="xajax_menuProfessor('novo')">
+                    <input type="button" value="Limpar" onclick="xajax_menuProfessor('pesquisa')">
+                </div>
         </form>
         <hr />
         <br>
@@ -50,7 +51,7 @@ HTML;
 
     if ($tipo == 'filtrar') {
         $professor = new Professor();
-        $professores = $professor->retornaProfessores($form['radio'], $form['pesq_aluno']);
+        $professores = $professor->retornaProfessores($form['radio'], $form['pesq_professor']);
 
         $html = '';
         foreach ($professores as $p) {
@@ -58,7 +59,8 @@ HTML;
                         <input readonly id="matricula" name="matricula" value="' . $p['id'] . ' " size="4">
                         <input readonly id="nome" name="nome" value="' . $p['nome'] . '">
                         <input readonly type="button" value="Editar" onclick="xajax_menuProfessor(\'editar\',xajax.getFormValues(' . formIdProfessor . $p['id'] . '))">
-                        <input readonly type="button" value="Apagar" onclick="xajax_apagarProfessor(xajax.getFormValues(' . formIdProfessor . $p['id'] . '))">
+                        <input readonly type="button" value="Apagar"  onclick="confirmacao(\''.apagar_professor. $p['id'].'\');">
+                        <input type="hidden" id="'.'apagar_professor' . $p['id'].'" name="'.'apagar_professor' . $p['id'].'" onclick="xajax_apagarProfessor(xajax.getFormValues(' . formIdProfessor . $p['id'] . '))">
                       </form>';
         }
 

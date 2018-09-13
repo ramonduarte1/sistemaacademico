@@ -39,14 +39,13 @@ function menuTurma($tipo, $form) {
                 <td>
                     <input type="radio" id="radio" value="4" name="radio" >Aluno
                 </td>
-            </tr>
-                <tr>
-                <td></td>
-                <td class="centralizado"><input type="button" value="Novo" onclick="xajax_menuTurma('novo')"></td>
-                <td class="centralizado"><input type="button" value="Limpar" onclick="xajax_menuTurma('pesquisa')"></td>
-            </tr>
         </table>
-       </form>
+        <hr/>
+                <div class="centralizado">
+                    <input type="button" value="Novo" onclick="xajax_menuTurma('novo')"> &nbsp &nbsp
+                    <input type="button" value="Limpar" onclick="xajax_menuTurma('pesquisa')">
+                </div>
+        </form>
         <hr/>
         <br>
         <div id="retorno" name="retorno"></div>
@@ -65,10 +64,10 @@ HTML;
                         <input readonly id="matricula" name="matricula" value="' . $t['id'] . ' " size="4">
                         <input readonly id="nome" name="nome" value="' . $t['nome'] . '">
                         <input type="button" value="Editar" onclick="xajax_menuTurma(\'editar\',xajax.getFormValues(' . formIdTurma . $t['id'] . '))">
-                        <input type="button" value="Apagar" onclick="xajax_apagarTurma(xajax.getFormValues(' . formIdTurma . $t['id'] . '))">
+                        <input type="button" value="Apagar" onclick="confirmacao(\''.apagar_turma. $t['id'].'\');">
+                        <input type="hidden" id="'.'apagar_turma' . $t['id'].'" name="'.'apagar_turma' . $t['id'].'"  onclick="xajax_apagarTurma(xajax.getFormValues(' . formIdTurma . $t['id'] . '))">
                       </form>';
         }
-
 
         $obj_response->assign("retorno", "innerHTML", $html);
     }

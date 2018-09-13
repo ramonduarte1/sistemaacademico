@@ -26,10 +26,10 @@ function menuAluno($tipo, $form) {
             <table border='0'>
                 <tr>
                     <td class="esquerda">
-                        <input type="radio" id="radio" value="1" name="radio"> Matriculado por nome
+                        <input type="radio" id="radio" value="1" name="radio"> Aluno por nome
                     </td>
                     <td class="esquerda">
-                        <input type="radio" id="radio" value="2" name="radio" > Matriculado por matricula
+                        <input type="radio" id="radio" value="2" name="radio" > Aluno por matricula
                     </td>
                 </tr>
                 <tr>
@@ -39,16 +39,17 @@ function menuAluno($tipo, $form) {
                     <td class="esquerda">
                         <input type="radio" id="radio" value="4" name="radio" > Não matriculado por matricula
                     </td>
+                    <td class="esquerda">
+                        <input type="radio" id="radio" value="5" name="radio" > Matricula trancada por nome
+                    </td>
                 </tr>
             </table>
         </table>
-            <tr>
-                <hr />
-                <div class='centralizado'>
-                     <input  type="button" value="Novo" onclick="xajax_menuAluno('novo')">
-                     <input  type="button" value="Limpar" onclick="xajax_menuAluno('pesquisa')">
-                </div>
-            </tr>
+            <hr />
+            <div class='centralizado'>
+                <input  type="button" value="Novo" onclick="xajax_menuAluno('novo')">
+                <input  type="button" value="Limpar" onclick="xajax_menuAluno('pesquisa')">
+            </div>
         </form>
         <hr />
         <br>
@@ -67,8 +68,8 @@ HTML;
                         <input readonly id="matricula" name="matricula" value="' . $a['id'] . ' " size="4">
                         <input readonly id="nome" name="nome" value="' . $a['nome'] . '">
                         <input readonly type="button" value="Editar" onclick="xajax_menuAluno(\'editar\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
-                        <input readonly type="button" value="Apagar"  onclick="confirmacao(\'apagar_aluno\');">
-                        <input type="hidden" id="apagar_aluno" name="apagar_aluno"  onclick="xajax_apagarAluno(xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
+                        <input readonly type="button" value="Apagar"  onclick="confirmacao(\''.apagar_aluno. $a['id'].'\');">
+                        <input type="hidden" id="'.'apagar_aluno' . $a['id'].'" name="'.'apagar_aluno' . $a['id'].'"  onclick="xajax_apagarAluno(xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
                       </form>';
         }
         $obj_response->assign("retorno", "innerHTML", $html);
@@ -106,6 +107,11 @@ HTML;
                     <tr>
                         <td class="direita">Telefone</td>
                         <td><input type="text" required name="telefone" id="telefone" onkeypress="mascara(this, \'## #####-####\')" maxlength="13" value="' . $a[0]['telefone'] . '"></td>
+                    </tr>
+                    <tr>
+                        <td class="direita">Turma</td>
+                        <td><input type="text" readonly name="turma_id" id="turma_id" value="'.$a[0]['turma_id'].' - '.$a[0]['nome_turma'].'" size="50"></td>
+                        
                     </tr>';
         if ($a[0]['situacao'] == 'trancado') {
             $html .= '

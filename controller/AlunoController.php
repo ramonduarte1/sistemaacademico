@@ -78,9 +78,7 @@ class AlunoController {
         $this->aluno = new Aluno();
         $this->aluno->setMatricula($form['matricula']);
 
-        $result = $this->aluno->apagar();
-
-        $this->objResponse->script($result);
+        $this->objResponse->script($this->aluno->apagar());
         return $this->objResponse;
     }
 

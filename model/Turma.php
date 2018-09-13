@@ -85,7 +85,7 @@ class Turma {
 
         $insert->execute($bind);
 
-        $sql = "SELECT last_value from turma_id_seq";//pega o id da turma que acabou de ser inserido
+        $sql = "SELECT last_value from turma_id_seq"; //pega o id da turma que acabou de ser inserido
         $utimoIdTurma = $this->conexao->query($sql);
         foreach ($utimoIdTurma as $value) {
             $idTurma = $value;
@@ -130,7 +130,7 @@ class Turma {
 
         if ($insert != FALSE) {
             //apaga o registro anterior para gravar as novas disciplinas
-            $sql = "delete from turma_disciplina where turma_id = ".$this->getCodigo()."";
+            $sql = "delete from turma_disciplina where turma_id = " . $this->getCodigo() . "";
             $this->conexao->query($sql);
 
             foreach ($this->getDisciplinas() as $idDisciplina) {
@@ -149,9 +149,9 @@ class Turma {
                 $insert->execute($bind);
             }
 
-            return "Turma alterada com sucesso!";
+            return "alert('Turma alterada com sucesso!');";
         } else {
-            return "Ocorreu um erro ao alterar!";
+            return "alert('Ocorreu um erro ao inserir!!');";
         }
     }
 
@@ -160,7 +160,7 @@ class Turma {
         $insert = $this->conexao->query($sql);
 
         if ($insert->rowCount() > 0) {// se existir turma com matriculas ativa
-            return "Turma não pode ser deletado!";
+            return "alert('Turma não pode ser deletado!');";
         } else {
             $sql = "UPDATE turma SET deletado = :deletado,data_altera = :data_altera, usuario_altera = :usuario_altera WHERE id = :id";
             $insert = $this->conexao->prepare($sql);
@@ -178,9 +178,9 @@ class Turma {
             $insert->execute($bind);
 
             if ($insert != FALSE) {
-                return "Turma apagado com sucesso!";
+                return "alert('Turma apagado com sucesso!');";
             } else {
-                return "Ocorreu um erro!";
+                return "alert('Ocorreu um erro ao inserir!');";
             }
         }
     }
@@ -191,8 +191,8 @@ class Turma {
             $sql = "select *from turma where turma.nome like '%$pesquisa%' and turma.deletado = 'n'";
         }
         if ($tipo == '2') {// codigo
-            $sql = "select *from turma where turma.id = ".$pesquisa." and turma.deletado = 'n'";
-        } 
+            $sql = "select *from turma where turma.id = " . $pesquisa . " and turma.deletado = 'n'";
+        }
         $array = array();
         $insert = $this->conexao->query($sql);
         foreach ($insert as $turma) {
@@ -212,6 +212,17 @@ class Turma {
         }
         return $array;
     }
-    
+
+    public function retornaDisciplinasDaTurma() {
+        $sql = "SELECT turma.id id_turma, turma.nome nome_turma, disciplina.id id_disc ,disciplina.nome nome_disc, disciplina.carga_horaria FROM turma
+                INNER JOIN turma_disciplina ON (turma.id = turma_disciplina.turma_id)
+                INNER JOIN disciplina ON (disciplina.id = turma_disciplina.disciplina_id) ORDER BY turma.id ASC";
+
+        $array = array();
+        foreach ($this->conexao->query($sql) as $professorD) {
+            array_push($array, $professorD);
+        }
+        return $array;
+    }
 
 }

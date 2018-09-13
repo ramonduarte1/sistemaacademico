@@ -38,7 +38,7 @@ function menuRelatorio($tipo, $form) {
                     <input type="radio" id="radio" value="5" name="radio"> Alunos com matricula Trancada
                 </td>
                 <td class="esquerda">
-                    <input type="radio" id="radio" value="6" name="radio" > Disciplina por Professor
+                    <input type="radio" id="radio" value="6" name="radio" > Disciplina por Turma
                 </td>
             </tr>
            </table>
@@ -54,7 +54,7 @@ HTML;
         $aluno = new Aluno();
         $alunos = $aluno->matriculados($form['radio']);
 
-        if ($form['radio'] == 1) {
+        if ($form['radio'] == 1) {//Alunos Matriculado
             $html = '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="formIdAluno" action="" method="post">
                       <table border="1">
                        <tr>
@@ -73,7 +73,7 @@ HTML;
                     </form>';
         }
 
-        if ($form['radio'] == 2) {
+        if ($form['radio'] == 2) {//Alunos não Matriculado
             $html = '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="formIdAluno" action="" method="post">
                       <table border="1">
                        <tr>
@@ -116,8 +116,7 @@ HTML;
         }
         if ($form['radio'] == 4) {
             $p = new Professor();
-            $professores = $p->retornaDisciplinasDoProfessor();
-
+            
             $html = '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="formIdAluno" action="" method="post">
                       <table class="bordasimples">
                        <tr>
@@ -141,7 +140,7 @@ HTML;
         }
         if ($form['radio'] == 5) {//retorna os aluno com matricula trancada
             $a = new Aluno();
-            
+
             $html = '<form class="centralizado" id="formIdAluno" name="formIdAluno" action="" method="post">
                       <table border="1">
                        <tr>
@@ -150,12 +149,34 @@ HTML;
                           <th>Email</th>
                           <th>Situação</th>
                        </tr>';
-            foreach ($a->retornaAlunos(5,NULL) as $aluno) {
+            foreach ($a->retornaAlunos(5, NULL) as $aluno) {
                 $html .= '<tr>
                             <td class="centralizado">' . $aluno['id'] . ' </td>
                             <td class="centralizado">' . $aluno['nome'] . ' </td>
                             <td class="centralizado">' . $aluno['email'] . '</td>
                             <td class="centralizado">' . $aluno['situacao'] . '</td>
+                          </tr>';
+            }
+            $html .= '</table>  
+                    </form>';
+        }
+        if ($form['radio'] == 6) {//retorna AS DISCIPLINAS POR TURMA
+            $t = new Turma();
+
+            $html = '<form class="centralizado" id="formIdAluno" name="formIdAluno" action="" method="post">
+                      <table border="1">
+                       <tr>
+                          <th>Codigo Turma</th>
+                          <th>Nome</th>
+                          <th>Codigo Disciplina</th>
+                          <th>Nome</th>
+                       </tr>';
+            foreach ($t->retornaDisciplinasDaTurma() as $turma) {
+                $html .= '<tr>
+                            <td class="centralizado">' . $turma['id_turma'] . ' </td>
+                            <td class="centralizado">' . $turma['nome_turma'] . ' </td>
+                            <td class="centralizado">' . $turma['id_disc'] . '</td>
+                            <td class="centralizado">' . $turma['nome_disc'] . '</td>
                           </tr>';
             }
             $html .= '</table>  

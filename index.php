@@ -49,8 +49,9 @@ $xajax_js = $xajaxUtilitario->getXajax_js();
             }
         </script>
         <script type="text/javascript">
- 
-       function confirmacao(acao) {
+            //funcao responvalvel por perguntar o usuario se realmente quer continuar ele recebe o nome
+            // de um formulario hidden para ser clicado caso for true a resposta do ussuario
+            function confirmacao(acao) {
                 var retVal = confirm("Deseja continuar ?");
                 if (retVal == true) {
                     document.getElementById(acao).click();// pede a confirmacao do usuario se for true passa o campo do input hidden para terminar a rotina

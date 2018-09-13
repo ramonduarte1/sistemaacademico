@@ -57,7 +57,7 @@ class Aluno extends Pessoa {
             'data_altera' => $date
         );
         $insert->execute($bind);
-        
+
 
         if ($insert != FALSE) {
             return "alert('Aluno cadastrado com sucesso!');document.getElementById(\"formAluno\").reset();";
@@ -72,7 +72,7 @@ class Aluno extends Pessoa {
         $insert = $this->conexao->query($sql);
 
         if ($insert->rowCount() > 0) {// se o aluno tiver matricula ativa
-            echo "<script>alert('Aluno não pode ser deletado!');location.href=\"../view/consulta_aluno.php\"</script> ";
+            return "alert('Aluno não pode ser deletado!');";
         } else {
             $sql = "UPDATE aluno SET deletado =:deletado, usuario_altera = :usuario_altera, data_altera= :data_altera WHERE id = :id";
             $insert = $this->conexao->prepare($sql);
@@ -87,11 +87,11 @@ class Aluno extends Pessoa {
                 ':id' => $this->getMatricula()
             );
             $insert->execute($bind);
-           
+
             if ($insert != FALSE) {
                 return "alert('Aluno deletado com sucesso!');document.getElementById(\"formAluno\").reset();";
             } else {
-                return "alert('Ocorreu um erro!');";
+                return "alert('Erro ao deletar!');document.getElementById(\"formAluno\").reset();";
             }
         }
     }
@@ -172,12 +172,11 @@ class Aluno extends Pessoa {
     }
 
     public function retornaAlunos($tipo, $pesquisa) {
-        $a = 1;
-        if ($tipo == '1') {// alunos matriculados por nome
-            $sql = "select *from aluno where turma_id notnull and aluno.nome like '%$pesquisa%' and aluno.deletado = 'n'";
+        if ($tipo == '1') {// alunos por nome
+            $sql = "select *from aluno where nome like '%$pesquisa%' and aluno.deletado = 'n' ORDER BY id ASC";
         }
-        if ($tipo == '2') {// alunos matriculados por matricula
-            $sql = "select *from aluno where turma_id isnull and  where id = " . $pesquisa . " and aluno.deletado = 'n'";
+        if ($tipo == '2') {// alunos por matricula
+            $sql = "select *from aluno where id = " . $pesquisa . " and deletado = 'n'";
         }
         if ($tipo == '3') {// alunos nao matriculados por nome
             $sql = "select *from aluno left join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno_disciplina.aluno_id is null and aluno.nome like '%$pesquisa%' and aluno.deletado = 'n'";
@@ -186,7 +185,7 @@ class Aluno extends Pessoa {
             $sql = "select *from aluno left join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where aluno_disciplina.aluno_id is null and aluno.id = " . $pesquisa . " and aluno.deletado = 'n'";
         }
         if ($tipo == '5') {// alunos com matricula trancada
-            $sql = "select *from aluno where situacao = 'trancado' and deletado = 'n'";
+            $sql = "select *from aluno where situacao = 'trancado' and deletado = 'n' ORDER BY id ASC";
         }
 
         $array = array();
@@ -200,14 +199,25 @@ class Aluno extends Pessoa {
 
     public function retornaAluno() {
         $id = $this->getMatricula();
+
         $sql = "select *from aluno where id = '$id' and aluno.deletado = 'n'";
 
-        $insert = $this->conexao->query($sql);
         $array = array();
-        foreach ($insert as $aluno) {
+        foreach ($this->conexao->query($sql) as $aluno) {
             array_push($array, $aluno);
         }
-        return $array;
+
+        if ($array[0]['turma_id'] != NULL) {// se o aluno for matriculado retorna novamente com os dados da turma
+            $sql = "select aluno.id,aluno.nome,aluno.email,aluno.endereco,aluno.telefone,aluno.turma_id, turma.nome nome_turma from aluno "
+                    . "inner join turma on(aluno.turma_id = turma.id) where aluno.id = '$id' and aluno.deletado = 'n'";
+            $arrayM = array();
+            foreach ($this->conexao->query($sql) as $alunoM) {
+                array_push($arrayM, $alunoM);
+            }
+            return $arrayM;
+        } else {
+            return $array;
+        }
     }
 
     public function pesqMenuMatricula($form) {
@@ -231,16 +241,16 @@ class Aluno extends Pessoa {
 
     public function matriculados($form) {
         if ($form['radio'] == 1) {//matriculado
-            $sql = "select *from aluno where turma_id notnull and aluno.deletado = 'n'";
+            $sql = "select *from aluno where turma_id notnull and aluno.deletado = 'n' ORDER BY id ASC";
         }
         if ($form['radio'] == 2) {//nao matriculado
-            $sql = "select *from aluno where turma_id is null and aluno.deletado = 'n'";
+            $sql = "select *from aluno where turma_id is null and aluno.deletado = 'n' ORDER BY id ASC";
         }
         if ($form['radio'] == 3) {
-            $sql = "select *from aluno where turma_id notnull and aluno.deletado = 'n'";
+            $sql = "select *from aluno where turma_id notnull and aluno.deletado = 'n' ORDER BY id ASC";
         }
         if ($form['radio'] == 4) {
-            $sql = "select *from aluno where turma_id notnull and aluno.deletado = 'n'";
+            $sql = "select *from aluno where turma_id notnull and aluno.deletado = 'n' ORDER BY id ASC";
         }
         $insert = $this->conexao->query($sql);
         $array = array();
@@ -253,7 +263,7 @@ class Aluno extends Pessoa {
     // retorna  o id nome da turma e a quantidade de alunos matriculado na mesma
     public function retornaQuantPorTurma() {
         $sql = "select aluno.turma_id, turma.nome, COUNT(aluno.turma_id) AS Qtd from turma inner join  aluno on turma.id = aluno.turma_id 
-            GROUP BY aluno.turma_id, turma.nome HAVING COUNT(aluno.turma_id) > 0 ORDER BY COUNT(aluno.turma_id) DESC";
+            GROUP BY aluno.turma_id, turma.nome HAVING COUNT(aluno.turma_id) > 0 ORDER BY COUNT(aluno.turma_id) ASC";
         $insert = $this->conexao->query($sql);
         $array = array();
         foreach ($insert as $aluno) {
