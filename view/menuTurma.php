@@ -83,24 +83,24 @@ HTML;
         $matriculadas = $d->retornaDisciplinasPorTurma($form['matricula']);
 
         $html = "<form id=\"formTurma\" name=\"formTurma\" method=\"post\">
-                <table border=\"0\">
+                <table border=\"1\" class=\"semborda\">
                     <tr>
-                        <td class=\"direita\">Codigo</td>
-                        <td>
+                        <td class=\"semborda\">Codigo</td>
+                        <td class=\"semborda\">
                             <input type=\"text\" readonly name=\"matricula\" id=\"matricula\" size=\"4\" value=\"{$t[0]['id']}\">
                         </td>
                     </tr>
-                    <tr>
-                        <td class=\"direita\">Nome</td>
-                        <td>
+                    <tr >
+                        <td class=\"semborda\">Nome</td>
+                        <td class=\"semborda\">
                             <input type=\"text\" required name=\"nome\" id=\"nome\" size=\"50\" value=\"{$t[0]['nome']}\">
                         </td>
                     </tr>
                     <tr>
-                        <td colspan='2'></td>
-                        <td><input class='direita' type=\"button\" class=\"button\" value=\"Salvar\" onclick=\"xajax_atualizarTurma(xajax.getFormValues('formTurma'))\"></td>
+                        <td class=\"semborda\"></td>
+                        <td class=\"semborda\"><input class='button' type=\"button\" class=\"button\" value=\"Salvar\" onclick=\"xajax_atualizarTurma(xajax.getFormValues('formTurma'))\"></td>
                     </tr>
-                    <table border=\"1\">
+                   
                     <tr><th colspan='3'>Disciplinas</th></tr>
                       <tr>
                         <th>Codigo</th>
@@ -123,7 +123,7 @@ HTML;
 
         $html .= "</tr></table>";
 
-        $html .= '</table>
+        $html .= '
                </form>';
 
         $obj_response->assign("retorno", "innerHTML", $html);
@@ -134,16 +134,16 @@ HTML;
         $disciplinas = $d->retornaTodasDisciplinas();
 
         $html = "<form id=\"formTurma\" name=\"formTurma\" method=\"post\">
-                    <table class=\"bordasimples\">
-                        <tr class=\"semborda\">
-                            <td class=\"direita\">Nome*</td>
-                            <td colspan=\"2\">
+                    <table border=\"1\" class=\"semborda\">
+                        <tr>
+                            <td class=\"semborda\">Nome*</td>
+                            <td colspan=\"2\" class=\"semborda\">
                                 <input type=\"text\" required id=\"nome\" name=\"nome\" size=\"50\">
                             </td>
                         </tr>
-                        <tr class=\"semborda\">
-                            <td></td>
-                            <td colspan=\"2\"><input type=\"button\" class=\"button\" value=\"Salvar\" onclick=\"return validarTurma()\"></td>
+                        <tr >
+                            <td class=\"semborda\"></td>
+                            <td colspan=\"2\" class=\"semborda\"><input type=\"button\" class=\"button\" value=\"Salvar\" onclick=\"return validarTurma()\"></td>
                             <input type=\"hidden\" id=\"salvar_turma\" name=\"salvar_turma\" onclick=\"xajax_salvarTurma(xajax.getFormValues('formTurma'))\">
                         </tr>";
         $html .= "<tr>
@@ -153,12 +153,12 @@ HTML;
                      </tr>";
         foreach ($disciplinas as $disciplina) {
             $html .= "<tr>
-                                <td>{$disciplina['id']}</td>
+                                <td class=\"centralizado\">{$disciplina['id']}</td>
                                 <td>{$disciplina['nome']}</td>
-                                <td><input class=\"centralizado\" type='checkbox' name=\"disciplinas[]\" value=" . $disciplina['id'] . "></td>
-            </tr>";
+                                <td class=\"centralizado\"><input type='checkbox' name=\"disciplinas[]\" value=" . $disciplina['id'] . "></td>
+                     </tr>";
         }
-        $htm .= "   </table>
+        $htm .= "</table>
 </form>";
 
         $obj_response->assign("retorno", "innerHTML", $html);

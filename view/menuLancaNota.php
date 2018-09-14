@@ -52,7 +52,7 @@ HTML;
         $html = '';
         foreach ($alunos as $a) {
             $html .= '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="formIdAluno" action="" method="post">
-                        <input readonly id="matricula" name="matricula" value="' . $a['id'] . ' " size="4">
+                        <input readonly id="matricula" name="matricula" value="' . $a['id'] . ' " size="2">
                         <input readonly id="nome" name="nome" value="' . $a['nome'] . '">
                         <input readonly type="button"  class="button" value="Incluir Notas" onclick="xajax_menuLancaNota(\'incluir_notas\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
                         <input readonly type="button"  class="button" value="Imprimir Boletinho" onclick="xajax_menuLancaNota(\'incluir_notas\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
@@ -76,16 +76,16 @@ HTML;
                    <tr>
                         <th>Matricula</th>
                         <th>Nome</th>
-                        <th>Email</th>
-                        <th colspan=\"4\">Endereco</th>
+                        <th colspan =\"2\">Email</th>
+                        <th colspan=\"3\">Endereco</th>
                         <th>Telefone</th>
                    </tr>
                    <tr>
                         <td>" . $a[0]['id'] . "</td>
                             <input type=\"hidden\" id=\"aluno_id\" name=\"aluno_id\" value=" . $a[0]['id'] . ">
                         <td>" . $a[0]['nome'] . "</td>
-                        <td>" . $a[0]['email'] . "</td>
-                        <td colspan='4'>" . $a[0]['endereco'] . "</td>
+                        <td colspan='2'>" . $a[0]['email'] . "</td>
+                        <td colspan='3'>" . $a[0]['endereco'] . "</td>
                         <td>" . $a[0]['telefone'] . "</td>
                    </tr>
                    <tr>
@@ -94,7 +94,7 @@ HTML;
                    <tr>
                         <th>Codigo</th>
                         <th>Nome</th>
-                        <th>Carga Horária</th>
+                        <th>C.Horária</th>
                         <th>Nota 1</th>
                         <th>Nota 2</th>
                         <th>Nota 3</th>
@@ -116,11 +116,11 @@ HTML;
                             <input type=\"hidden\" id=\"disciplinas[]\" name=\"disciplinas[]\" value=" . $d['id'] . ">
                         <td>" . $d['nome'] . "</td>
                         <td>" . $d['carga_horaria'] . "</td>
-                        <td><input type='number' min='0' max='10' step=\"0.1\" id=" . $d['disciplina_id'] . n1 . " name=" . $d['disciplina_id'] . n1 . " value=". $d['nota1']." size='2' ></td>
-                        <td><input type='number' min='0' max='10' step=\"0.1\" id=" . $d['disciplina_id'] . n2 . " name=" . $d['disciplina_id'] . n2 . " value=". $d['nota2']." size='2' ></td>
-                        <td><input type='number' min='0' max='10' step=\"0.1\" id=" . $d['disciplina_id'] . n3 . " name=" . $d['disciplina_id'] . n3 . " value=". $d['nota3']." size='2' ></td>
-                        <td><input readonly type='text' size='5' value=". $d['media']."></td>
-                        <td><input readonly type='text' size='10' value=". $d['situacao']."></td>
+                        <td><input class=\"semborda\" type='number' min='0' max='10' step=\"0.1\" id=" . $d['disciplina_id'] . n1 . " name=" . $d['disciplina_id'] . n1 . " value=". $d['nota1']." size='1' ></td>
+                        <td><input class=\"semborda\" type='number' min='0' max='10' step=\"0.1\" id=" . $d['disciplina_id'] . n2 . " name=" . $d['disciplina_id'] . n2 . " value=". $d['nota2']." size='1' ></td>
+                        <td><input class=\"semborda\" type='number' min='0' max='10' step=\"0.1\" id=" . $d['disciplina_id'] . n3 . " name=" . $d['disciplina_id'] . n3 . " value=". $d['nota3']." size='1' ></td>
+                        <td><input class=\"semborda\" readonly  size='5' value=". $d['media']."></td>
+                        <td><input class=\"semborda\" readonly  size='10' value=". $d['situacao']."></td>
                      </tr>";
         }
         $turma = new Turma();
@@ -145,10 +145,6 @@ HTML;
                       <td>
                         <button onclick =\"xajax_salvaNotas(xajax.getFormValues('formIncluirNotas'))\">Salvar</button>
                       </td>    
-                 </tr>
-                 <tr>
-                    <td><button onclick=\"imprimeBoletinho()\">Cancelar Matricula</button></td>
-                    <td colspan=\"7\"></td>
                  </tr>";
 
         $html .= "<table>

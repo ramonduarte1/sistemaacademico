@@ -209,7 +209,7 @@ class Aluno extends Pessoa {
         }
   
         if ($array[0]['turma_id'] != NULL) {// se o aluno for matriculado retorna novamente com os dados da turma
-            $sql = "select aluno.id,aluno.nome,aluno.email,aluno.endereco,aluno.telefone,aluno.turma_id, turma.nome nome_turma from aluno "
+            $sql = "select aluno.id,aluno.nome,aluno.email,aluno.endereco,aluno.situacao,aluno.telefone,aluno.turma_id, turma.nome nome_turma from aluno "
                     . "inner join turma on(aluno.turma_id = turma.id) where aluno.id = '$id' and aluno.deletado = 'n'";
             $arrayM = array();
             foreach ($this->conexao->query($sql) as $alunoM) {
@@ -222,13 +222,13 @@ class Aluno extends Pessoa {
     }
 
     public function pesqMenuMatricula($form) {
-        if ($form['radio'] == 1) {
-            $sql = "select *from aluno where nome like '%" . $form['pesq_aluno'] . "%' and aluno.deletado = 'n' and turma_id notnull";
+        if ($form['radio'] == 1) {//por nome
+            $sql = "select *from aluno where nome like '%" . $form['pesq_aluno'] . "%' and aluno.deletado = 'n' and turma_id notnull order by aluno.id";
         }
-        if ($form['radio'] == 2) {
+        if ($form['radio'] == 2) {//por matricula
             $sql = "select *from aluno where id = " . $form['pesq_aluno'] . " and aluno.deletado = 'n'";
         }
-        if ($form['radio'] == 3) {
+        if ($form['radio'] == 3) {//por turma
             $sql = "select *from aluno where turma_id = " . $form['pesq_aluno'] . " and aluno.deletado = 'n'";
         }
 
@@ -240,7 +240,7 @@ class Aluno extends Pessoa {
         return $array;
     }
 
-    public function matriculados($form) {
+    public function filtro($form) {
         if ($form['radio'] == 1) {//matriculado
             $sql = "select *from aluno where turma_id notnull and aluno.deletado = 'n' ORDER BY nome";
         }

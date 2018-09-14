@@ -52,11 +52,11 @@ HTML;
 
     if ($tipo == 'filtrar') {
         $aluno = new Aluno();
-        $alunos = $aluno->matriculados($form['radio']);
+        $alunos = $aluno->filtro($form['radio']);
 
         if ($form['radio'] == 1) {//Alunos Matriculado
             $html = '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="formIdAluno" action="" method="post">
-                      <table class="bordasimples">
+                      <table border="1" class="semborda">
                        <tr>
                           <th>Matricula</th>
                           <th>Nome</th>
@@ -75,7 +75,7 @@ HTML;
 
         if ($form['radio'] == 2) {//Alunos não Matriculado
             $html = '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="formIdAluno" action="" method="post">
-                      <table class="bordasimples">
+                      <table border="1" class="semborda">
                        <tr>
                           <th>Matricula</th>
                           <th>Nome</th>
@@ -97,7 +97,7 @@ HTML;
             $quant = $a->retornaQuantPorTurma();
 
             $html = '<form class="centralizado" id="formIdAluno" name="formIdAluno" action="" method="post">
-                      <table class="bordasimples">
+                      <table border="1" class="semborda">
                        <tr>
                           <th>Codigo</th>
                           <th>Nome</th>
@@ -118,7 +118,7 @@ HTML;
             $p = new Professor();
             
             $html = '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="formIdAluno" action="" method="post">
-                      <table class="bordasimples">
+                      <table border="1" class="semborda">
                        <tr>
                           <th>Matricula</th>
                           <th>Nome</th>
@@ -132,7 +132,7 @@ HTML;
                             <td >' . $professor['nome_prof'] . '</td>
                             <td >' . $professor['id_disc'] . '</td>
                             <td >' . $professor['nome_disc'] . '</td>
-                            <td >' . $professor['carga_horaria'] . '</td>
+                            <td >' . $professor['carga_horaria'] .'</td>
                           </tr>';
             }
             $html .= '</table>  
@@ -142,11 +142,12 @@ HTML;
             $a = new Aluno();
 
             $html = '<form class="centralizado" id="formIdAluno" name="formIdAluno" action="" method="post">
-                      <table class="bordasimples">
+                      <table border="1" class="semborda">
                        <tr>
                           <th>Matricula</th>
                           <th>Nome</th>
                           <th>Email</th>
+                          <th>Telefone</th>
                           <th>Situação</th>
                        </tr>';
             foreach ($a->retornaAlunos(5, NULL) as $aluno) {
@@ -154,6 +155,7 @@ HTML;
                             <td class="centralizado">' . $aluno['id'] . ' </td>
                             <td class="centralizado">' . $aluno['nome'] . ' </td>
                             <td class="centralizado">' . $aluno['email'] . '</td>
+                            <td class="centralizado">' . $aluno['telefone'] . '</td>
                             <td class="centralizado">' . $aluno['situacao'] . '</td>
                           </tr>';
             }
@@ -164,12 +166,12 @@ HTML;
             $t = new Turma();
 
             $html = '<form class="centralizado" id="formIdAluno" name="formIdAluno" action="" method="post">
-                      <table class="bordasimples">
+                      <table border="1" class="semborda">
                        <tr>
                           <th>Codigo Turma</th>
-                          <th>Nome</th>
+                          <th>Nome Turma</th>
                           <th>Codigo Disciplina</th>
-                          <th>Nome</th>
+                          <th>Nome Disciplina</th>
                        </tr>';
             foreach ($t->retornaDisciplinasDaTurma() as $turma) {
                 $html .= '<tr>

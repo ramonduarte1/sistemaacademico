@@ -62,16 +62,17 @@ HTML;
         $aluno = new Aluno();
         $alunos = $aluno->retornaAlunos($form['radio'], $form['pesq_aluno']);
 
-        $html = '';
+        $html = '<div id="" style="overflow:scroll; height:350px;">';//scroll
         foreach ($alunos as $a) {
             $html .= '<form class="centralizado" id="'.formIdAluno.$a['id'] .'" name="'.formIdAluno.$a['id'] .'" action="" method="post">
-                        <input readonly id="matricula" name="matricula" value="'.$a['id'].'" size="4">
-                        <input readonly id="nome" name="nome" value="' . $a['nome'] . '">
-                        <input readonly type="button" class="button" value="Editar" onclick="xajax_menuAluno(\'editar\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
-                        <input readonly type="button" class="button" value="Apagar"  onclick="confirmacao(\''.apagar_aluno. $a['id'].'\');">
-                        <input type="hidden" id="'.'apagar_aluno' . $a['id'].'" name="'.'apagar_aluno' . $a['id'].'"  onclick="xajax_apagarAluno(xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
-                      </form>';
+                            <input readonly id="matricula" name="matricula" value="'.$a['id'].'" size="4">
+                            <input readonly id="nome" name="nome" value="' . $a['nome'] . '">
+                            <input readonly type="button" class="button" value="Editar" onclick="xajax_menuAluno(\'editar\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
+                            <input readonly type="button" class="button" value="Apagar"  onclick="confirmacao(\''.apagar_aluno. $a['id'].'\');">
+                            <input type="hidden" id="'.'apagar_aluno' . $a['id'].'" name="'.'apagar_aluno' . $a['id'].'"  onclick="xajax_apagarAluno(xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
+                       </form>';
         }
+        $html .=' </div>';
         $obj_response->assign("retorno", "innerHTML", $html);
     }
 

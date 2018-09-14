@@ -80,34 +80,34 @@ HTML;
 
 
         $html = '<form id="formProfessor" name="formProfessor" method="post">
-                <table>
+                <table border="1" class="semborda">
                     <tr>
-                        <td class="direita">Matricula</td>
-                        <td>
+                        <td class="semborda">Matricula</td>
+                        <td class="semborda">
                             <input type="text" required name="matricula" size="4" value=' . $a[0]['id'] . '>
                         </td>
                     </tr>
                     <tr>
-                        <td class="direita">Nome</td>
-                        <td>
+                        <td class="semborda">Nome</td>
+                        <td class="semborda"> 
                             <input type="text" required name="nome" size="50" value=' . $a[0]['nome'] . '>
                         </td>
                     </tr>
                     <tr>
-                        <td class="direita">Email</td>
-                        <td><input type="email" required name="email" size="50" value=' . $a[0]['email'] . '></td>
+                        <td class="semborda">Email</td>
+                        <td class="semborda"><input type="email" required name="email" size="50" value=' . $a[0]['email'] . '></td>
                     </tr>
                     <tr>
-                        <td class="direita">Endereço</td>
-                        <td><input type="text" required name="endereco" size="50" value=' . $a[0]['endereco'] . '></td>
+                        <td class="semborda">Endereço</td>
+                        <td class="semborda"><input type="text" required name="endereco" size="50" value=' . $a[0]['endereco'] . '></td>
                     </tr>
                     <tr>
-                        <td class="direita">Telefone</td>
-                        <td><input type="text" required name="telefone" onkeyup="mascara( this, mtel );" maxlength="15" value="' . $a[0]['telefone'] . '"></td>
+                        <td class="semborda">Telefone</td>
+                        <td class="semborda"><input type="text" required name="telefone" onkeyup="mascara( this, mtel );" maxlength="15" value="' . $a[0]['telefone'] . '"></td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td><input type="button" class="button" value="Salvar" onclick="xajax_atualizarProfessor(xajax.getFormValues(\'formProfessor\'))"></td>
+                        <td class="semborda"></td>
+                        <td class="semborda"><input type="button" class="button" value="Salvar" onclick="xajax_atualizarProfessor(xajax.getFormValues(\'formProfessor\'))"></td>
                     </tr>
                     <tr>
                         <th colspan="3">Disciplinas</th>
@@ -115,7 +115,7 @@ HTML;
         foreach ($disciplinas as $disciplina) {
 
             $html .= " <tr>
-                            <td>{$disciplina['id']}</td>
+                            <td class=\"centralizado\">{$disciplina['id']}</td>
                             <td>{$disciplina['nome']}</td>";
 
             if (in_array($disciplina['id'], array_column($matriculadas, 'disciplina_id'))) { //verifica se essa disciplina estar matriculada nessa turma
@@ -129,35 +129,35 @@ HTML;
         $html .= "</tr></table>";
 
         $html .= '</table>
-               </form>';
+               </form><br><br>';
 
         $obj_response->assign("retorno", "innerHTML", $html);
     }
 
     if ($tipo == 'novo') {
         $html = '<form id="formProfessor" name="formProfessor" method="post">
-                 <table class="bordasimples">
+                 <table border="1" class="semborda">
                     <tr>
-                        <td class="direita">Nome</td>
-                        <td colspan="2">
+                        <td class="semborda">Nome</td>
+                        <td colspan="2" class="semborda">
                             <input type="text" required name="nome" size="50">
                         </td>
                     </tr>
                     <tr>
-                        <td class="direita">Email</td>
-                        <td colspan="2"><input type="email" required name="email" size="50"></td>
+                        <td class="semborda">Email</td>
+                        <td colspan="2" class="semborda"><input type="email" required name="email" size="50"></td>
                     </tr>
                     <tr>
-                        <td class="direita">Endereço</td>
-                        <td colspan="2"><input type="text" required name="endereco" size="50"></td>
+                        <td class="semborda">Endereço</td>
+                        <td colspan="2" class="semborda"><input type="text" required name="endereco" size="50"></td>
                     </tr>
                     <tr>
-                        <td class="direita">Telefone</td>
-                        <td colspan="2"><input type="text" required name="telefone" onkeyup="mascara( this, mtel );" maxlength="15"></td>
+                        <td class="semborda">Telefone</td>
+                        <td colspan="2" class="semborda"><input type="text" required name="telefone" onkeyup="mascara( this, mtel );" maxlength="15"></td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td><input type="button" class="button" value="Salvar" onclick="return validarProfessor()"></td>
+                        <td class="semborda"></td>
+                        <td class="semborda"><input type="button" class="button" value="Salvar" onclick="return validarProfessor()"></td>
                         <input type="hidden" id="salvar_professor" name="salvar_professor" onclick="xajax_salvarProfessor(xajax.getFormValues(\'formProfessor\'))">
                     </tr>
                     <tr>
@@ -168,19 +168,17 @@ HTML;
         foreach ($disciplinas->retornaTodasDisciplinas() as $disciplina) {
 
             $html .= "<tr>
-                                <td>{$disciplina['id']}</td>
-                                <td>{$disciplina['nome']}</td>
-                                <td><input class=\"centralizado\" type='checkbox' name=\"disciplinas[]\" value=" . $disciplina['id'] . "></td>
+                         <td class=\"centralizado\">{$disciplina['id']}</td>
+                         <td>{$disciplina['nome']}</td>
+                         <td class=\"centralizado\"><input class=\"centralizado\" type='checkbox' name=\"disciplinas[]\" value=" . $disciplina['id'] . "></td>
                       </tr>";
         }
 
         $html .= '</table>
-           </form>';
+           </form><br><br>';
 
         $obj_response->assign("retorno", "innerHTML", $html);
     }
 
     return $obj_response;
-}
-
-// retornar uma listagem dos alunos em grid quando clicar no aluno abre a manutencao do usuario
+}// retornar uma listagem dos alunos em grid quando clicar no aluno abre a manutencao do usuario

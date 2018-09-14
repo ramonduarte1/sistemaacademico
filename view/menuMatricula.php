@@ -73,8 +73,8 @@ HTML;
     if ($tipo == 'filtrar_aluno') {
         $aluno = new Aluno();
         $alunos = $aluno->retornaAlunos($form['radio_aluno'], $form['pesq_aluno']);
-        $a = 1;
-        $html = '';
+
+        $html = '<div id="" style="overflow:scroll; height:150px;">';//scroll
         foreach ($alunos as $a) {
             $html .= '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="formIdAluno" action="" method="post">
                         <input readonly id="mat_aluno" name="mat_aluno" value="' . $a['id'] . ' " size="4">
@@ -82,16 +82,16 @@ HTML;
                         <input type="button" class="button" value="Matricular" onclick="xajax_menuMatricula(\'matricular_aluno\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
                       </form>';
         }
-
-
+        $html .='</div>';
+        
         $obj_response->assign("retorno", "innerHTML", $html);
     }
 
     if ($tipo == 'filtrar_turma') {
         $turma = new Turma();
         $turmas = $turma->retornaTurmas($form['radio_turma'], $form['pesq_turma']);
-        $a = 1;
-        $html = '';
+
+        $html = '<div id="" style="overflow:scroll; height:150px;">';//scroll
         foreach ($turmas as $t) {
             $html .= '<form class="centralizado" id="' . formIdTurma . $t['id'] . '" name="formIdAluno" action="" method="post">
                         <input readonly id="matricula" name="matricula" value="' . $t['id'] . ' " size="4">
@@ -99,6 +99,7 @@ HTML;
                         <input type="button" class="button" value="Matricular" onclick="xajax_menuMatricula(\'matricular_turma\',xajax.getFormValues(' . formIdTurma . $t['id'] . '))">
                       </form>';
         }
+        $html .='</div>';
         $obj_response->assign("retorno", "innerHTML", $html);
     }
 
@@ -115,7 +116,7 @@ HTML;
         $matricula = new Matricula();
 
         $aluno = $matricula->retornaAluno();//retorna o aluno que estar com o id salva na session
-        $html = '<table border="1">  
+        $html = '<table border="1" class="semborda">  
                   <tr>
                     <th>Matricula</th>
                     <th colspan="2">Nome</th>

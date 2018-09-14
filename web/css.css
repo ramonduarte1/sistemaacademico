@@ -85,9 +85,7 @@ table{
 
 }
 
-.semborda{
-    border: none;
-}
+.semborda{border: none;}
 
 table.bordasimples{
     border-collapse: collapse;
@@ -109,7 +107,7 @@ table.bordasimples tr td {
 }
 input{
     padding: 10px 12px;  
-    font-size: 16px;
+    font-size: 12px;
 }
 .button{
     border: black;
