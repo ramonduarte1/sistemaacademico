@@ -105,12 +105,11 @@ HTML;
                     </tr>
                     <tr>
                         <td class="direita">Telefone</td>
-                        <td><input type="text" required name="telefone" id="telefone" onkeypress="mascara(this, \'## #####-####\')" maxlength="13" value="' . $a[0]['telefone'] . '"></td>
+                        <td><input type="text" required name="telefone" id="telefone" onkeyup="mascara( this, mtel );" maxlength="15" value="' . $a[0]['telefone'] . '"></td>
                     </tr>
                     <tr>
                         <td class="direita">Turma</td>
                         <td><input type="text" readonly name="turma_id" id="turma_id" value="'.$a[0]['turma_id'].' - '.$a[0]['nome_turma'].'" size="50"></td>
-                        
                     </tr>';
         if ($a[0]['situacao'] == 'trancado') {
             $html .= '
@@ -154,11 +153,12 @@ HTML;
                     </tr>
                     <tr>
                         <td class="direita">Telefone</td>
-                        <td><input type="text" required name="telefone" onkeypress="mascara(this, '## #####-####')" maxlength="13"></td>
+                        <td><input type="text" required id="telefone" name="telefone" onkeyup="mascara( this, mtel );" maxlength="15"></td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td><input type="button" class="button" value="Salvar" onclick="xajax_salvarAluno(xajax.getFormValues('formAluno'))"></td>
+                        <td><input type="button" class="button" value="Salvar" onclick="return validarAluno()"></td>
+                        <input type="hidden" id="salvar_aluno" name="salvar_aluno" onclick="xajax_salvarAluno(xajax.getFormValues('formAluno'))">
                     </tr>
                 </table>
            </form>

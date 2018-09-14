@@ -10,7 +10,6 @@ function __autoload($class_name) {
     $diretorios = array(
         'Consultas/',
         'banco/',
-        'ajax/',
         'controller/',
         'model/',
         'view',

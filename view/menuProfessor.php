@@ -103,7 +103,7 @@ HTML;
                     </tr>
                     <tr>
                         <td class="direita">Telefone</td>
-                        <td><input type="text" required name="telefone" onkeypress="mascara(this, \'## #####-####\')" maxlength="13" value=' . $a[0]['telefone'] . '></td>
+                        <td><input type="text" required name="telefone" onkeyup="mascara( this, mtel );" maxlength="15" value="' . $a[0]['telefone'] . '"></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -136,7 +136,7 @@ HTML;
 
     if ($tipo == 'novo') {
         $html = '<form id="formProfessor" name="formProfessor" method="post">
-                <table border="1">
+                 <table class="bordasimples">
                     <tr>
                         <td class="direita">Nome</td>
                         <td colspan="2">
@@ -153,11 +153,12 @@ HTML;
                     </tr>
                     <tr>
                         <td class="direita">Telefone</td>
-                        <td colspan="2"><input type="text" required name="telefone" onkeypress="mascara(this, \'## #####-####\')" maxlength="13"></td>
+                        <td colspan="2"><input type="text" required name="telefone" onkeyup="mascara( this, mtel );" maxlength="15"></td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td colspan="2"><input type="button" class="button" value="Salvar" onclick="xajax_salvarProfessor(xajax.getFormValues(\'formProfessor\'))"></td>
+                        <td><input type="button" class="button" value="Salvar" onclick="return validarProfessor()"></td>
+                        <input type="hidden" id="salvar_professor" name="salvar_professor" onclick="xajax_salvarProfessor(xajax.getFormValues(\'formProfessor\'))">
                     </tr>
                     <tr>
                         <th colspan="3">Disciplinas</th>

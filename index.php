@@ -21,45 +21,88 @@ $xajax_js = $xajaxUtilitario->getXajax_js();
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="web/css.css">
-        <style>
+        <script type="text/javascript" src="web/funcoes.js"></script>
+        <script type="text/javascript">
+            function validarProfessor() {
+                var nome = formProfessor.nome.value;
+                var email = formProfessor.email.value;
+                var endereco = formProfessor.endereco.value;
+                var telefone = formProfessor.telefone.value;
+                if (nome == "") {
+                    alert('Preencha o campo com seu nome');
+                    formProfessor.nome.focus();
+                    return false;
+                } else if (email == "" || email.indexOf('@') == -1
+                        || email.indexOf('.') == -1) {
+                    alert('Preencha o campo com seu email corretamente');
+                    formProfessor.nome.focus();
+                    return false;
+                } else if (endereco == "") {
+                    alert('Preencha o campo com seu endereço');
+                    formProfessor.nome.focus();
+                    return false;
+                } else if (telefone == "") {
+                    alert('Preencha o campo com seu telefone');
+                    formProfessor.nome.focus();
+                    return false;
+                } else {
+                    document.getElementById("salvar_professor").click();
+                }
+            }
 
-        </style>
+            function validarDisciplina() {
+                var nome = formDisciplina.nome.value;
+                var carga_horaria = formDisciplina.carga_horaria.value;
+
+                if (nome == "") {
+                    alert('Preencha o campo nome');
+                    formDisciplina.nome.focus();
+                    return false;
+                } else if (carga_horaria == "") {
+                    alert('Preencha o campo carga horaria');
+                    formDisciplina.carga_horaria.focus();
+                    return false;
+                } else if (isNaN(carga_horaria)) {
+                    alert('Carga Horaria deve ser numerico!');
+                    formDisciplina.carga_horaria.focus();
+                    return false;
+                } else {
+                    document.getElementById("salvar_disciplina").click();
+                }
+            }
+
+            function validarTurma() {
+                var nome = formTurma.nome.value;
+
+                if (nome == "") {
+                    alert('Preencha o campo nome');
+                    formTurma.nome.focus();
+                    return false;
+                } else {
+                    document.getElementById("salvar_turma").click();
+                }
+            }
+
+
+            /* Máscaras ER */
+            function mascara(o, f) {
+                v_obj = o
+                v_fun = f
+                setTimeout("execmascara()", 1)
+            }
+            function execmascara() {
+                v_obj.value = v_fun(v_obj.value)
+            }
+            function mtel(v) {
+                v = v.replace(/\D/g, "");             //Remove tudo o que não é dígito
+                v = v.replace(/^(\d{2})(\d)/g, "($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+                v = v.replace(/(\d)(\d{4})$/, "$1-$2");    //Coloca hífen entre o quarto e o quinto dígitos
+                return v;
+            }
+        </script>
         <meta charset="UTF-8">
         <title></title>
         <?php echo $xajax_js; ?>
-        <script type="text/javascript">
-            function imprimeBoletinho() {
-                var conteudo = document.getElementById('formIncluirNotas').innerHTML,
-                        tela_impressao = window.open('about:blank');
-
-                tela_impressao.document.write(conteudo);
-                tela_impressao.window.print();
-                tela_impressao.window.close();
-            }
-        </script>
-        <script type="text/javascript">
-            function mascara(t, mask) {
-                var i = t.value.length;
-                var saida = mask.substring(1, 0);
-                var texto = mask.substring(i)
-                if (texto.substring(0, 1) != saida) {
-                    t.value += texto.substring(0, 1);
-                }
-            }
-        </script>
-        <script type="text/javascript">
-            //funcao responvalvel por perguntar o usuario se realmente quer continuar ele recebe o nome
-            // de um formulario hidden para ser clicado caso for true a resposta do ussuario
-            function confirmacao(acao) {
-                var retVal = confirm("Deseja continuar ?");
-                if (retVal == true) {
-                    document.getElementById(acao).click();// pede a confirmacao do usuario se for true passa o campo do input hidden para terminar a rotina
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        </script>
     </head>
     <body onload="xajax_menuPrincipal();">
         <div id="pagina">
@@ -78,18 +121,16 @@ $xajax_js = $xajaxUtilitario->getXajax_js();
             <div id="conteudoPagina"></div>
         </div>
     </body>
-<!--script para p dialog aluno-->
+    <!--script para p dialog aluno-->
     <script>
         (function () {
             var updateButton = document.getElementById('updateDetails');
             var cancelButton = document.getElementById('cancel');
             var favDialog = document.getElementById('favDialog');
-
             // O botão Update abre uma Dialog
             updateButton.addEventListener('click', function () {
                 favDialog.showModal();
             });
-
             // O botão cancelButtom fecha uma Dialog
             cancelButton.addEventListener('click', function () {
                 favDialog.close();

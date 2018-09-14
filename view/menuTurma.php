@@ -134,32 +134,30 @@ HTML;
         $disciplinas = $d->retornaTodasDisciplinas();
 
         $html = "<form id=\"formTurma\" name=\"formTurma\" method=\"post\">
-                    <table border=\"1\">
-                        <tr>
+                    <table class=\"bordasimples\">
+                        <tr class=\"semborda\">
                             <td class=\"direita\">Nome*</td>
                             <td colspan=\"2\">
                                 <input type=\"text\" required id=\"nome\" name=\"nome\" size=\"50\">
                             </td>
                         </tr>
-                        <tr>
+                        <tr class=\"semborda\">
                             <td></td>
-                            <td colspan=\"2\"><input type=\"button\" class=\"button\" value=\"Salvar\" onclick=\"xajax_salvarTurma(xajax.getFormValues('formTurma'))\"></td>
+                            <td colspan=\"2\"><input type=\"button\" class=\"button\" value=\"Salvar\" onclick=\"return validarTurma()\"></td>
+                            <input type=\"hidden\" id=\"salvar_turma\" name=\"salvar_turma\" onclick=\"xajax_salvarTurma(xajax.getFormValues('formTurma'))\">
                         </tr>";
-
         $html .= "<tr>
                             <th>Matricula</th>
                             <th>Nome</th>
                             <th></th>
                      </tr>";
         foreach ($disciplinas as $disciplina) {
-
             $html .= "<tr>
                                 <td>{$disciplina['id']}</td>
                                 <td>{$disciplina['nome']}</td>
                                 <td><input class=\"centralizado\" type='checkbox' name=\"disciplinas[]\" value=" . $disciplina['id'] . "></td>
             </tr>";
         }
-
         $htm .= "   </table>
 </form>";
 

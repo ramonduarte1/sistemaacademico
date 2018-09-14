@@ -127,7 +127,8 @@ HTML;
                     </tr>
                     <tr>
                         <td></td>
-                        <td><input type="button" class="button" value="Salvar" onclick="xajax_salvarDisciplina(xajax.getFormValues('formDisciplina'))"></td>
+                        <td><input type="button" class="button" value="Salvar" onclick="return validarDisciplina()"></td>
+                        <input type="hidden" id="salvar_disciplina" nome="salvar_disciplina" onclick="xajax_salvarDisciplina(xajax.getFormValues('formDisciplina'))">
                     </tr>
                 </table>
            </form>
