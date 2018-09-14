@@ -21,7 +21,7 @@ function menuMatricula($tipo, $form) {
                         <input required="" type="text" size="50" id="pesq_aluno" name="pesq_aluno">
                     </td>
                     <td>
-                        <input type="button" value="Pesquisar" onclick="xajax_menuMatricula('filtrar_aluno', xajax.getFormValues('formPesquisa'))">
+                        <input type="button" class="button" value="Pesquisar" onclick="xajax_menuMatricula('filtrar_aluno', xajax.getFormValues('formPesquisa'))">
                     </td>
                 </tr>
                 <tr>
@@ -45,7 +45,7 @@ function menuMatricula($tipo, $form) {
                         <input required="" type="text" size="50" id="pesq_turma" name="pesq_turma">
                     </td>
                     <td>
-                         <input type="button" value="Pesquisar" onclick="xajax_menuMatricula('filtrar_turma', xajax.getFormValues('formPesquisaTurma'))">
+                         <input type="button" class="button" value="Pesquisar" onclick="xajax_menuMatricula('filtrar_turma', xajax.getFormValues('formPesquisaTurma'))">
                     </td>
                 </tr>
                 <tr>
@@ -79,7 +79,7 @@ HTML;
             $html .= '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="formIdAluno" action="" method="post">
                         <input readonly id="mat_aluno" name="mat_aluno" value="' . $a['id'] . ' " size="4">
                         <input readonly id="nome" name="nome" value="' . $a['nome'] . '">
-                        <input readonly type="button" value="Matricular" onclick="xajax_menuMatricula(\'matricular_aluno\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
+                        <input type="button" class="button" value="Matricular" onclick="xajax_menuMatricula(\'matricular_aluno\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
                       </form>';
         }
 
@@ -96,7 +96,7 @@ HTML;
             $html .= '<form class="centralizado" id="' . formIdTurma . $t['id'] . '" name="formIdAluno" action="" method="post">
                         <input readonly id="matricula" name="matricula" value="' . $t['id'] . ' " size="4">
                         <input readonly id="nome" name="nome" value="' . $t['nome'] . '">
-                        <input type="button" value="Matricular" onclick="xajax_menuMatricula(\'matricular_turma\',xajax.getFormValues(' . formIdTurma . $t['id'] . '))">
+                        <input type="button" class="button" value="Matricular" onclick="xajax_menuMatricula(\'matricular_turma\',xajax.getFormValues(' . formIdTurma . $t['id'] . '))">
                       </form>';
         }
         $obj_response->assign("retorno", "innerHTML", $html);
@@ -192,7 +192,7 @@ HTML;
                     </tr>
                     <tr>
                         <td></td>
-                        <td><input type="button" value="Salvar" onclick="xajax_atualizarDisciplina(xajax.getFormValues('formDisciplina'))"></td>
+                        <td><input type="button" class="button" value="Salvar" onclick="xajax_atualizarDisciplina(xajax.getFormValues('formDisciplina'))"></td>
                     </tr>
                 </table>
            </form>
@@ -220,7 +220,7 @@ HTML;
                     </tr>
                     <tr>
                         <td></td>
-                        <td><input type="button" value="Salvar" onclick="xajax_salvarDisciplina(xajax.getFormValues('formDisciplina'))"></td>
+                        <td><input type="button" class="button" value="Salvar" onclick="xajax_salvarDisciplina(xajax.getFormValues('formDisciplina'))"></td>
                     </tr>
                 </table>
            </form>

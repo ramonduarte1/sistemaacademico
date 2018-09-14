@@ -107,14 +107,25 @@ input{
     padding: 10px 12px;  
     font-size: 16px;
 }
-button{
-    border: none;
+.button{
+    border: black;
     color: back;
     padding: 10px 12px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;   
+}
+button{
+    border: black;
+    color: back;
+    padding: 10px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
     margin: 4px 2px;
     cursor: pointer;   
 }
@@ -138,23 +149,4 @@ body {
 .logincentro{
     padding-top: 20px;
     align-content: center;
-}
-
-/*dialog*/
-dialog {
-    width: 40%;
-    margin-top: 100px;
-    background: lightgray;
-    border: 4px solid #1c87c9;
-}
-button {
-    padding: 10px;
-    outline: none;
-    background: #1c87c9;
-    color: white;
-    font-size: 16px;
-    font-weight: 500;
-}
-span {
-    color: red;
 }

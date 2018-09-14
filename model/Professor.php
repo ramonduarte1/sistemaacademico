@@ -18,9 +18,7 @@ class Professor extends Pessoa {
 
     function __construct() {
         $this->conexao = new Conexao();
-        if (!session_status()) {
-            session_start();
-        }
+        $this->disciplinas = array();
     }
 
     function getDisciplinas() {
@@ -94,9 +92,29 @@ class Professor extends Pessoa {
         $insert->execute($bind);
 
         if ($insert != FALSE) {
-            return "Professor alterado com sucesso!";
+            //apaga o registro anterior para gravar as novas disciplinas
+            $sql = "delete from professor_disciplina where professor_id = " . $this->getMatricula() . "";
+            $this->conexao->query($sql);
+
+            foreach ($this->getDisciplinas() as $idDisciplina) {
+                $sql = "INSERT INTO professor_disciplina VALUES (:professor_id,:disciplina_id)";
+                $insert = $this->conexao->prepare($sql);
+
+                date_default_timezone_set('America/Sao_Paulo');
+                $date = date('Y-m-d H:i');
+
+                $bind = array
+                    (
+                    ':professor_id' => $this->getMatricula(),
+                    ':disciplina_id' => $idDisciplina
+                );
+
+                $insert->execute($bind);
+            }
+
+            return "alert('Turma alterada com sucesso!');";
         } else {
-            return "Ocorreu um erro ao alterar!";
+            return "alert('Ocorreu um erro ao alterar!!');";
         }
     }
 
@@ -106,7 +124,7 @@ class Professor extends Pessoa {
         $insert = $this->conexao->query($sql);
 
         if ($insert->rowCount() > 0) {// se o aluno tiver matricula ativa
-            echo "<script>alert('Professor não pode ser deletado!');location.href=\"../view/consulta_professor.php\"</script> ";
+            return 'alert("O registro não pode ser deletado!");';
         } else {
             $sql = "UPDATE professor SET deletado = :deletado, usuario_altera = :usuario_altera, data_altera = :data_altera WHERE id = :id";
             $insert = $this->conexao->prepare($sql);
@@ -122,9 +140,9 @@ class Professor extends Pessoa {
             );
             $insert->execute($bind);
             if ($insert != FALSE) {
-                return "Professor apagado com sucesso!";
+                return 'alert("Registro deletado com sucesso!");document.getElementById("'.'formIdProfessor'.$this->getMatricula().'").style.visibility = "hidden"';
             } else {
-                echo "Ocorreu um erro!";
+                echo 'alert("Ocorreu um erro ao deletar o registro!");';
             }
         }
     }
@@ -132,7 +150,7 @@ class Professor extends Pessoa {
     public function retornaProfessores($tipo, $pesquisa) {
 
         if ($tipo == '1') {//professor por nome
-            $sql = "select *from professor where nome like '%$pesquisa%' and professor.deletado = 'n'";
+            $sql = "select *from professor where nome like '%$pesquisa%' and professor.deletado = 'n' order by id asc";
 //          $sql = "select *from professor inner join turma_professor on (professor.id = turma_professor.professor_id) where professor.nome like '%$pesquisa%' and professor.deletado = 'n'";
         } else {//professor por matricula
             $sql = "select *from professor where id = '$pesquisa' and professor.deletado = 'n'";
@@ -162,7 +180,7 @@ class Professor extends Pessoa {
     public function retornaDisciplinasDoProfessor() {
         $sql = "select professor.id id_prof, professor.nome nome_prof , disciplina.id id_disc ,disciplina.nome nome_disc, disciplina.carga_horaria from professor "
                 . "inner join professor_disciplina on (professor.id = professor_disciplina.professor_id) "
-                . "inner join disciplina on (disciplina.id = professor_disciplina.disciplina_id)";
+                . "inner join disciplina on (disciplina.id = professor_disciplina.disciplina_id) order by disciplina.nome";
 
         $consulta = $this->conexao->query($sql);
         $array = array();

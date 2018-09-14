@@ -20,26 +20,26 @@ function menuProfessor($tipo, $form) {
                     <input required="" type="text" size="50" id="pesq_professor" name="pesq_professor">
                 </td>
                 <td>
-                    <input type="button" value="Pesquisar" onclick="xajax_menuProfessor('filtrar', xajax.getFormValues('formPesquisa'))">
+                    <input type="button" class="button" value="Pesquisar" onclick="xajax_menuProfessor('filtrar', xajax.getFormValues('formPesquisa'))">
                 </td>
             </tr>
             <tr>
                 <td></td>
                 <td class="esquerda">
-                    <input type="radio" id="radio" value="1" name="radio"> Pesquisar por nome
+                    <input type="radio" id="radio" value="1" name="radio" checked> Pesquisar por nome
                 </td>
             </tr>
             <tr>
                 <td></td>
                 <td class="esquerda">
-                    <input type="radio" id="radio" value="2" name="radio" checked> Pesquisar por matricula
+                    <input type="radio" id="radio" value="2" name="radio" > Pesquisar por matricula
                 </td>
             </tr>
         </table>
             <hr />
                 <div class='centralizado'>
-                    <input type="button" value="Novo" onclick="xajax_menuProfessor('novo')">
-                    <input type="button" value="Limpar" onclick="xajax_menuProfessor('pesquisa')">
+                    <input type="button" class="button" value="Novo" onclick="xajax_menuProfessor('novo')">
+                    <input type="button" class="button" value="Limpar" onclick="xajax_menuProfessor('pesquisa')">
                 </div>
         </form>
         <hr />
@@ -56,11 +56,11 @@ HTML;
         $html = '';
         foreach ($professores as $p) {
             $html .= '<form class="centralizado" id="' . formIdProfessor . $p['id'] . '" name="' . formIdProfessor . $p['id'] . '" action="" method="post">
-                        <input readonly id="matricula" name="matricula" value="' . $p['id'] . ' " size="4">
+                        <input readonly id="matricula" name="matricula" value="' . $p['id'] . '" size="4">
                         <input readonly id="nome" name="nome" value="' . $p['nome'] . '">
-                        <input readonly type="button" value="Editar" onclick="xajax_menuProfessor(\'editar\',xajax.getFormValues(' . formIdProfessor . $p['id'] . '))">
-                        <input readonly type="button" value="Apagar"  onclick="confirmacao(\''.apagar_professor. $p['id'].'\');">
-                        <input type="hidden" id="'.'apagar_professor' . $p['id'].'" name="'.'apagar_professor' . $p['id'].'" onclick="xajax_apagarProfessor(xajax.getFormValues(' . formIdProfessor . $p['id'] . '))">
+                        <input readonly type="button" class="button" value="Editar" onclick="xajax_menuProfessor(\'editar\',xajax.getFormValues(' . formIdProfessor . $p['id'] . '))">
+                        <input readonly type="button" class="button" value="Apagar"  onclick="confirmacao(\'' . apagar_professor . $p['id'] . '\');">
+                        <input type="hidden" id="' . 'apagar_professor' . $p['id'] . '" name="' . 'apagar_professor' . $p['id'] . '" onclick="xajax_apagarProfessor(xajax.getFormValues(' . formIdProfessor . $p['id'] . '))">
                       </form>';
         }
 
@@ -74,41 +74,63 @@ HTML;
         $professor->setMatricula($matricula);
         $a = $professor->retornaProfessor();
 
+        $d = new Disciplina();
+        $disciplinas = $d->retornaTodasDisciplinas();
+        $matriculadas = $d->retornaDisciplinasPorProfessor($form['matricula']);
 
-        $html = <<<HTML
-            <form id="formProfessor" name="formProfessor" method="post">
+
+        $html = '<form id="formProfessor" name="formProfessor" method="post">
                 <table>
                     <tr>
                         <td class="direita">Matricula</td>
                         <td>
-                            <input type="text" required name="matricula" size="4" value="{$a[0]['id']}">
+                            <input type="text" required name="matricula" size="4" value=' . $a[0]['id'] . '>
                         </td>
                     </tr>
                     <tr>
                         <td class="direita">Nome</td>
                         <td>
-                            <input type="text" required name="nome" size="50" value="{$a[0]['nome']}">
+                            <input type="text" required name="nome" size="50" value=' . $a[0]['nome'] . '>
                         </td>
                     </tr>
                     <tr>
                         <td class="direita">Email</td>
-                        <td><input type="email" required name="email" size="50" value="{$a[0]['email']}"></td>
+                        <td><input type="email" required name="email" size="50" value=' . $a[0]['email'] . '></td>
                     </tr>
                     <tr>
                         <td class="direita">Endereço</td>
-                        <td><input type="text" required name="endereco" size="50" value="{$a[0]['endereco']}"></td>
+                        <td><input type="text" required name="endereco" size="50" value=' . $a[0]['endereco'] . '></td>
                     </tr>
                     <tr>
                         <td class="direita">Telefone</td>
-                        <td><input type="text" required name="telefone" onkeypress="mascara(this, '## #####-####')" maxlength="13" value="{$a[0]['telefone']}"></td>
+                        <td><input type="text" required name="telefone" onkeypress="mascara(this, \'## #####-####\')" maxlength="13" value=' . $a[0]['telefone'] . '></td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td><input type="button" value="Salvar" onclick="xajax_atualizarProfessor(xajax.getFormValues('formProfessor'))"></td>
+                        <td><input type="button" class="button" value="Salvar" onclick="xajax_atualizarProfessor(xajax.getFormValues(\'formProfessor\'))"></td>
                     </tr>
-                </table>
-           </form>
-HTML;
+                    <tr>
+                        <th colspan="3">Disciplinas</th>
+                    </tr>';
+        foreach ($disciplinas as $disciplina) {
+
+            $html .= " <tr>
+                            <td>{$disciplina['id']}</td>
+                            <td>{$disciplina['nome']}</td>";
+
+            if (in_array($disciplina['id'], array_column($matriculadas, 'disciplina_id'))) { //verifica se essa disciplina estar matriculada nessa turma
+                $html .= "<td><input class=\"centralizado\" type='checkbox' name=\"disciplinas[]\" value=" . $disciplina['id'] . " checked></td>"; //se true deixa marcado
+            } else {
+                $html .= "<td><input class=\"centralizado\" type='checkbox' name=\"disciplinas[]\" value=" . $disciplina['id'] . "></td>";
+            }
+        }
+
+
+        $html .= "</tr></table>";
+
+        $html .= '</table>
+               </form>';
+
         $obj_response->assign("retorno", "innerHTML", $html);
     }
 
@@ -135,13 +157,13 @@ HTML;
                     </tr>
                     <tr>
                         <td></td>
-                        <td colspan="2"><input type="button" value="Salvar" onclick="xajax_salvarProfessor(xajax.getFormValues(\'formProfessor\'))"></td>
+                        <td colspan="2"><input type="button" class="button" value="Salvar" onclick="xajax_salvarProfessor(xajax.getFormValues(\'formProfessor\'))"></td>
                     </tr>
                     <tr>
                         <th colspan="3">Disciplinas</th>
                     </tr>';
         $disciplinas = new Disciplina();
-        
+
         foreach ($disciplinas->retornaTodasDisciplinas() as $disciplina) {
 
             $html .= "<tr>

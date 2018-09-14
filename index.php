@@ -11,7 +11,6 @@ require './view/menuTurma.php';
 require './view/menuMatricula.php';
 require './view/menuRelatorio.php';
 require './view/menuLancaNota.php';
-
 require './util/XajaxUtil.php';
 
 session_start();
@@ -60,7 +59,6 @@ $xajax_js = $xajaxUtilitario->getXajax_js();
                     return false;
                 }
             }
-
         </script>
     </head>
     <body onload="xajax_menuPrincipal();">
@@ -72,7 +70,7 @@ $xajax_js = $xajaxUtilitario->getXajax_js();
                 '<fieldset>
                         <h3>Seu navegador está com o JavaScript desativado, por favor ative para o melhor funcionamento do sistema.</h3>
                         Depois de ativar o JavaScript clique <a href=\'index.php\'>aqui</a>.
-                    </fieldset>';
+                 </fieldset>';
                 ?>
                 </noscript>
             </div>
@@ -80,6 +78,24 @@ $xajax_js = $xajaxUtilitario->getXajax_js();
             <div id="conteudoPagina"></div>
         </div>
     </body>
+<!--script para p dialog aluno-->
+    <script>
+        (function () {
+            var updateButton = document.getElementById('updateDetails');
+            var cancelButton = document.getElementById('cancel');
+            var favDialog = document.getElementById('favDialog');
+
+            // O botão Update abre uma Dialog
+            updateButton.addEventListener('click', function () {
+                favDialog.showModal();
+            });
+
+            // O botão cancelButtom fecha uma Dialog
+            cancelButton.addEventListener('click', function () {
+                favDialog.close();
+            });
+        })();
+    </script>
 </html>
 <?php
 //dialog xajax para exibir a lista de alunos e turmas?>

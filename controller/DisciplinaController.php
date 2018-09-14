@@ -62,9 +62,7 @@ class DisciplinaController {
         $this->discplina = new Disciplina();
         $this->discplina->setCodigo($form['matricula']);
 
-        $result = $this->discplina->apagar();
-
-        $this->objResponse->alert($result);
+        $this->objResponse->script($this->discplina->apagar());
         return $this->objResponse;
     }
 

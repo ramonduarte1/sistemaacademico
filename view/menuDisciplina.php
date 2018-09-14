@@ -12,15 +12,14 @@ function menuDisciplina($tipo, $form) {
     if ($tipo == 'pesquisa') {
         $html = <<<HTML
         <h2 class="centralizado">Cadastro Disciplina</h2><br><br>
+        <form id="formPesquisa" name="formPesquisa">     
         <table border="0">
             <tr>
                 <td colspan="3">
-                <form id="formPesquisa" name="formPesquisa">
                     <input required="" type="text" size="50" id="pesq_disciplina" name="pesq_disciplina">
-                </form>
                 </td>
                 <td>
-                     <input type="button" value="Pesquisar" onclick="xajax_menuDisciplina('filtrar', xajax.getFormValues('formPesquisa'))">
+                     <input type="button" class="button" value="Pesquisar" onclick="xajax_menuDisciplina('filtrar', xajax.getFormValues('formPesquisa'))">
                 </td>
             </tr>
             <tr>
@@ -33,17 +32,18 @@ function menuDisciplina($tipo, $form) {
                 </td>
             </tr>
             <tr>
-                <td>
+               <!-- <td>
                     <input type="radio" id="radio" value="3" name="radio" >Professor
                 </td>
                 <td>
                     <input type="radio" id="radio" value="4" name="radio" >Aluno
-                </td>
+                </td>-->
         </table>
+        </form>
         <hr/>
             <div class="centralizado">
-                <input type="button" value="Novo" onclick="xajax_menuDisciplina('novo')">
-                <input type="button" value="Limpar" onclick="xajax_menuDisciplina('pesquisa')">
+                <input type="button" class="button" value="Novo" onclick="xajax_menuDisciplina('novo')">
+                <input type="button" class="button" value="Limpar" onclick="xajax_menuDisciplina('pesquisa')">
             </div>
         <hr/>
         <br>
@@ -59,10 +59,10 @@ HTML;
         $html = '';
         foreach ($disciplinas as $d) {
             $html .= '<form class="centralizado" id="' . formIdDisciplina . $d['id'] . '" name="' . formIdDisciplina . $d['id'] . '" action="" method="post">
-                        <input readonly id="matricula" name="matricula" value="' . $d['id'] . ' " size="4">
+                        <input readonly id="matricula" name="matricula" value="' . $d['id'] . '" size="4">
                         <input readonly id="nome" name="nome" value="' . $d['nome'] . '">
-                        <input type="button" value="Editar" onclick="xajax_menuDisciplina(\'editar\',xajax.getFormValues(' . formIdDisciplina . $d['id'] . '))">
-                        <input type="button" value="Apagar" onclick="confirmacao(\''.apagar_disciplina. $d['id'].'\');">
+                        <input type="button" class="button" value="Editar" onclick="xajax_menuDisciplina(\'editar\',xajax.getFormValues(' . formIdDisciplina . $d['id'] . '))">
+                        <input type="button" class="button" value="Apagar" onclick="confirmacao(\''.apagar_disciplina. $d['id'].'\');">
                         <input type="hidden" id="'.'apagar_disciplina' . $d['id'].'" name="'.'apagar_disciplina' . $d['id'].'"  onclick="xajax_apagarDisciplina(xajax.getFormValues(' . formIdDisciplina . $d['id'] . '))">
                       </form>';
         }
@@ -99,7 +99,7 @@ HTML;
                     </tr>
                     <tr>
                         <td></td>
-                        <td><input type="button" value="Salvar" onclick="xajax_atualizarDisciplina(xajax.getFormValues('formDisciplina'))"></td>
+                        <td><input type="button" class="button" value="Salvar" onclick="xajax_atualizarDisciplina(xajax.getFormValues('formDisciplina'))"></td>
                     </tr>
                 </table>
            </form>
@@ -127,7 +127,7 @@ HTML;
                     </tr>
                     <tr>
                         <td></td>
-                        <td><input type="button" value="Salvar" onclick="xajax_salvarDisciplina(xajax.getFormValues('formDisciplina'))"></td>
+                        <td><input type="button" class="button" value="Salvar" onclick="xajax_salvarDisciplina(xajax.getFormValues('formDisciplina'))"></td>
                     </tr>
                 </table>
            </form>

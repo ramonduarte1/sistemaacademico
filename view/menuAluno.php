@@ -20,13 +20,13 @@ function menuAluno($tipo, $form) {
                     <input required="" type="text" size="50" id="pesq_aluno" name="pesq_aluno">
                 </td>
                 <td>
-                    <input type="button" value="Pesquisar" onclick="xajax_menuAluno('filtrar', xajax.getFormValues('formPesquisa'))">
+                    <input type="button" class="button" value="Pesquisar" onclick="xajax_menuAluno('filtrar', xajax.getFormValues('formPesquisa'))">
                 </td>
             </tr>
             <table border='0'>
                 <tr>
                     <td class="esquerda">
-                        <input type="radio" id="radio" value="1" name="radio"> Aluno por nome
+                        <input type="radio" id="radio" value="1" name="radio" checked> Aluno por nome
                     </td>
                     <td class="esquerda">
                         <input type="radio" id="radio" value="2" name="radio" > Aluno por matricula
@@ -34,7 +34,7 @@ function menuAluno($tipo, $form) {
                 </tr>
                 <tr>
                     <td class="esquerda">
-                        <input type="radio" id="radio" value="3" name="radio" checked> Não matriculado por nome
+                        <input type="radio" id="radio" value="3" name="radio"> Não matriculado por nome
                     </td>
                     <td class="esquerda">
                         <input type="radio" id="radio" value="4" name="radio" > Não matriculado por matricula
@@ -47,8 +47,8 @@ function menuAluno($tipo, $form) {
         </table>
             <hr />
             <div class='centralizado'>
-                <input  type="button" value="Novo" onclick="xajax_menuAluno('novo')">
-                <input  type="button" value="Limpar" onclick="xajax_menuAluno('pesquisa')">
+                <input  type="button" class="button" value="Novo" onclick="xajax_menuAluno('novo')">
+                <input  type="button" class="button" value="Limpar" onclick="xajax_menuAluno('pesquisa')">
             </div>
         </form>
         <hr />
@@ -64,11 +64,11 @@ HTML;
 
         $html = '';
         foreach ($alunos as $a) {
-            $html .= '<form class="centralizado" id="'.formIdAluno.$a['id'].'" name="'.formIdAluno.$a['id'].'" action="" method="post">
-                        <input readonly id="matricula" name="matricula" value="' . $a['id'] . ' " size="4">
+            $html .= '<form class="centralizado" id="'.formIdAluno.$a['id'] .'" name="'.formIdAluno.$a['id'] .'" action="" method="post">
+                        <input readonly id="matricula" name="matricula" value="'.$a['id'].'" size="4">
                         <input readonly id="nome" name="nome" value="' . $a['nome'] . '">
-                        <input readonly type="button" value="Editar" onclick="xajax_menuAluno(\'editar\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
-                        <input readonly type="button" value="Apagar"  onclick="confirmacao(\''.apagar_aluno. $a['id'].'\');">
+                        <input readonly type="button" class="button" value="Editar" onclick="xajax_menuAluno(\'editar\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
+                        <input readonly type="button" class="button" value="Apagar"  onclick="confirmacao(\''.apagar_aluno. $a['id'].'\');">
                         <input type="hidden" id="'.'apagar_aluno' . $a['id'].'" name="'.'apagar_aluno' . $a['id'].'"  onclick="xajax_apagarAluno(xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
                       </form>';
         }
@@ -76,12 +76,11 @@ HTML;
     }
 
     if ($tipo == 'editar') {
-//        onclick="xajax_apagarAluno(xajax.getFormValues(' . formIdAluno . $a['id'] . '))"
         $aluno = new Aluno();
         $matricula = $form['matricula'];
         $aluno->setMatricula($matricula);
         $a = $aluno->retornaAluno();
-
+        
         $html = '<form id="formAluno" name="formAluno" method="post">
                 <table>
                     <tr>
@@ -128,7 +127,7 @@ HTML;
         }
         $html .= '  <tr>
                         <td></td>
-                        <td><input type="button" value="Salvar" onclick="xajax_atualizarAluno(xajax.getFormValues(\'formAluno\'))"></td>
+                        <td><input type="button" class="button" value="Salvar" onclick="xajax_atualizarAluno(xajax.getFormValues(\'formAluno\'))"></td>
                     </tr>
                 </table>
            </form>';
@@ -159,7 +158,7 @@ HTML;
                     </tr>
                     <tr>
                         <td></td>
-                        <td><input type="button" value="Salvar" onclick="xajax_salvarAluno(xajax.getFormValues('formAluno'))"></td>
+                        <td><input type="button" class="button" value="Salvar" onclick="xajax_salvarAluno(xajax.getFormValues('formAluno'))"></td>
                     </tr>
                 </table>
            </form>

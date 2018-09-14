@@ -89,7 +89,8 @@ class Aluno extends Pessoa {
             $insert->execute($bind);
 
             if ($insert != FALSE) {
-                return "alert('Aluno deletado com sucesso!');document.getElementById(\"formAluno\").reset();";
+                $matricula = $this->getMatricula();
+                return 'alert("Aluno deletado com sucesso!");document.getElementById("'.'formIdAluno'.$matricula.'").style.visibility = "hidden"';
             } else {
                 return "alert('Erro ao deletar!');document.getElementById(\"formAluno\").reset();";
             }
@@ -206,7 +207,7 @@ class Aluno extends Pessoa {
         foreach ($this->conexao->query($sql) as $aluno) {
             array_push($array, $aluno);
         }
-
+  
         if ($array[0]['turma_id'] != NULL) {// se o aluno for matriculado retorna novamente com os dados da turma
             $sql = "select aluno.id,aluno.nome,aluno.email,aluno.endereco,aluno.telefone,aluno.turma_id, turma.nome nome_turma from aluno "
                     . "inner join turma on(aluno.turma_id = turma.id) where aluno.id = '$id' and aluno.deletado = 'n'";
@@ -241,16 +242,16 @@ class Aluno extends Pessoa {
 
     public function matriculados($form) {
         if ($form['radio'] == 1) {//matriculado
-            $sql = "select *from aluno where turma_id notnull and aluno.deletado = 'n' ORDER BY id ASC";
+            $sql = "select *from aluno where turma_id notnull and aluno.deletado = 'n' ORDER BY nome";
         }
         if ($form['radio'] == 2) {//nao matriculado
-            $sql = "select *from aluno where turma_id is null and aluno.deletado = 'n' ORDER BY id ASC";
+            $sql = "select *from aluno where turma_id is null and aluno.deletado = 'n' ORDER BY nome";
         }
         if ($form['radio'] == 3) {
-            $sql = "select *from aluno where turma_id notnull and aluno.deletado = 'n' ORDER BY id ASC";
+            $sql = "select *from aluno where turma_id notnull and aluno.deletado = 'n' ORDER BY nome";
         }
         if ($form['radio'] == 4) {
-            $sql = "select *from aluno where turma_id notnull and aluno.deletado = 'n' ORDER BY id ASC";
+            $sql = "select *from aluno where turma_id notnull and aluno.deletado = 'n' ORDER BY nome";
         }
         $insert = $this->conexao->query($sql);
         $array = array();

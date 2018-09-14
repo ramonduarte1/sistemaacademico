@@ -32,7 +32,7 @@ class ProfessorController {
 
     public function salvarProfessor($form) {
         $this->disciplinas = $form['disciplinas'];
-        
+
         $this->professor = new Professor();
         $this->professor->setDisciplinas($this->disciplinas);
         $this->professor->setNome($form['nome']);
@@ -47,17 +47,24 @@ class ProfessorController {
     }
 
     public function atualizarProfessor($form) {
-
+        
+        $disciplinas = array();
+        foreach ($form['disciplinas'] as $id) {
+            array_push($disciplinas, $id);
+        }
+        
         $this->professor = new Professor();
         $this->professor->setMatricula($form['matricula']);
         $this->professor->setNome($form['nome']);
         $this->professor->setTelefone($form['telefone']);
         $this->professor->setEmail($form['email']);
         $this->professor->setEndereco($form['endereco']);
+        $this->professor->setDisciplinas($disciplinas);
+
 
         $result = $this->professor->atualizar();
 
-        $this->objResponse->alert($result);
+        $this->objResponse->script($result);
         return $this->objResponse;
     }
 
@@ -66,9 +73,7 @@ class ProfessorController {
         $this->professor = new Professor();
         $this->professor->setMatricula($form['matricula']);
 
-        $result = $this->professor->apagar();
-
-        $this->objResponse->alert($result);
+        $this->objResponse->script($this->professor->apagar());
         return $this->objResponse;
     }
 

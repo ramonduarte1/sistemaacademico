@@ -20,7 +20,7 @@ function menuLancaNota($tipo, $form) {
                             <input required="" type="text" size="50" id="pesq_aluno" name="pesq_aluno">
                         </td>
                         <td>
-                            <input type="button" value="Pesquisar" onclick="xajax_menuLancaNota('filtrar', xajax.getFormValues('formPesquisa'))">
+                            <input type="button" class="button" value="Pesquisar" onclick="xajax_menuLancaNota('filtrar', xajax.getFormValues('formPesquisa'))">
                         </td>
                 </tr>
                <table border='0'>
@@ -54,8 +54,8 @@ HTML;
             $html .= '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="formIdAluno" action="" method="post">
                         <input readonly id="matricula" name="matricula" value="' . $a['id'] . ' " size="4">
                         <input readonly id="nome" name="nome" value="' . $a['nome'] . '">
-                        <input readonly type="button" value="Incluir Notas" onclick="xajax_menuLancaNota(\'incluir_notas\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
-                        <input readonly type="button" value="Imprimir Boletinho" onclick="xajax_menuLancaNota(\'incluir_notas\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
+                        <input readonly type="button"  class="button" value="Incluir Notas" onclick="xajax_menuLancaNota(\'incluir_notas\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
+                        <input readonly type="button"  class="button" value="Imprimir Boletinho" onclick="xajax_menuLancaNota(\'incluir_notas\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
                       </form>';
         }
 

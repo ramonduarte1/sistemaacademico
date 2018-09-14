@@ -13,14 +13,14 @@ function menuTurma($tipo, $form) {
     if ($tipo == 'pesquisa') {
         $html = <<<HTML
         <h2 class="centralizado">Cadastro Turma</h2><br><br>
-        <form id="formPesquisa" name="formPesquisa">     
+        <form id="formPesquisa" name="formPesquisa" methd="post">     
             <table border="0">
             <tr>
                 <td colspan="3">
                     <input required="" type="text" size="50" id="pesq_turma" name="pesq_turma">
                 </td>
                 <td>
-                     <input type="button" value="Pesquisar" onclick="xajax_menuTurma('filtrar', xajax.getFormValues('formPesquisa'))">
+                     <input type="button" class="button" value="Pesquisar" onclick="xajax_menuTurma('filtrar', xajax.getFormValues('formPesquisa'))">
                 </td>
             </tr>
             <tr>
@@ -42,8 +42,8 @@ function menuTurma($tipo, $form) {
         </table>
         <hr/>
                 <div class="centralizado">
-                    <input type="button" value="Novo" onclick="xajax_menuTurma('novo')"> &nbsp &nbsp
-                    <input type="button" value="Limpar" onclick="xajax_menuTurma('pesquisa')">
+                    <input type="button" class="button" value="Novo" onclick="xajax_menuTurma('novo')"> &nbsp &nbsp
+                    <input type="button" class="button" value="Limpar" onclick="xajax_menuTurma('pesquisa')">
                 </div>
         </form>
         <hr/>
@@ -61,10 +61,10 @@ HTML;
         $html = '';
         foreach ($turmas as $t) {
             $html .= '<form class="centralizado" id="' . formIdTurma . $t['id'] . '" name="' . formIdTurma . $t['id'] . '" action="" method="post">
-                        <input readonly id="matricula" name="matricula" value="' . $t['id'] . ' " size="4">
+                        <input readonly id="matricula" name="matricula" value="' . $t['id'] . '" size="4">
                         <input readonly id="nome" name="nome" value="' . $t['nome'] . '">
-                        <input type="button" value="Editar" onclick="xajax_menuTurma(\'editar\',xajax.getFormValues(' . formIdTurma . $t['id'] . '))">
-                        <input type="button" value="Apagar" onclick="confirmacao(\''.apagar_turma. $t['id'].'\');">
+                        <input type="button" class="button" value="Editar" onclick="xajax_menuTurma(\'editar\',xajax.getFormValues(' . formIdTurma . $t['id'] . '))">
+                        <input type="button" class="button" value="Apagar" onclick="confirmacao(\''.apagar_turma. $t['id'].'\');">
                         <input type="hidden" id="'.'apagar_turma' . $t['id'].'" name="'.'apagar_turma' . $t['id'].'"  onclick="xajax_apagarTurma(xajax.getFormValues(' . formIdTurma . $t['id'] . '))">
                       </form>';
         }
@@ -98,7 +98,7 @@ HTML;
                     </tr>
                     <tr>
                         <td colspan='2'></td>
-                        <td><input class='direita' type=\"button\" value=\"Salvar\" onclick=\"xajax_atualizarTurma(xajax.getFormValues('formTurma'))\"></td>
+                        <td><input class='direita' type=\"button\" class=\"button\" value=\"Salvar\" onclick=\"xajax_atualizarTurma(xajax.getFormValues('formTurma'))\"></td>
                     </tr>
                     <table border=\"1\">
                     <tr><th colspan='3'>Disciplinas</th></tr>
@@ -143,7 +143,7 @@ HTML;
                         </tr>
                         <tr>
                             <td></td>
-                            <td colspan=\"2\"><input type=\"button\" value=\"Salvar\" onclick=\"xajax_salvarTurma(xajax.getFormValues('formTurma'))\"></td>
+                            <td colspan=\"2\"><input type=\"button\" class=\"button\" value=\"Salvar\" onclick=\"xajax_salvarTurma(xajax.getFormValues('formTurma'))\"></td>
                         </tr>";
 
         $html .= "<tr>

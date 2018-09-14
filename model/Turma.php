@@ -23,9 +23,6 @@ class Turma {
     function __construct() {
         $this->conexao = new Conexao();
         $this->disciplinas = array();
-        if (!isset($_SESSION)) {
-            session_start();
-        }
     }
 
     function getDisciplinas() {
@@ -160,7 +157,7 @@ class Turma {
         $insert = $this->conexao->query($sql);
 
         if ($insert->rowCount() > 0) {// se existir turma com matriculas ativa
-            return "alert('Turma não pode ser deletado!');";
+            return "alert('Registro não pode ser deletado!');";
         } else {
             $sql = "UPDATE turma SET deletado = :deletado,data_altera = :data_altera, usuario_altera = :usuario_altera WHERE id = :id";
             $insert = $this->conexao->prepare($sql);
@@ -178,7 +175,7 @@ class Turma {
             $insert->execute($bind);
 
             if ($insert != FALSE) {
-                return "alert('Turma apagado com sucesso!');";
+                return 'alert("Registro deletado com sucesso!");document.getElementById("'.'formIdTurma'.$this->getCodigo().'").style.visibility = "hidden"';
             } else {
                 return "alert('Ocorreu um erro ao inserir!');";
             }
@@ -188,7 +185,7 @@ class Turma {
     public function retornaTurmas($tipo, $pesquisa) {
 
         if ($tipo == '1') {// nome
-            $sql = "select *from turma where turma.nome like '%$pesquisa%' and turma.deletado = 'n'";
+            $sql = "select *from turma where turma.nome like '%$pesquisa%' and turma.deletado = 'n' order by id";
         }
         if ($tipo == '2') {// codigo
             $sql = "select *from turma where turma.id = " . $pesquisa . " and turma.deletado = 'n'";

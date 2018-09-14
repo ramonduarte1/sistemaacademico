@@ -17,9 +17,6 @@ class AlunoController {
     private $objResponse;
 
     function __construct() {
-        if (!isset($_SESSION)) {
-            session_start();
-        }
         $aluno = new Aluno();
         $this->objResponse = new xajaxResponse(); //instancia o xajax
     }
@@ -33,7 +30,6 @@ class AlunoController {
     }
 
     public function salvarAluno($form) {
-
         $this->aluno = new Aluno();
 
         $this->aluno->setNome($form['nome']);
@@ -41,10 +37,7 @@ class AlunoController {
         $this->aluno->setEmail($form['email']);
         $this->aluno->setEndereco($form['endereco']);
 
-
-        $result = $this->aluno->salvaNoBanco();
-
-        $this->objResponse->script($result);
+        $this->objResponse->script($this->aluno->salvaNoBanco());
 
         return $this->objResponse;
     }

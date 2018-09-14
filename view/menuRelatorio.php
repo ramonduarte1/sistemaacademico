@@ -22,7 +22,7 @@ function menuRelatorio($tipo, $form) {
                     <input type="radio" id="radio" value="2" name="radio" > Alunos não Matriculados
                 </td>
                 <td rowspan="2"> 
-                    <input type="button" value="Pesquisar" onclick="xajax_menuRelatorio('filtrar', xajax.getFormValues('formPesquisa'))">
+                    <input type="button" class="button" value="Pesquisar" onclick="xajax_menuRelatorio('filtrar', xajax.getFormValues('formPesquisa'))">
                 </td>
             </tr>
             <tr>
@@ -56,7 +56,7 @@ HTML;
 
         if ($form['radio'] == 1) {//Alunos Matriculado
             $html = '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="formIdAluno" action="" method="post">
-                      <table border="1">
+                      <table class="bordasimples">
                        <tr>
                           <th>Matricula</th>
                           <th>Nome</th>
@@ -75,7 +75,7 @@ HTML;
 
         if ($form['radio'] == 2) {//Alunos não Matriculado
             $html = '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="formIdAluno" action="" method="post">
-                      <table border="1">
+                      <table class="bordasimples">
                        <tr>
                           <th>Matricula</th>
                           <th>Nome</th>
@@ -97,7 +97,7 @@ HTML;
             $quant = $a->retornaQuantPorTurma();
 
             $html = '<form class="centralizado" id="formIdAluno" name="formIdAluno" action="" method="post">
-                      <table border="1">
+                      <table class="bordasimples">
                        <tr>
                           <th>Codigo</th>
                           <th>Nome</th>
@@ -114,7 +114,7 @@ HTML;
             $html .= '</table>  
                     </form>';
         }
-        if ($form['radio'] == 4) {
+        if ($form['radio'] == 4) {//Disciplina por Professor
             $p = new Professor();
             
             $html = '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="formIdAluno" action="" method="post">
@@ -142,7 +142,7 @@ HTML;
             $a = new Aluno();
 
             $html = '<form class="centralizado" id="formIdAluno" name="formIdAluno" action="" method="post">
-                      <table border="1">
+                      <table class="bordasimples">
                        <tr>
                           <th>Matricula</th>
                           <th>Nome</th>
@@ -164,7 +164,7 @@ HTML;
             $t = new Turma();
 
             $html = '<form class="centralizado" id="formIdAluno" name="formIdAluno" action="" method="post">
-                      <table border="1">
+                      <table class="bordasimples">
                        <tr>
                           <th>Codigo Turma</th>
                           <th>Nome</th>
