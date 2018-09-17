@@ -4,16 +4,6 @@
  * and open the template in the editor.
  */
 
-
-//function mascara(t, mask) {
-//    var i = t.value.length;
-//    var saida = mask.substring(1, 0);
-//    var texto = mask.substring(i)
-//    if (texto.substring(0, 1) != saida) {
-//        t.value += texto.substring(0, 1);
-//    }
-//}
-
 function imprimeBoletinho() {
     var conteudo = document.getElementById('formIncluirNotas').innerHTML,
             tela_impressao = window.open('about:blank');
@@ -29,7 +19,7 @@ function mascara(t, mask) {
         t.value += texto.substring(0, 1);
     }
 }
-//funcao responvalvel por perguntar o usuario se realmente quer continuar ele recebe o nome
+//funcao responsavel por perguntar o usuario se realmente quer continuar ele recebe o nome
 // de um formulario hidden para ser clicado caso for true a resposta do ussuario
 function confirmacao(acao) {
     var retVal = confirm("Deseja continuar ?");
@@ -40,7 +30,6 @@ function confirmacao(acao) {
         return false;
     }
 }
-
 function validarAluno() {
     var nome = formAluno.nome.value;
     var email = formAluno.email.value;
@@ -68,46 +57,3 @@ function validarAluno() {
     }
 }
 
-//function validarProfessor() {
-//    var nome = formProfessor.nome.value;
-//    var email = formProfessor.email.value;
-//    var endereco = formProfessor.endereco.value;
-//    var telefone = formProfessor.telefone.value;
-//    if (nome == "") {
-//        alert('Preencha o campo com seu nome');
-//        formProfessor.nome.focus();
-//        return false;
-//    } else if (email == "" || email.indexOf('@') == -1
-//            || email.indexOf('.') == -1) {
-//        alert('Preencha o campo com seu email corretamente');
-//        formProfessor.nome.focus();
-//        return false;
-//    } else if (endereco == "") {
-//        alert('Preencha o campo com seu endereço');
-//        formProfessor.nome.focus();
-//        return false;
-//    } else if (telefone == "") {
-//        alert('Preencha o campo com seu telefone');
-//        formProfessor.nome.focus();
-//        return false;
-//    } else {
-//        document.getElementById("salvar_professor").click();
-//    }
-//}
-//
-//function validarDisciplina() {
-//    var nome = formDisciplina.nome.value;
-//    var carga_horaria = formDisciplina.carga_horaria.value;
-//
-//    if (nome == "") {
-//        alert('Preencha o campo nome');
-//        formDisciplina.nome.focus();
-//        return false;
-//    } else if (carga_horaria == "") {
-//        alert('Preencha o campo carga horaria');
-//        formDisciplina.carga_horaria.focus();
-//        return false;
-//    } else {
-//        document.getElementById("salvar_professor").click();
-//    }
-//}

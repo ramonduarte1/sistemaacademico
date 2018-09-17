@@ -117,8 +117,7 @@ HTML;
         if ($form['radio'] == 4) {//Disciplina por Professor
             $p = new Professor();
             
-            $html = '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="formIdAluno" action="" method="post">
-                      <table border="1" class="semborda">
+            $html = ' <table border="1" class="semborda">
                        <tr>
                           <th>Matricula</th>
                           <th>Nome</th>
@@ -135,8 +134,7 @@ HTML;
                             <td >' . $professor['carga_horaria'] .'</td>
                           </tr>';
             }
-            $html .= '</table>  
-                    </form>';
+            $html .= '</table>';
         }
         if ($form['radio'] == 5) {//retorna os aluno com matricula trancada
             $a = new Aluno();

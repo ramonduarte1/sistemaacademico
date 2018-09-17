@@ -40,7 +40,7 @@ class ProfessorController {
         $this->professor->setEmail($form['email']);
         $this->professor->setEndereco($form['endereco']);
 
-        $result = $this->professor->salvaNoBanco();
+        $result = $this->professor->salvar();
 
         $this->objResponse->script($result);
         return $this->objResponse;

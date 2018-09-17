@@ -36,6 +36,7 @@ class XajaxUtil {
         $this->xajax->register(XAJAX_FUNCTION, array("apagarAluno", $aluno, "apagarAluno"));
         $this->xajax->register(XAJAX_FUNCTION, array("atualizarAluno", $aluno, "atualizarAluno"));
         $this->xajax->register(XAJAX_FUNCTION, array("adicionarTurma", $aluno, "adicionarTurma"));
+        $this->xajax->register(XAJAX_FUNCTION, array("removerTurma", $aluno, "removerTurma"));
 
         $professor = new ProfessorController();
         $this->xajax->register(XAJAX_FUNCTION, array("salvarProfessor", $professor, "salvarProfessor"));

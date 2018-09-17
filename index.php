@@ -53,7 +53,6 @@ $xajax_js = $xajaxUtilitario->getXajax_js();
             function validarDisciplina() {
                 var nome = formDisciplina.nome.value;
                 var carga_horaria = formDisciplina.carga_horaria.value;
-
                 if (nome == "") {
                     alert('Preencha o campo nome');
                     formDisciplina.nome.focus();
@@ -73,7 +72,6 @@ $xajax_js = $xajaxUtilitario->getXajax_js();
 
             function validarTurma() {
                 var nome = formTurma.nome.value;
-
                 if (nome == "") {
                     alert('Preencha o campo nome');
                     formTurma.nome.focus();
@@ -82,7 +80,6 @@ $xajax_js = $xajaxUtilitario->getXajax_js();
                     document.getElementById("salvar_turma").click();
                 }
             }
-
 
             /* Máscaras ER */
             function mascara(o, f) {
@@ -94,9 +91,18 @@ $xajax_js = $xajaxUtilitario->getXajax_js();
                 v_obj.value = v_fun(v_obj.value)
             }
             function mtel(v) {
-                v = v.replace(/\D/g, "");             //Remove tudo o que não é dígito
+                v = v.replace(/\D/g, ""); //Remove tudo o que não é dígito
                 v = v.replace(/^(\d{2})(\d)/g, "($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
-                v = v.replace(/(\d)(\d{4})$/, "$1-$2");    //Coloca hífen entre o quarto e o quinto dígitos
+                v = v.replace(/(\d)(\d{4})$/, "$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
+                return v;
+            }
+            function intervalo(v) {// mascara para o intervalo das notas entre 0 e 10
+                v = v.replace(",", ".");// se o numero for digitado com virgula substituir por ponto
+                if (v > 10) {
+                    v = 10;
+                } else if (v < 0) {
+                    v = 0;
+                }
                 return v;
             }
         </script>

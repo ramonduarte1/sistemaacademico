@@ -170,7 +170,6 @@ HTML;
         $matricula = $form['matricula'];
         $disciplina->setCodigo($matricula);
         $d = $disciplina->retornaDisciplina();
-        $a = 1;
 
         $html = <<<HTML
             <form id="formDisciplina" name="formDisciplina" method="post">

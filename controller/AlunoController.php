@@ -31,7 +31,6 @@ class AlunoController {
 
     public function salvarAluno($form) {
         $this->aluno = new Aluno();
-
         $this->aluno->setNome($form['nome']);
         $this->aluno->setTelefone($form['telefone']);
         $this->aluno->setEmail($form['email']);
@@ -47,6 +46,7 @@ class AlunoController {
         $this->aluno->setMatricula($_SESSION['matricula']['aluno']);
         $this->aluno->setTurma_id($_SESSION['matricula']['turma']);
         $this->objResponse->alert($this->aluno->adicionarTurma());
+
         return $this->objResponse;
     }
 
@@ -59,10 +59,20 @@ class AlunoController {
         $this->aluno->setEmail($form['email']);
         $this->aluno->setEndereco($form['endereco']);
         $this->aluno->setTrancado($form['trancar']);
+        $this->aluno->setDisciplinas($form['disciplinas']);
 
         $result = $this->aluno->atualizar();
 
         $this->objResponse->alert($result);
+        return $this->objResponse;
+    }
+
+    public function removerTurma($form) {
+      
+        $this->aluno = new Aluno();
+        $this->aluno->setMatricula($form['matricula']);
+        
+        $this->objResponse->alert($this->aluno->removerTurma());
         return $this->objResponse;
     }
 

@@ -174,7 +174,7 @@ class Disciplina {
 
             $insert->execute($bind);
             if ($insert != FALSE) {
-                return 'alert("Registro deletado com sucesso!");document.getElementById("'.'formIdDisciplina'.$this->getCodigo().'").style.visibility = "hidden"';
+                return 'alert("Registro deletado com sucesso!");document.getElementById("' . 'formIdDisciplina' . $this->getCodigo() . '").style.visibility = "hidden"';
             } else {
                 return 'alert("Ocorreu um erro ao deletar o registro!");';
             }
@@ -189,14 +189,13 @@ class Disciplina {
         } else {//disciplinas por matricula
             $sql = "select *from disciplina where id = '$pesquisa' and disciplina.deletado = 'n'";
 //            $sql = "select *from disciplina left join turma_disciplina on (disciplina.id = turma_disciplina.disciplina_id) where turma_disciplina.disciplina_id is null and disciplina.nome like '%$pesquisa%' and disciplina.deletado = 'n'";
-            
         }
         $array = array();
         $insert = $this->conexao->query($sql);
         foreach ($insert as $disciplina) {
             array_push($array, $disciplina);
         }
-        
+
         return $array;
     }
 
@@ -212,8 +211,20 @@ class Disciplina {
         return $array;
     }
 
+    public function retornaDisponivel() {
+
+        $sql = "select *from disciplina left join professor_disciplina on disciplina.id = professor_disciplina.disciplina_id where professor_disciplina.disciplina_id isnull order by disciplina.id";
+//        $sql = "select *from disciplina where deletado = 'n' order by id";
+        $insert = $this->conexao->query($sql);
+        $array = array();
+        foreach ($insert as $disciplina) {
+            array_push($array, $disciplina);
+        }
+        return $array;
+    }
+
     public function retornaTodasDisciplinas() {
-        $id = $this->getCodigo();
+
         $sql = "select *from disciplina where deletado = 'n' order by id";
         $insert = $this->conexao->query($sql);
         $array = array();
@@ -223,10 +234,22 @@ class Disciplina {
         return $array;
     }
 
+    public function retornaAtualDisponivel() {
+
+        $sql = "select *from disciplina left join professor_disciplina on disciplina.id = professor_disciplina.disciplina_id where professor_disciplina.disciplina_id isnull or professor_disciplina.professor_id = " . $this->getProfessor_id() . " order by disciplina.id";
+//        $sql = "select *from disciplina where deletado = 'n' order by id";
+        $insert = $this->conexao->query($sql);
+        $array = array();
+        foreach ($insert as $disciplina) {
+            array_push($array, $disciplina);
+        }
+        return $array;
+    }
+
     public function retornaDisciplinasPorTurma($id) {
+
         $sql = "select *from disciplina inner join  turma_disciplina on disciplina.id = turma_disciplina.disciplina_id where turma_disciplina.turma_id ='" . $id . "' order by turma_disciplina.turma_id";
-//        $sql = "SELECT disciplina.id, disciplina.nome, disciplina.carga_horaria FROM turma INNER JOIN turma_disciplina ON turma.id = turma_disciplina.turma_id 
-//                  and turma_disciplina.turma_id = " . $id . " INNER JOIN disciplina ON turma_disciplina.disciplina_id = disciplina.id";
+
         $insert = $this->conexao->query($sql);
         $array = array();
         foreach ($insert as $disciplina) {
@@ -237,6 +260,18 @@ class Disciplina {
 
     public function retornaDisciplinasPorProfessor($id) {
         $sql = "select *from disciplina inner join  professor_disciplina on disciplina.id = professor_disciplina.disciplina_id where professor_disciplina.professor_id ='" . $id . "'";
+        $insert = $this->conexao->query($sql);
+        $array = array();
+        foreach ($insert as $disciplina) {
+            array_push($array, $disciplina);
+        }
+        return $array;
+    }
+
+    public function retornaDisciplinasPorAluno($id) {
+        $sql = "select *from disciplina inner join  aluno_disciplina"
+                . " on disciplina.id = aluno_disciplina.disciplina_id where aluno_disciplina.aluno_id ='" . $id . "' "
+                . "and aluno_disciplina.deletado = 'n'";
         $insert = $this->conexao->query($sql);
         $array = array();
         foreach ($insert as $disciplina) {

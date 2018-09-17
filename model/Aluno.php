@@ -16,13 +16,20 @@ class Aluno extends Pessoa {
     private $turma_id;
     private $conexao;
     private $trancado;
+    private $disciplinas;
 
     function __construct() {
-        if (!session_status()) {
-            session_start();
-        }
+        $this->disciplinas = array();
         $this->notas = array();
         $this->conexao = new Conexao();
+    }
+
+    function getDisciplinas() {
+        return $this->disciplinas;
+    }
+
+    function setDisciplinas($disciplinas) {
+        $this->disciplinas = $disciplinas;
     }
 
     function getTrancado() {
@@ -90,7 +97,7 @@ class Aluno extends Pessoa {
 
             if ($insert != FALSE) {
                 $matricula = $this->getMatricula();
-                return 'alert("Aluno deletado com sucesso!");document.getElementById("'.'formIdAluno'.$matricula.'").style.visibility = "hidden"';
+                return 'alert("Aluno deletado com sucesso!");document.getElementById("' . 'formIdAluno' . $matricula . '").style.visibility = "hidden"';
             } else {
                 return "alert('Erro ao deletar!');document.getElementById(\"formAluno\").reset();";
             }
@@ -122,14 +129,65 @@ class Aluno extends Pessoa {
         $insert->execute($bind);
 
         if ($insert != FALSE) {
-            return "Aluno alterado com sucesso!";
+            //apaga o registro anterior para gravar as novas disciplinas
+            $sql = "UPDATE aluno_disciplina SET deletado = 's' WHERE aluno_id = " . $this->getMatricula() . "";
+            $this->conexao->query($sql);
+
+            foreach ($this->getDisciplinas() as $idDisciplina) {// atualiza as disciplinas que veio marcado para nao deletado
+                $sql = "UPDATE aluno_disciplina SET deletado = 'n' WHERE aluno_id = " . $this->getMatricula() . " "
+                        . "and disciplina_id= " . $idDisciplina . "";
+
+                $insert = $this->conexao->query($sql);
+
+                if ($insert->rowCount() == 0) {// se nao modificou nenhuma linha é porque é uma disciplina nova entao insere no banco
+                    $sql = "INSERT INTO aluno_disciplina (aluno_id,disciplina_id) VALUES (" . $this->getMatricula() . "," . $idDisciplina . ")";
+                    $this->conexao->query($sql);
+                }
+            }
+            if ($insert->rowCount() > 0) {
+                return "Aluno alterado com sucesso!";
+            } else {
+                return "Ocorreu um erro ao alterar!";
+            }
+        }
+    }
+
+    public function removerTurma() {
+        $sql = "UPDATE aluno SET turma_id=:turma_id, usuario_altera = :usuario_altera, data_altera= :data_altera WHERE id = :id";
+        $insert = $this->conexao->prepare($sql);
+
+        if ($this->getTrancado() == null) {
+            $this->setTrancado("ativo");
+        }
+
+        date_default_timezone_set('America/Sao_Paulo');
+        $date = date('Y-m-d H:i');
+
+        $bind = array(
+            'turma_id' => NULL,
+            'id' => $this->getMatricula(),
+            'usuario_altera' => $_SESSION['login'],
+            'data_altera' => $date
+        );
+        $insert->execute($bind);
+
+        if ($insert != FALSE) {
+            // apaga o registro da tabela aluno_disciplina
+            $sql = "delete from aluno_disciplina where aluno_id = " . $this->getMatricula() . "";
+            $this->conexao->query($sql);
+
+            if ($insert->rowCount() > 0) {
+                return "Turma removida com sucesso!";
+            } else {
+                return "Ocorreu um erro ao remover!";
+            }
         } else {
             return "Ocorreu um erro ao alterar!";
         }
     }
 
     public function adicionarTurma() {
-        $sql = "UPDATE aluno SET turma_id = " . $this->getTurma_id() . ", usuario_altera = :usuario_altera, data_altera = :data_altera WHERE id =" . $this->getMatricula() . " ";
+        $sql = "UPDATE aluno SET situacao= 'ativo', turma_id = " . $this->getTurma_id() . ", usuario_altera = :usuario_altera, data_altera = :data_altera WHERE id =" . $this->getMatricula() . " ";
         $insert = $this->conexao->prepare($sql);
 
         date_default_timezone_set('America/Sao_Paulo');
@@ -207,7 +265,7 @@ class Aluno extends Pessoa {
         foreach ($this->conexao->query($sql) as $aluno) {
             array_push($array, $aluno);
         }
-  
+
         if ($array[0]['turma_id'] != NULL) {// se o aluno for matriculado retorna novamente com os dados da turma
             $sql = "select aluno.id,aluno.nome,aluno.email,aluno.endereco,aluno.situacao,aluno.telefone,aluno.turma_id, turma.nome nome_turma from aluno "
                     . "inner join turma on(aluno.turma_id = turma.id) where aluno.id = '$id' and aluno.deletado = 'n'";
@@ -223,13 +281,13 @@ class Aluno extends Pessoa {
 
     public function pesqMenuMatricula($form) {
         if ($form['radio'] == 1) {//por nome
-            $sql = "select *from aluno where nome like '%" . $form['pesq_aluno'] . "%' and aluno.deletado = 'n' and turma_id notnull order by aluno.id";
+            $sql = "select *from aluno where nome like '%" . $form['pesq_aluno'] . "%' and aluno.deletado = 'n' and turma_id notnull and aluno.situacao='ativo' order by aluno.id ";
         }
         if ($form['radio'] == 2) {//por matricula
-            $sql = "select *from aluno where id = " . $form['pesq_aluno'] . " and aluno.deletado = 'n'";
+            $sql = "select *from aluno where id = " . $form['pesq_aluno'] . " and aluno.deletado = 'n' and aluno.situacao='ativo'";
         }
         if ($form['radio'] == 3) {//por turma
-            $sql = "select *from aluno where turma_id = " . $form['pesq_aluno'] . " and aluno.deletado = 'n'";
+            $sql = "select *from aluno where turma_id = " . $form['pesq_aluno'] . " and aluno.deletado = 'n' and aluno.situacao='ativo'";
         }
 
         $insert = $this->conexao->query($sql);

@@ -57,7 +57,7 @@ class AlunoDisciplina {
     public function retornaNotas() {
         //retorna as disciplinas com as notas do aluno
         $sql = "select *from disciplina inner join  aluno_disciplina on disciplina.id = aluno_disciplina.disciplina_id 
-                where aluno_disciplina.aluno_id =" . $this->getAluno_id() . " order by id asc";
+                where aluno_disciplina.aluno_id =" . $this->getAluno_id() . " and aluno_disciplina.deletado = 'n' order by id ";
 
         $insert = $this->conexao->query($sql);
         $array = array();

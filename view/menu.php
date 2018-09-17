@@ -17,9 +17,9 @@ function menuPrincipal() {
           <a href="javascript:void(0)" class="dropbtn">Cadastro</a>
           <div class="dropdown-content">
             <a href="#" onclick="xajax_menuAluno('pesquisa')">Aluno</a>
-            <a href="#" onclick="xajax_menuProfessor('pesquisa')">Professor</a>
             <a href="#" onclick="xajax_menuDisciplina('pesquisa')">Disciplina</a>
             <a href="#" onclick="xajax_menuTurma('pesquisa')">Turma</a>
+            <a href="#" onclick="xajax_menuProfessor('pesquisa')">Professor</a>
           </div>
         </li>
           <li><a href="#" onclick="xajax_menuMatricula('pesquisa')">Matricula</a></li>

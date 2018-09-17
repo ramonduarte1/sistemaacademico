@@ -29,7 +29,7 @@ class Professor extends Pessoa {
         $this->disciplinas = $disciplinas;
     }
 
-    public function salvaNoBanco() {
+    public function salvar() {
         $sql = "INSERT INTO professor (nome,email,endereco,telefone,usuario_altera,data_altera) VALUES (:nome,:email,:endereco,:telefone,:usuario_altera,:data_altera)";
         $insert = $this->conexao->prepare($sql);
 
@@ -47,7 +47,7 @@ class Professor extends Pessoa {
         $insert->execute($bind);
 
 
-        if ($insert != FALSE) { // se tiver inserido a turma  salva tambem na tabela turma_disciplina
+        if ($insert != FALSE) { // se tiver inserido o professor  salva tambem na tabela turma_disciplina
             $sql = "SELECT last_value from professor_id_seq";
             $utimoIdProfessor = $this->conexao->query($sql);
 
@@ -112,7 +112,7 @@ class Professor extends Pessoa {
                 $insert->execute($bind);
             }
 
-            return "alert('Turma alterada com sucesso!');";
+            return "alert('Registro alterado com sucesso!');";
         } else {
             return "alert('Ocorreu um erro ao alterar!!');";
         }
@@ -120,10 +120,10 @@ class Professor extends Pessoa {
 
     public function apagar() {
 
-        $sql = "select *from professor inner join turma_professor on (professor.id = turma_professor.professor_id) where id = '" . $this->getMatricula() . "'";
+        $sql = "select *from professor inner join professor_disciplina on (professor.id = professor_disciplina.professor_id) where id = '" . $this->getMatricula() . "'";
         $insert = $this->conexao->query($sql);
 
-        if ($insert->rowCount() > 0) {// se o aluno tiver matricula ativa
+        if ($insert->rowCount() > 0) {// se o professor tiver disciplina ativa
             return 'alert("O registro não pode ser deletado!");';
         } else {
             $sql = "UPDATE professor SET deletado = :deletado, usuario_altera = :usuario_altera, data_altera = :data_altera WHERE id = :id";
@@ -140,7 +140,7 @@ class Professor extends Pessoa {
             );
             $insert->execute($bind);
             if ($insert != FALSE) {
-                return 'alert("Registro deletado com sucesso!");document.getElementById("'.'formIdProfessor'.$this->getMatricula().'").style.visibility = "hidden"';
+                return 'alert("Registro deletado com sucesso!");document.getElementById("' . 'formIdProfessor' . $this->getMatricula() . '").style.visibility = "hidden"';
             } else {
                 echo 'alert("Ocorreu um erro ao deletar o registro!");';
             }

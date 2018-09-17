@@ -103,22 +103,17 @@ HTML;
                    </tr>";
         $disciplinas = new AlunoDisciplina();
         $disciplinas->setAluno_id($form['matricula']);
-        $result = $disciplinas->retornaNotas();
-        $disciplinasA = array(); // aqui vai ser usado update pois a tabela (aluno_disciplina) ja deve estar preenchida no momento da matricula 
 
-        foreach ($result as $disciplina) {
-            array_push($disciplinasA, $disciplina);
-        }
-        foreach ($disciplinasA as $d) {
+        foreach ($disciplinas->retornaNotas() as $d) {
 
             $html .= "<tr>
                         <td>" . $d['disciplina_id'] . "</td>
                             <input type=\"hidden\" id=\"disciplinas[]\" name=\"disciplinas[]\" value=" . $d['id'] . ">
                         <td>" . $d['nome'] . "</td>
                         <td>" . $d['carga_horaria'] . "</td>
-                        <td><input class=\"semborda\" type='number' min='0' max='10' step=\"0.1\" id=" . $d['disciplina_id'] . n1 . " name=" . $d['disciplina_id'] . n1 . " value=". $d['nota1']." size='1' ></td>
-                        <td><input class=\"semborda\" type='number' min='0' max='10' step=\"0.1\" id=" . $d['disciplina_id'] . n2 . " name=" . $d['disciplina_id'] . n2 . " value=". $d['nota2']." size='1' ></td>
-                        <td><input class=\"semborda\" type='number' min='0' max='10' step=\"0.1\" id=" . $d['disciplina_id'] . n3 . " name=" . $d['disciplina_id'] . n3 . " value=". $d['nota3']." size='1' ></td>
+                        <td><input class=\"semborda\" onkeyup=\"mascara( this, intervalo );\" id=" . $d['disciplina_id'] . n1 . " name=" . $d['disciplina_id'] . n1 . " value=". $d['nota1']." size='2'></td>
+                        <td><input class=\"semborda\" onkeyup=\"mascara( this, intervalo );\" id=" . $d['disciplina_id'] . n2 . " name=" . $d['disciplina_id'] . n2 . " value=". $d['nota2']." size='2' ></td>
+                        <td><input class=\"semborda\" onkeyup=\"mascara( this, intervalo );\" id=" . $d['disciplina_id'] . n3 . " name=" . $d['disciplina_id'] . n3 . " value=". $d['nota3']." size='2' ></td>
                         <td><input class=\"semborda\" readonly  size='5' value=". $d['media']."></td>
                         <td><input class=\"semborda\" readonly  size='10' value=". $d['situacao']."></td>
                      </tr>";

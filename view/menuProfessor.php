@@ -8,7 +8,9 @@
 
 function menuProfessor($tipo, $form) {
     $obj_response = new xajaxResponse();
-//, xajax.getFormValues('formPesquisa')
+    $professorObj = new Professor();
+    $disciplinaObj = new Disciplina();
+    
     if ($tipo == 'pesquisa') {
         $html = <<<HTML
         <h2 class="centralizado">Cadastro Professor</h2><br><br>
@@ -50,8 +52,8 @@ HTML;
     }
 
     if ($tipo == 'filtrar') {
-        $professor = new Professor();
-        $professores = $professor->retornaProfessores($form['radio'], $form['pesq_professor']);
+
+        $professores = $professorObj->retornaProfessores($form['radio'], $form['pesq_professor']);
 
         $html = '';
         foreach ($professores as $p) {
@@ -69,41 +71,35 @@ HTML;
     }
 
     if ($tipo == 'editar') {
-        $professor = new Professor();
-        $matricula = $form['matricula'];
-        $professor->setMatricula($matricula);
-        $a = $professor->retornaProfessor();
 
-        $d = new Disciplina();
-        $disciplinas = $d->retornaTodasDisciplinas();
-        $matriculadas = $d->retornaDisciplinasPorProfessor($form['matricula']);
-
+        $professorObj->setMatricula($form['matricula']);
+        $professor = $professorObj->retornaProfessor();
 
         $html = '<form id="formProfessor" name="formProfessor" method="post">
                 <table border="1" class="semborda">
                     <tr>
                         <td class="semborda">Matricula</td>
                         <td class="semborda">
-                            <input type="text" required name="matricula" size="4" value=' . $a[0]['id'] . '>
+                            <input type="text" required name="matricula" size="4" value=' . $professor[0]['id'] . '>
                         </td>
                     </tr>
                     <tr>
                         <td class="semborda">Nome</td>
                         <td class="semborda"> 
-                            <input type="text" required name="nome" size="50" value=' . $a[0]['nome'] . '>
+                            <input type="text" required name="nome" size="50" value=' . $professor[0]['nome'] . '>
                         </td>
                     </tr>
                     <tr>
                         <td class="semborda">Email</td>
-                        <td class="semborda"><input type="email" required name="email" size="50" value=' . $a[0]['email'] . '></td>
+                        <td class="semborda"><input type="email" required name="email" size="50" value=' . $professor[0]['email'] . '></td>
                     </tr>
                     <tr>
                         <td class="semborda">Endereço</td>
-                        <td class="semborda"><input type="text" required name="endereco" size="50" value=' . $a[0]['endereco'] . '></td>
+                        <td class="semborda"><input type="text" required name="endereco" size="50" value=' . $professor[0]['endereco'] . '></td>
                     </tr>
                     <tr>
                         <td class="semborda">Telefone</td>
-                        <td class="semborda"><input type="text" required name="telefone" onkeyup="mascara( this, mtel );" maxlength="15" value="' . $a[0]['telefone'] . '"></td>
+                        <td class="semborda"><input type="text" required name="telefone" onkeyup="mascara( this, mtel );" maxlength="15" value="' . $professor[0]['telefone'] . '"></td>
                     </tr>
                     <tr>
                         <td class="semborda"></td>
@@ -112,6 +108,12 @@ HTML;
                     <tr>
                         <th colspan="3">Disciplinas</th>
                     </tr>';
+
+        
+        $disciplinaObj->setProfessor_id($form['matricula']);
+        $disciplinas = $disciplinaObj->retornaAtualDisponivel(); //retorna as disciplinas do professor e o restante disponivel
+        $matriculadas = $disciplinaObj->retornaDisciplinasPorProfessor($form['matricula']); //retorna as disciplinas que o professor ja estar ministrando
+
         foreach ($disciplinas as $disciplina) {
 
             $html .= " <tr>
@@ -163,10 +165,8 @@ HTML;
                     <tr>
                         <th colspan="3">Disciplinas</th>
                     </tr>';
-        $disciplinas = new Disciplina();
-
-        foreach ($disciplinas->retornaTodasDisciplinas() as $disciplina) {
-
+      
+        foreach ($disciplinaObj->retornaDisponivel() as $disciplina) {//retorna as disciplinas do professor e o restante disponivel
             $html .= "<tr>
                          <td class=\"centralizado\">{$disciplina['id']}</td>
                          <td>{$disciplina['nome']}</td>
@@ -181,4 +181,6 @@ HTML;
     }
 
     return $obj_response;
-}// retornar uma listagem dos alunos em grid quando clicar no aluno abre a manutencao do usuario
+}
+
+// retornar uma listagem dos alunos em grid quando clicar no aluno abre a manutencao do usuario
