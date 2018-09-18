@@ -82,7 +82,14 @@ class AlunoDisciplina {
             }if ($media < 4) {
                 $situacao = "Reprovado";
             }
-            $sql = "UPDATE aluno_disciplina SET nota1 = " . $form[$codigo . 'n1'] . " , nota2 =" . $form[$codigo . 'n2'] . "  , nota3 = " . $form[$codigo . 'n3'] . ", media = " . $media . ", situacao= '".$situacao."' WHERE aluno_id = " . $form['aluno_id'] . " and disciplina_id = " . $codigo;
+            
+            date_default_timezone_set('America/Sao_Paulo');
+            $date = date('Y-m-d H:i');
+            
+            $sql = "UPDATE aluno_disciplina SET nota1 = " . $form[$codigo . 'n1'] . " , nota2 =" . $form[$codigo . 'n2'] . "  ,"
+                    . " nota3 = " . $form[$codigo . 'n3'] . ", media = " . $media . ", situacao= '" . $situacao . "' , "
+                    . "usuario_altera = '" . $_SESSION['login'] . "', data_altera = '" . $date . "' "
+                    . "WHERE aluno_id = " . $form['aluno_id'] . " and disciplina_id = " . $codigo;
             $resp = $this->conexao->query($sql);
         }
         if ($resp->rowCount() > 0) { //se ocorreu alguma alteração na tabela é pq deu certo 

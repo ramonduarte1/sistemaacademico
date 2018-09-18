@@ -213,8 +213,8 @@ class Disciplina {
 
     public function retornaDisponivel() {
 
-        $sql = "select *from disciplina left join professor_disciplina on disciplina.id = professor_disciplina.disciplina_id where professor_disciplina.disciplina_id isnull order by disciplina.id";
-//        $sql = "select *from disciplina where deletado = 'n' order by id";
+// para um disciplina por professor//       $sql = "select *from disciplina left join professor_disciplina on disciplina.id = professor_disciplina.disciplina_id where disciplina.deletado = 'n' and professor_disciplina.disciplina_id isnull order by disciplina.id";
+        $sql = "select *from disciplina where deletado = 'n' order by id";
         $insert = $this->conexao->query($sql);
         $array = array();
         foreach ($insert as $disciplina) {
@@ -235,11 +235,11 @@ class Disciplina {
     }
 
     public function retornaAtualDisponivel() {
-
-        $sql = "select *from disciplina left join professor_disciplina on (disciplina.id = professor_disciplina.disciplina_id) "
+// para um disciplina por professor//
+     /*   $sql = "select *from disciplina left join professor_disciplina on (disciplina.id = professor_disciplina.disciplina_id) "
                 . "where disciplina.deletado = 'n' and professor_disciplina.disciplina_id isnull "
-                . "or professor_disciplina.professor_id = " . $this->getProfessor_id() . " order by disciplina.id";
-//        $sql = "select *from disciplina where deletado = 'n' order by id";
+                . "or professor_disciplina.professor_id = " . $this->getProfessor_id() . " order by disciplina.id";*/
+        $sql = "select *from disciplina where deletado = 'n' order by id";
         $insert = $this->conexao->query($sql);
         $array = array();
         foreach ($insert as $disciplina) {

@@ -24,10 +24,14 @@ class XajaxUtil {
         $this->xajax->register(XAJAX_FUNCTION, 'menuLancaNota');
         $this->xajax->register(XAJAX_FUNCTION, 'menuMatricula');
         $this->xajax->register(XAJAX_FUNCTION, 'menuRelatorio');
+        $this->xajax->register(XAJAX_FUNCTION, 'menuUsuario');
 
         //registra metodos
         $login = new UsuarioController();
         $this->xajax->register(XAJAX_FUNCTION, array("verificaCredenciais", $login, "verificaCredenciais")); //metodo
+        $this->xajax->register(XAJAX_FUNCTION, array("salvarUsuario", $login, "salvarUsuario")); //metodo
+        $this->xajax->register(XAJAX_FUNCTION, array("apagarUsuario", $login, "apagarUsuario")); //metodo
+        
         $this->xajax->register(XAJAX_FUNCTION, array("sair", $login, "sair")); //metodo
 
         $aluno = new AlunoController();

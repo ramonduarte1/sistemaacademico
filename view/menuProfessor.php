@@ -10,7 +10,7 @@ function menuProfessor($tipo, $form) {
     $obj_response = new xajaxResponse();
     $professorObj = new Professor();
     $disciplinaObj = new Disciplina();
-    
+
     if ($tipo == 'pesquisa') {
         $html = <<<HTML
         <h2 class="centralizado">Cadastro Professor</h2><br><br>
@@ -55,7 +55,7 @@ HTML;
 
         $professores = $professorObj->retornaProfessores($form['radio'], $form['pesq_professor']);
 
-        $html = '';
+        $html = '<div id="" style="overflow:scroll; height:350px;">'; //scroll
         foreach ($professores as $p) {
             $html .= '<form class="centralizado" id="' . formIdProfessor . $p['id'] . '" name="' . formIdProfessor . $p['id'] . '" action="" method="post">
                         <input readonly id="matricula" name="matricula" value="' . $p['id'] . '" size="4">
@@ -65,7 +65,7 @@ HTML;
                         <input type="hidden" id="' . 'apagar_professor' . $p['id'] . '" name="' . 'apagar_professor' . $p['id'] . '" onclick="xajax_apagarProfessor(xajax.getFormValues(' . formIdProfessor . $p['id'] . '))">
                       </form>';
         }
-
+        $html .= ' </div>';
 
         $obj_response->assign("retorno", "innerHTML", $html);
     }
@@ -109,7 +109,6 @@ HTML;
                         <th colspan="3">Disciplinas</th>
                     </tr>';
 
-        
         $disciplinaObj->setProfessor_id($form['matricula']);
         $disciplinas = $disciplinaObj->retornaAtualDisponivel(); //retorna as disciplinas do professor e o restante disponivel
         $matriculadas = $disciplinaObj->retornaDisciplinasPorProfessor($form['matricula']); //retorna as disciplinas que o professor ja estar ministrando
@@ -119,14 +118,12 @@ HTML;
             $html .= " <tr>
                             <td class=\"centralizado\">{$disciplina['id']}</td>
                             <td>{$disciplina['nome']}</td>";
-
             if (in_array($disciplina['id'], array_column($matriculadas, 'disciplina_id'))) { //verifica se essa disciplina estar matriculada nessa turma
                 $html .= "<td><input class=\"centralizado\" type='checkbox' name=\"disciplinas[]\" value=" . $disciplina['id'] . " checked></td>"; //se true deixa marcado
             } else {
                 $html .= "<td><input class=\"centralizado\" type='checkbox' name=\"disciplinas[]\" value=" . $disciplina['id'] . "></td>";
             }
         }
-
 
         $html .= "</tr></table>";
 
@@ -165,7 +162,7 @@ HTML;
                     <tr>
                         <th colspan="3">Disciplinas</th>
                     </tr>';
-      
+
         foreach ($disciplinaObj->retornaDisponivel() as $disciplina) {//retorna as disciplinas do professor e o restante disponivel
             $html .= "<tr>
                          <td class=\"centralizado\">{$disciplina['id']}</td>

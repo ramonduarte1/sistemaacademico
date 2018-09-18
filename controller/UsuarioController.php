@@ -20,6 +20,25 @@ class UsuarioController {
         $this->objResponse = new xajaxResponse(); //instancia o xajax
     }
 
+    public function salvarUsuario($form) {
+
+        $this->usuario = new Usuario();
+        $this->usuario->setLogin($form['nome']);
+        $this->usuario->setSenha($form['password']);
+
+        $this->objResponse->script($this->usuario->salvar());
+        return $this->objResponse;
+    }
+
+    public function apagarUsuario($form) {
+
+        $this->usuario = new Usuario();
+        $this->usuario->setId($form['matricula']);
+
+        $this->objResponse->script($this->usuario->apagar());
+        return $this->objResponse;
+    }
+
     public function verificaCredenciais($form) {
 
         $this->usuario = new Usuario();

@@ -65,16 +65,20 @@ HTML;
         $html = '<div id="" style="overflow:scroll; height:350px;">'; //scroll
         foreach ($alunos as $a) {
             $html .= '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="' . formIdAluno . $a['id'] . '" action="" method="post">
+                                                  
                             <input readonly id="matricula" name="matricula" value="' . $a['id'] . '" size="4">
                             <input readonly id="nome" name="nome" value="' . $a['nome'] . '">
-                            <input readonly type="button" class="button" value="Editar" onclick="xajax_menuAluno(\'editar\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
-                            <input readonly type="button" class="button" value="Apagar"  onclick="confirmacao(\'' . apagar_aluno . $a['id'] . '\');">
+                            <input type="button" class="button" value="Editar" onclick="xajax_menuAluno(\'editar\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
+                            <input type="button" class="button" value="Apagar"  onclick="confirmacao(\'' . apagar_aluno . $a['id'] . '\');">
+                            <input type="button" class="button" value="Comprovante"  onclick="xajax_menuAluno(\'comprovante\' ,xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
                             <input type="hidden" id="' . 'apagar_aluno' . $a['id'] . '" name="' . 'apagar_aluno' . $a['id'] . '"  onclick="xajax_apagarAluno(xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
+                       
                        </form>';
         }
-        $html .= ' </div>';
+        $html .= '</div>';
 
         $obj_response->assign("retorno", "innerHTML", $html);
+        $obj_response->script("favDialog.showModal();");
     }
 
     if ($tipo == 'editar') {
@@ -160,7 +164,10 @@ HTML;
         $html .= ' <tr>';
 
         if (count($disciplinas) > 0) {
-            $html .= '<td class="semborda"><input type="button" class="button" value="Sair da Turma" onclick="xajax_removerTurma(xajax.getFormValues(\'formAluno\'))"></td>';
+            $html .= '<td class="semborda">
+                        <input type="button" class="button" value="Sair da Turma" onclick="confirmacao(\'remover_turma\')">
+                        <input type="hidden" id="remover_turma" name="remover_turma" onclick="xajax_removerTurma(xajax.getFormValues(\'formAluno\'))">
+                      </td>';
         }
         $html .= '    <td class="semborda"></td>
                       <td colspan="2" class="direita"><input type="button" class="button" value="Salvar" onclick="xajax_atualizarAluno(xajax.getFormValues(\'formAluno\'))"></td>
@@ -204,5 +211,77 @@ HTML;
 HTML;
         $obj_response->assign("retorno", "innerHTML", $html);
     }
+    if ($tipo == 'comprovante') {
+        $aluno = new Aluno();
+        $aluno->setMatricula($form['matricula']);
+        $a = $aluno->retornaAluno();
+
+        $html = "<form id=\"formIncluirNotas\" name=\"formIncluirNotas\" method=\"post\">
+                 <table class='centralizado' border=\"1\">
+                   <tr>
+                       <th BGCOLOR=\"#e8e8e8\" colspan=\"4\">Aluno</th>
+                   </tr>
+                   <tr>
+                        <th>Matricula</th>
+                        <th colspan='2'>Nome</th>
+                        <th>Email</th>
+                   </tr>
+                   <tr>
+                        <td>" . $a[0]['id'] . "</td>
+                        <input type=\"hidden\" id=\"aluno_id\" name=\"aluno_id\" value=" . $a[0]['id'] . ">
+                        <td colspan='2'>" . $a[0]['nome'] . "</td>
+                        <td >" . $a[0]['email'] . "</td>
+                   </tr>
+                   <tr>
+                        <th>Endereco</th>
+                        <td>" . $a[0]['endereco'] . "</td>
+                        <th>Telefone</th>
+                        <td>" . $a[0]['telefone'] . "</td>
+                   </tr>
+                   <tr>
+                        <th BGCOLOR=\"#e8e8e8\" colspan=\"4\" >Disciplinas</th>
+                   </tr>
+                   <tr>
+                        <th>Codigo</th>
+                        <th colspan='2'>Nome</th>
+                        <th>C.Horária</th>
+                   </tr>";
+        $disciplinas = new AlunoDisciplina();
+        $disciplinas->setAluno_id($form['matricula']);
+
+        foreach ($disciplinas->retornaNotas() as $d) {
+
+            $html .= "<tr>
+                        <td>" . $d['disciplina_id'] . "</td>
+                            <input type=\"hidden\" id=\"disciplinas[]\" name=\"disciplinas[]\" value=" . $d['id'] . ">
+                        <td colspan='2'>" . $d['nome'] . "</td>
+                        <td>" . $d['carga_horaria'] . "</td>
+                     </tr>";
+        }
+        $turma = new Turma();
+        $turma->setCodigo($a[0]['turma_id']);
+        $t = $turma->retornaTurma();
+
+        $html .= "<tr>
+                     <th  BGCOLOR=\"#e8e8e8\" colspan = '4'>Turma</th>
+                  </tr>
+                  <tr>
+                      <th>Codigo</th>
+                      <td>" . $a[0]['turma_id'] . "</td>
+                      <th>Nome</th>
+                      <td colspan = '3'>" . $t[0]['nome'] . "</td>
+                  </tr>
+                  <tr>
+                      <td colspan = '3'></td>
+                      <td>
+                          <input type=\"button\" value='Imprimir' class='button' onclick=\"imprimeBoletinho()\">
+                      </td>    
+                 </tr>";
+
+        $html .= "<table>
+                  </form>";
+        $obj_response->assign("retorno", "innerHTML", $html);
+    }
+
     return $obj_response;
 }

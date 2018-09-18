@@ -15,13 +15,13 @@ function menuLancaNota($tipo, $form) {
         <form id="formPesquisa" name="formPesquisa" method="post">     
             <table border="0">
                 <tr>
-                        <th>Pesquisa</th>
-                        <td>
-                            <input required="" type="text" size="50" id="pesq_aluno" name="pesq_aluno">
-                        </td>
-                        <td>
-                            <input type="button" class="button" value="Pesquisar" onclick="xajax_menuLancaNota('filtrar', xajax.getFormValues('formPesquisa'))">
-                        </td>
+                    <th>Pesquisa</th>
+                    <td>
+                        <input required="" type="text" size="50" id="pesq_aluno" name="pesq_aluno">
+                    </td>
+                    <td>
+                        <input type="button" class="button" value="Pesquisar" onclick="xajax_menuLancaNota('filtrar', xajax.getFormValues('formPesquisa'))">
+                    </td>
                 </tr>
                <table border='0'>
                 <tr>
@@ -58,14 +58,12 @@ HTML;
                         <input readonly type="button"  class="button" value="Imprimir Boletinho" onclick="xajax_menuLancaNota(\'incluir_notas\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
                       </form>';
         }
-
         $obj_response->assign("retorno", "innerHTML", $html);
     }
 
     if ($tipo == 'incluir_notas') {
         $aluno = new Aluno();
         $aluno->setMatricula($form['matricula']);
-
         $a = $aluno->retornaAluno();
 
         $html = "<form id=\"formIncluirNotas\" name=\"formIncluirNotas\" method=\"post\">
@@ -108,19 +106,18 @@ HTML;
 
             $html .= "<tr>
                         <td>" . $d['disciplina_id'] . "</td>
-                            <input type=\"hidden\" id=\"disciplinas[]\" name=\"disciplinas[]\" value=" . $d['id'] . ">
+                        <input type=\"hidden\" id=\"disciplinas[]\" name=\"disciplinas[]\" value=" . $d['id'] . ">
                         <td>" . $d['nome'] . "</td>
                         <td>" . $d['carga_horaria'] . "</td>
-                        <td><input class=\"semborda\" onkeyup=\"mascara( this, intervalo );\" id=" . $d['disciplina_id'] . n1 . " name=" . $d['disciplina_id'] . n1 . " value=". $d['nota1']." size='3'></td>
-                        <td><input class=\"semborda\" onkeyup=\"mascara( this, intervalo );\" id=" . $d['disciplina_id'] . n2 . " name=" . $d['disciplina_id'] . n2 . " value=". $d['nota2']." size='3' ></td>
-                        <td><input class=\"semborda\" onkeyup=\"mascara( this, intervalo );\" id=" . $d['disciplina_id'] . n3 . " name=" . $d['disciplina_id'] . n3 . " value=". $d['nota3']." size='3' ></td>
-                        <td><input class=\"semborda\" readonly  size='5' value=". $d['media']."></td>
-                        <td><input class=\"semborda\" readonly  size='10' value=". $d['situacao']."></td>
+                        <td><input class=\"semborda\" onkeyup=\"mascara( this, intervalo );\" id=" . $d['disciplina_id'] . n1 . " name=" . $d['disciplina_id'] . n1 . " value=" . $d['nota1'] . " size='3'></td>
+                        <td><input class=\"semborda\" onkeyup=\"mascara( this, intervalo );\" id=" . $d['disciplina_id'] . n2 . " name=" . $d['disciplina_id'] . n2 . " value=" . $d['nota2'] . " size='3' ></td>
+                        <td><input class=\"semborda\" onkeyup=\"mascara( this, intervalo );\" id=" . $d['disciplina_id'] . n3 . " name=" . $d['disciplina_id'] . n3 . " value=" . $d['nota3'] . " size='3' ></td>
+                        <td><input class=\"semborda\" readonly  size='5' value=" . $d['media'] . "></td>
+                        <td><input class=\"semborda\" readonly  size='10' value=" . $d['situacao'] . "></td>
                      </tr>";
         }
         $turma = new Turma();
         $turma->setCodigo($a[0]['turma_id']);
-
         $t = $turma->retornaTurma();
 
         $html .= "<tr>
@@ -135,10 +132,10 @@ HTML;
                   <tr>
                       <td colspan = '6'></td>
                       <td>
-                        <button onclick=\"imprimeBoletinho()\">Imprimir</button>
+                        <input value='Imprimir' type='button' class='button' onclick=\"imprimeBoletinho()\">
                       </td> 
                       <td>
-                        <button onclick =\"xajax_salvaNotas(xajax.getFormValues('formIncluirNotas'))\">Salvar</button>
+                          <input value='Salvar' type='button' class='button'  onclick =\"xajax_salvaNotas(xajax.getFormValues('formIncluirNotas'))\">
                       </td>    
                  </tr>";
 
@@ -148,4 +145,5 @@ HTML;
     }
     return $obj_response;
 }
+
 // retornar uma listagem dos alunos em grid quando clicar no aluno abre a manutencao do usuario

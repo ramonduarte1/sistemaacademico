@@ -19,6 +19,7 @@ function menuPrincipal() {
             <a href="#" onclick="xajax_menuDisciplina('pesquisa')">Disciplina</a>
             <a href="#" onclick="xajax_menuTurma('pesquisa')">Turma</a>
             <a href="#" onclick="xajax_menuProfessor('pesquisa')">Professor</a>
+            <a href="#" onclick="xajax_menuUsuario('pesquisa')">Usuario</a>
           </div>
         </li>
           <li><a href="#" onclick="xajax_menuMatricula('pesquisa')">Matricula</a></li>

@@ -8,6 +8,8 @@
 
 function menuMatricula($tipo, $form) {
     $obj_response = new xajaxResponse();
+    $matricula = new Matricula();
+
     if ($tipo == 'pesquisa') {
         $html = <<<HTML
         <h2 class="centralizado">Matricula</h2><br><br>
@@ -45,7 +47,7 @@ function menuMatricula($tipo, $form) {
                         <input required="" type="text" size="50" id="pesq_turma" name="pesq_turma">
                     </td>
                     <td>
-                         <input type="button" class="button" value="Pesquisar" onclick="xajax_menuMatricula('filtrar_turma', xajax.getFormValues('formPesquisaTurma'))">
+                        <input type="button" class="button" value="Pesquisar" onclick="xajax_menuMatricula('filtrar_turma', xajax.getFormValues('formPesquisaTurma'))">
                     </td>
                 </tr>
                 <tr>
@@ -74,7 +76,7 @@ HTML;
         $aluno = new Aluno();
         $alunos = $aluno->retornaAlunos($form['radio_aluno'], $form['pesq_aluno']);
 
-        $html = '<div id="" style="overflow:scroll; height:150px;">';//scroll
+        $html = '<div id="" style="overflow:scroll; height:150px;">'; //scroll
         foreach ($alunos as $a) {
             $html .= '<form class="centralizado" id="' . formIdAluno . $a['id'] . '" name="formIdAluno" action="" method="post">
                         <input readonly id="mat_aluno" name="mat_aluno" value="' . $a['id'] . ' " size="4">
@@ -82,8 +84,8 @@ HTML;
                         <input type="button" class="button" value="Matricular" onclick="xajax_menuMatricula(\'matricular_aluno\',xajax.getFormValues(' . formIdAluno . $a['id'] . '))">
                       </form>';
         }
-        $html .='</div>';
-        
+        $html .= '</div>';
+
         $obj_response->assign("retorno", "innerHTML", $html);
     }
 
@@ -91,7 +93,7 @@ HTML;
         $turma = new Turma();
         $turmas = $turma->retornaTurmas($form['radio_turma'], $form['pesq_turma']);
 
-        $html = '<div id="" style="overflow:scroll; height:150px;">';//scroll
+        $html = '<div id="" style="overflow:scroll; height:150px;">'; //scroll
         foreach ($turmas as $t) {
             $html .= '<form class="centralizado" id="' . formIdTurma . $t['id'] . '" name="formIdAluno" action="" method="post">
                         <input readonly id="matricula" name="matricula" value="' . $t['id'] . ' " size="4">
@@ -99,23 +101,17 @@ HTML;
                         <input type="button" class="button" value="Matricular" onclick="xajax_menuMatricula(\'matricular_turma\',xajax.getFormValues(' . formIdTurma . $t['id'] . '))">
                       </form>';
         }
-        $html .='</div>';
+        $html .= '</div>';
         $obj_response->assign("retorno", "innerHTML", $html);
     }
 
     if ($tipo == 'matricular_aluno') {
-        $matricula = new Matricula();
-
         $matricula->matriculaAluno($form['mat_aluno']);
         $tipo = 'matricular_turma'; // muda para matricular_turma para entrar direto no proximo if
-        
     }
 
     if ($tipo == 'matricular_turma') {
-
-        $matricula = new Matricula();
-
-        $aluno = $matricula->retornaAluno();//retorna o aluno que estar com o id salva na session
+        $aluno = $matricula->retornaAluno(); //retorna o aluno que estar com o id salva na session
         $html = '<table border="1" class="semborda">  
                   <tr>
                     <th>Matricula</th>
@@ -147,7 +143,7 @@ HTML;
 
         $d = new Disciplina();
         $disciplinas = $d->retornaDisciplinasPorTurma($form['matricula']);
-        
+
         $html .= ' <tr>
                     <th>Código</th>
                     <th>Disciplina</th>
@@ -161,7 +157,7 @@ HTML;
                       </tr>';
         }
         $html .= '</table>';
-        $html .= '<button onclick="xajax_adicionarTurma()">Matricular</button>';
+        $html .= '<input type="button" class="button" value="Matricular" onclick="xajax_adicionarTurma()">';
         $obj_response->assign("retorno_turma", "innerHTML", $html);
     }
 

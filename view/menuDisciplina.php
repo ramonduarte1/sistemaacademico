@@ -56,16 +56,17 @@ HTML;
         $disciplina = new Disciplina();
         $disciplinas = $disciplina->retornaDisciplinas($form['radio'], $form['pesq_disciplina']);
 
-        $html = '';
+        $html = '<div id="" style="overflow:scroll; height:350px;">'; //scroll
         foreach ($disciplinas as $d) {
             $html .= '<form class="centralizado" id="' . formIdDisciplina . $d['id'] . '" name="' . formIdDisciplina . $d['id'] . '" action="" method="post">
                         <input readonly id="matricula" name="matricula" value="' . $d['id'] . '" size="4">
                         <input readonly id="nome" name="nome" value="' . $d['nome'] . '">
                         <input type="button" class="button" value="Editar" onclick="xajax_menuDisciplina(\'editar\',xajax.getFormValues(' . formIdDisciplina . $d['id'] . '))">
-                        <input type="button" class="button" value="Apagar" onclick="confirmacao(\''.apagar_disciplina. $d['id'].'\');">
-                        <input type="hidden" id="'.'apagar_disciplina' . $d['id'].'" name="'.'apagar_disciplina' . $d['id'].'"  onclick="xajax_apagarDisciplina(xajax.getFormValues(' . formIdDisciplina . $d['id'] . '))">
+                        <input type="button" class="button" value="Apagar" onclick="confirmacao(\'' . apagar_disciplina . $d['id'] . '\');">
+                        <input type="hidden" id="' . 'apagar_disciplina' . $d['id'] . '" name="' . 'apagar_disciplina' . $d['id'] . '"  onclick="xajax_apagarDisciplina(xajax.getFormValues(' . formIdDisciplina . $d['id'] . '))">
                       </form>';
         }
+        $html .= ' </div>';
 
 
         $obj_response->assign("retorno", "innerHTML", $html);
@@ -138,4 +139,5 @@ HTML;
 
     return $obj_response;
 }
+
 // retornar uma listagem dos alunos em grid quando clicar no aluno abre a manutencao do usuario

@@ -9,7 +9,6 @@
 function menuTurma($tipo, $form) {
 
     $obj_response = new xajaxResponse();
-//, xajax.getFormValues('formPesquisa')
     if ($tipo == 'pesquisa') {
         $html = <<<HTML
         <h2 class="centralizado">Cadastro Turma</h2><br><br>
@@ -58,17 +57,17 @@ HTML;
         $turma = new Turma();
         $turmas = $turma->retornaTurmas($form['radio'], $form['pesq_turma']);
 
-        $html = '';
+        $html = '<div id="" style="overflow:scroll; height:350px;">'; //scroll
         foreach ($turmas as $t) {
             $html .= '<form class="centralizado" id="' . formIdTurma . $t['id'] . '" name="' . formIdTurma . $t['id'] . '" action="" method="post">
                         <input readonly id="matricula" name="matricula" value="' . $t['id'] . '" size="4">
                         <input readonly id="nome" name="nome" value="' . $t['nome'] . '">
                         <input type="button" class="button" value="Editar" onclick="xajax_menuTurma(\'editar\',xajax.getFormValues(' . formIdTurma . $t['id'] . '))">
-                        <input type="button" class="button" value="Apagar" onclick="confirmacao(\''.apagar_turma. $t['id'].'\');">
-                        <input type="hidden" id="'.'apagar_turma' . $t['id'].'" name="'.'apagar_turma' . $t['id'].'"  onclick="xajax_apagarTurma(xajax.getFormValues(' . formIdTurma . $t['id'] . '))">
+                        <input type="button" class="button" value="Apagar" onclick="confirmacao(\'' . apagar_turma . $t['id'] . '\');">
+                        <input type="hidden" id="' . 'apagar_turma' . $t['id'] . '" name="' . 'apagar_turma' . $t['id'] . '"  onclick="xajax_apagarTurma(xajax.getFormValues(' . formIdTurma . $t['id'] . '))">
                       </form>';
         }
-
+        $html .= ' </div>';
         $obj_response->assign("retorno", "innerHTML", $html);
     }
 
@@ -162,7 +161,6 @@ HTML;
 </form>";
 
         $obj_response->assign("retorno", "innerHTML", $html);
-
     }
 
     return $obj_response;

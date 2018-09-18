@@ -286,10 +286,6 @@ class Aluno extends Pessoa {
         if ($form['radio'] == 2) {//por matricula
             $sql = "select *from aluno where id = " . $form['pesq_aluno'] . " and aluno.deletado = 'n' and aluno.situacao='ativo'";
         }
-        if ($form['radio'] == 3) {//por turma
-            $sql = "select *from aluno where turma_id = " . $form['pesq_aluno'] . " and aluno.deletado = 'n' and aluno.situacao='ativo'";
-        }
-
         $insert = $this->conexao->query($sql);
         $array = array();
         foreach ($insert as $aluno) {

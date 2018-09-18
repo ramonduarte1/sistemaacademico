@@ -47,7 +47,7 @@ class Professor extends Pessoa {
         $insert->execute($bind);
 
 
-        if ($insert != FALSE) { // se tiver inserido o professor  salva tambem na tabela turma_disciplina
+        if ($insert != FALSE) { // se tiver inserido o professor  salva tambem na tabela professor_disciplina
             $sql = "SELECT last_value from professor_id_seq";
             $utimoIdProfessor = $this->conexao->query($sql);
 
@@ -56,13 +56,15 @@ class Professor extends Pessoa {
             }
 
             foreach ($this->getDisciplinas() as $idDisciplina) {
-                $sql = "INSERT INTO professor_disciplina VALUES (:professor_id,:disciplina_id)";
+                $sql = "INSERT INTO professor_disciplina VALUES (:professor_id,:disciplina_id,:data_altera,:usuario_altera)";
                 $insert = $this->conexao->prepare($sql);
 
                 $bind = array
                     (
                     ':professor_id' => $idProfessor[0],
-                    ':disciplina_id' => $idDisciplina
+                    ':disciplina_id' => $idDisciplina,
+                    ':data_altera' => $date,
+                    ':usuario_altera' => $_SESSION['login']
                 );
 
                 $insert->execute($bind);
@@ -97,7 +99,7 @@ class Professor extends Pessoa {
             $this->conexao->query($sql);
 
             foreach ($this->getDisciplinas() as $idDisciplina) {
-                $sql = "INSERT INTO professor_disciplina VALUES (:professor_id,:disciplina_id)";
+                $sql = "INSERT INTO professor_disciplina VALUES (:professor_id,:disciplina_id,:data_altera,:usuario_altera)";
                 $insert = $this->conexao->prepare($sql);
 
                 date_default_timezone_set('America/Sao_Paulo');
@@ -106,7 +108,9 @@ class Professor extends Pessoa {
                 $bind = array
                     (
                     ':professor_id' => $this->getMatricula(),
-                    ':disciplina_id' => $idDisciplina
+                    ':disciplina_id' => $idDisciplina,
+                    ':data_altera' => $date,
+                    ':usuario_altera' => $_SESSION['login']
                 );
 
                 $insert->execute($bind);
@@ -180,7 +184,7 @@ class Professor extends Pessoa {
     public function retornaDisciplinasDoProfessor() {
         $sql = "select professor.id id_prof, professor.nome nome_prof , disciplina.id id_disc ,disciplina.nome nome_disc, disciplina.carga_horaria from professor "
                 . "inner join professor_disciplina on (professor.id = professor_disciplina.professor_id) "
-                . "inner join disciplina on (disciplina.id = professor_disciplina.disciplina_id) order by disciplina.nome";
+                . "inner join disciplina on (disciplina.id = professor_disciplina.disciplina_id) order by professor.id";
 
         $consulta = $this->conexao->query($sql);
         $array = array();

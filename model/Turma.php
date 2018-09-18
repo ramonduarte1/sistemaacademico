@@ -90,13 +90,15 @@ class Turma {
 
         if ($insert != FALSE) { // se tiver inserido a turma  salva tambem na tabela turma_disciplina
             foreach ($this->getDisciplinas() as $idDisciplina) {
-                $sql = "INSERT INTO turma_disciplina VALUES (:turma_id,:disciplina_id)";
+                $sql = "INSERT INTO turma_disciplina VALUES (:turma_id,:disciplina_id,:data_altera,:usuario_altera)";
                 $insert = $this->conexao->prepare($sql);
 
                 $bind = array
                     (
                     ':turma_id' => $idTurma[0],
-                    ':disciplina_id' => $idDisciplina
+                    ':disciplina_id' => $idDisciplina,
+                    ':data_altera' => $date,
+                    ':usuario_altera' => $_SESSION['login']
                 );
 
                 $insert->execute($bind);
@@ -131,7 +133,7 @@ class Turma {
             $this->conexao->query($sql);
 
             foreach ($this->getDisciplinas() as $idDisciplina) {
-                $sql = "INSERT INTO turma_disciplina VALUES (:turma_id,:disciplina_id)";
+                $sql = "INSERT INTO turma_disciplina VALUES (:turma_id,:disciplina_id,:data_altera,:usuario_altera)";
                 $insert = $this->conexao->prepare($sql);
 
                 date_default_timezone_set('America/Sao_Paulo');
@@ -140,7 +142,9 @@ class Turma {
                 $bind = array
                     (
                     ':turma_id' => $this->getCodigo(),
-                    ':disciplina_id' => $idDisciplina
+                    ':disciplina_id' => $idDisciplina,
+                    ':data_altera' => $date,
+                    ':usuario_altera' => $_SESSION['login']
                 );
 
                 $insert->execute($bind);
@@ -175,7 +179,7 @@ class Turma {
             $insert->execute($bind);
 
             if ($insert != FALSE) {
-                return 'alert("Registro deletado com sucesso!");document.getElementById("'.'formIdTurma'.$this->getCodigo().'").style.visibility = "hidden"';
+                return 'alert("Registro deletado com sucesso!");document.getElementById("' . 'formIdTurma' . $this->getCodigo() . '").style.visibility = "hidden"';
             } else {
                 return "alert('Ocorreu um erro ao inserir!');";
             }

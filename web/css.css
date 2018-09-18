@@ -156,22 +156,36 @@ body {
 
 input[type=text], select {
     width: 100%;
-/*    padding: 12px 20px;*/
-    margin: 4px 0;
+    padding: 12px 20px;
+    margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
-    border-radius: 1px;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+input[type=password], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     box-sizing: border-box;
 }
 
 input[type=email], select {
     width: 100%;
     padding: 12px 20px;
-    margin: 4px 0;
+    margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
 }
 /*Dialog*/
-.window {position: fixed; width: 440px; height: 200px; display: none; z-index: 9090; padding: 20px; background-color: #fff;}
+.dialogBox {
+    width: 600px;
+    height: 600px;
+    background: #f9f9f9;
+    border-radius: 10px;
+}
