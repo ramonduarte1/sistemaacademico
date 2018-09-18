@@ -42,28 +42,4 @@ class Matricula {
         $this->aluno->setMatricula($_SESSION['matricula']['aluno']);
         return $this->aluno->retornaAluno();
     }
-
-//    public function salvar() {
-//        $this->aluno->setMatricula($_SESSION['matricula']['aluno']);
-//        $this->turma->setCodigo($_SESSION['matricula']['turma']);
-//                
-//        $sql = "UPDATE aluno SET turma_id = " . $this->turma->getCodigo() . ", usuario_altera = :usuario_altera, data_altera = :data_altera WHERE id =" . $this->aluno->getMatricula() . " ";
-//        $insert = $this->conexao->prepare($sql);
-//        
-//        date_default_timezone_set('America/Sao_Paulo');
-//        $date = date('Y-m-d H:i');
-//
-//        $bind = array(
-//            ':usuario_altera' => $_SESSION['login'],
-//            ':data_altera' => $date
-//        );
-//        $insert->execute($bind);
-//
-//        if ($insert != FALSE) {
-//            return "Sucesso!";
-//        } else {
-//            return "Ocorreu um erro!";
-//        }
-//    }
-
 }

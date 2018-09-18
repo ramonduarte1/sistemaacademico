@@ -41,7 +41,7 @@ class Professor extends Pessoa {
             'email' => $this->getEmail(),
             'endereco' => $this->getEndereco(),
             'telefone' => $this->getTelefone(),
-            'usuario_altera' => $this->getUsuarioAltera(),
+            'usuario_altera' => $_SESSION['login'],
             'data_altera' => $date
         );
         $insert->execute($bind);
@@ -86,7 +86,7 @@ class Professor extends Pessoa {
             'endereco' => $this->getEndereco(),
             'telefone' => $this->getTelefone(),
             'id' => $this->getMatricula(),
-            'usuario_altera' => $this->getUsuarioAltera(),
+            'usuario_altera' => $_SESSION['login'],
             'data_altera' => $date
         );
         $insert->execute($bind);
@@ -134,7 +134,7 @@ class Professor extends Pessoa {
 
             $bind = array(
                 'deletado' => 's',
-                'usuario_altera' => $this->getUsuarioAltera(),
+                'usuario_altera' => $_SESSION['login'],
                 'data_altera' => $date,
                 'id' => $this->getMatricula()
             );

@@ -48,7 +48,7 @@ class Aluno extends Pessoa {
         $this->turma_id = $turma_id;
     }
 
-    public function salvaNoBanco() {
+    public function salvar() {
         $sql = "INSERT INTO aluno (nome,email,endereco,telefone,usuario_altera,data_altera) VALUES (:nome,:email,:endereco,:telefone,:usuario_altera,:data_altera)";
         $insert = $this->conexao->prepare($sql);
 
@@ -75,7 +75,7 @@ class Aluno extends Pessoa {
 
     public function apagar() {
 
-        $sql = "select *from aluno inner join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where id = '" . $this->getMatricula() . "' and deletado ='n' ";
+        $sql = "select *from aluno inner join aluno_disciplina on (aluno.id = aluno_disciplina.aluno_id) where id = '" . $this->getMatricula() . "' and aluno.deletado ='n' ";
         $insert = $this->conexao->query($sql);
 
         if ($insert->rowCount() > 0) {// se o aluno tiver matricula ativa
@@ -89,7 +89,7 @@ class Aluno extends Pessoa {
 
             $bind = array(
                 ':deletado' => 's',
-                ':usuario_altera' => $this->getUsuarioAltera(),
+                ':usuario_altera' => $_SESSION['login'],
                 ':data_altera' => $date,
                 ':id' => $this->getMatricula()
             );
@@ -123,7 +123,7 @@ class Aluno extends Pessoa {
             'telefone' => $this->getTelefone(),
             'trancado' => $this->getTrancado(),
             'id' => $this->getMatricula(),
-            'usuario_altera' => $this->getUsuarioAltera(),
+            'usuario_altera' => $_SESSION['login'],
             'data_altera' => $date
         );
         $insert->execute($bind);

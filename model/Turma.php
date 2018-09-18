@@ -65,7 +65,7 @@ class Turma {
         $this->disciplinas = $disciplinas;
     }
 
-    public function salvarNoBanco() {
+    public function salvar() {
 
         $sql = "INSERT INTO turma (nome,data_altera,usuario_altera) VALUES (:nome,:data_altera,:usuario_altera)";
         $insert = $this->conexao->prepare($sql);
@@ -77,7 +77,7 @@ class Turma {
             (
             ':nome' => $this->getNome(),
             ':data_altera' => $date,
-            ':usuario_altera' => $this->getUsuarioAltera()
+            ':usuario_altera' => $_SESSION['login']
         );
 
         $insert->execute($bind);
@@ -120,7 +120,7 @@ class Turma {
             ':nome' => $this->getNome(),
             ':id' => $this->getCodigo(),
             ':data_altera' => $date,
-            ':usuario_altera' => $this->getUsuarioAltera()
+            ':usuario_altera' => $_SESSION['login']
         );
 
         $insert->execute($bind);
@@ -169,7 +169,7 @@ class Turma {
                 (
                 ':deletado' => 's',
                 ':data_altera' => $date,
-                ':usuario_altera' => $this->getUsuarioAltera(),
+                ':usuario_altera' => $_SESSION['login'],
                 ':id' => $this->getCodigo()
             );
             $insert->execute($bind);

@@ -51,9 +51,7 @@ class DisciplinaController {
         $this->discplina->setNome($form['nome']);
         $this->discplina->setCargaHoraria($form['carga_horaria']);
 
-        $result = $this->discplina->atualizar();
-
-        $this->objResponse->alert($result);
+        $this->objResponse->script($this->discplina->atualizar());
         return $this->objResponse;
     }
 

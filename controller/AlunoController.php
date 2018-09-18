@@ -36,7 +36,7 @@ class AlunoController {
         $this->aluno->setEmail($form['email']);
         $this->aluno->setEndereco($form['endereco']);
 
-        $this->objResponse->script($this->aluno->salvaNoBanco());
+        $this->objResponse->script($this->aluno->salvar());
 
         return $this->objResponse;
     }
@@ -60,6 +60,7 @@ class AlunoController {
         $this->aluno->setEndereco($form['endereco']);
         $this->aluno->setTrancado($form['trancar']);
         $this->aluno->setDisciplinas($form['disciplinas']);
+        $this->aluno->setUsuarioAltera($_SESSION['login']);
 
         $result = $this->aluno->atualizar();
 

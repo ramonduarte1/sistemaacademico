@@ -12,7 +12,6 @@ function menuPrincipal() {
 
     $html = <<<HTML
        <ul>
-        <li><a href="index.php">Home</a></li>
         <li class="dropdown">
           <a href="javascript:void(0)" class="dropbtn">Cadastro</a>
           <div class="dropdown-content">
@@ -26,7 +25,7 @@ function menuPrincipal() {
           <li><a href="#" onclick="xajax_menuRelatorio('pesquisa')">Relatório</a></li>
           <li><a href="#" onclick="xajax_menuLancaNota('pesquisa')">Notas/Boletinho</a></li>
           <li><a href="#" onclick="xajax_sair()">sair</a></li>
-      </ul>
+       </ul>
 HTML;
 
     $obj_response = new xajaxResponse();

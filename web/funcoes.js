@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+
 function imprimeBoletinho() {
     var conteudo = document.getElementById('formIncluirNotas').innerHTML,
             tela_impressao = window.open('about:blank');
@@ -11,14 +12,14 @@ function imprimeBoletinho() {
     tela_impressao.window.print();
     tela_impressao.window.close();
 }
-function mascara(t, mask) {
-    var i = t.value.length;
-    var saida = mask.substring(1, 0);
-    var texto = mask.substring(i)
-    if (texto.substring(0, 1) != saida) {
-        t.value += texto.substring(0, 1);
-    }
-}
+//function mascara(t, mask) {
+//    var i = t.value.length;
+//    var saida = mask.substring(1, 0);
+//    var texto = mask.substring(i)
+//    if (texto.substring(0, 1) != saida) {
+//        t.value += texto.substring(0, 1);
+//    }
+//}
 //funcao responsavel por perguntar o usuario se realmente quer continuar ele recebe o nome
 // de um formulario hidden para ser clicado caso for true a resposta do ussuario
 function confirmacao(acao) {

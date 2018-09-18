@@ -113,13 +113,13 @@ class Disciplina {
             ':nome' => $this->getNome(),
             ':carga_horaria' => $this->getCargaHoraria(),
             ':data_altera' => $date,
-            ':usuario_altera' => $this->getUsuarioAltera()
+            ':usuario_altera' => $_SESSION['login']
         );
 
         $insert->execute($bind);
 
         if ($insert != FALSE) {
-            return "alert('Disciplina cadastrado com sucesso!');document.getElementById(\"formDisciplina\").reset();";
+            return "alert('Registro cadastrado com sucesso!');document.getElementById(\"formDisciplina\").reset();";
         } else {
             return "alert('Ocorreu um erro ao cadastrar!');";
         }
@@ -138,15 +138,15 @@ class Disciplina {
             ':carga_horaria' => $this->getCargaHoraria(),
             ':id' => $this->getCodigo(),
             ':data_altera' => $date,
-            ':usuario_altera' => $this->getUsuarioAltera()
+            ':usuario_altera' => $_SESSION['login']
         );
 
         $insert->execute($bind);
-        $a = 1;
+
         if ($insert != FALSE) {
-            return "Disciplina cadastrada com sucesso!";
+            return "alert('Registro alterado com sucesso!');";
         } else {
-            return "Ocorreu um erro ao cadastrar!";
+            return "alert('Ocorreu um erro ao alterar!')";
         }
     }
 
@@ -168,7 +168,7 @@ class Disciplina {
                 (
                 ':deletado' => 's',
                 ':data_altera' => $date,
-                ':usuario_altera' => $this->getUsuarioAltera(),
+                ':usuario_altera' => $_SESSION['login'],
                 ':id' => $this->getCodigo()
             );
 
@@ -236,7 +236,9 @@ class Disciplina {
 
     public function retornaAtualDisponivel() {
 
-        $sql = "select *from disciplina left join professor_disciplina on disciplina.id = professor_disciplina.disciplina_id where professor_disciplina.disciplina_id isnull or professor_disciplina.professor_id = " . $this->getProfessor_id() . " order by disciplina.id";
+        $sql = "select *from disciplina left join professor_disciplina on (disciplina.id = professor_disciplina.disciplina_id) "
+                . "where disciplina.deletado = 'n' and professor_disciplina.disciplina_id isnull "
+                . "or professor_disciplina.professor_id = " . $this->getProfessor_id() . " order by disciplina.id";
 //        $sql = "select *from disciplina where deletado = 'n' order by id";
         $insert = $this->conexao->query($sql);
         $array = array();

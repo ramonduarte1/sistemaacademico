@@ -40,7 +40,7 @@ class TurmaController {
         }
 
         $this->turma->setDisciplinas($disciplinas);
-        $result = $this->turma->salvarNoBanco();
+        $result = $this->turma->salvar();
 
         $this->objResponse->script($result);
         
