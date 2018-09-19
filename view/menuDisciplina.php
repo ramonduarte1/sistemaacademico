@@ -8,7 +8,7 @@
 
 function menuDisciplina($tipo, $form) {
     $obj_response = new xajaxResponse();
-//, xajax.getFormValues('formPesquisa')
+
     if ($tipo == 'pesquisa') {
         $html = <<<HTML
         <h2 class="centralizado">Cadastro Disciplina</h2><br><br>
