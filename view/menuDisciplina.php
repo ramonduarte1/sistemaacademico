@@ -123,10 +123,6 @@ HTML;
                         <td><input type="text" required id="carga_horario" name="carga_horaria" size="50"></td>
                     </tr>
                     <tr>
-                        <td class="direita">Ementa</td>
-                        <td><input type="file" name="file" id="file" size="50"></td>
-                    </tr>
-                    <tr>
                         <td></td>
                         <td><input type="button" class="button" value="Salvar" onclick="return validarDisciplina()"></td>
                         <input type="hidden" id="salvar_disciplina" nome="salvar_disciplina" onclick="xajax_salvarDisciplina(xajax.getFormValues('formDisciplina'))">

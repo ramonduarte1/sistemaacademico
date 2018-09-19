@@ -26,23 +26,13 @@ function menuAluno($tipo, $form) {
             <table border='0'>
                 <tr>
                     <td class="esquerda">
-                        <input type="radio" id="radio" value="1" name="radio" checked> Aluno por nome
+                        <input type="radio" id="radio" value="1" name="radio" checked> Nome
                     </td>
                     <td class="esquerda">
-                        <input type="radio" id="radio" value="2" name="radio" > Aluno por matricula
+                        <input type="radio" id="radio" value="2" name="radio" > Matricula
                     </td>
                 </tr>
-                <tr>
-                    <td class="esquerda">
-                        <input type="radio" id="radio" value="3" name="radio"> Não matriculado por nome
-                    </td>
-                    <td class="esquerda">
-                        <input type="radio" id="radio" value="4" name="radio" > Não matriculado por matricula
-                    </td>
-                    <td class="esquerda">
-                        <input type="radio" id="radio" value="5" name="radio" > Matricula trancada por nome
-                    </td>
-                </tr>
+                
             </table>
         </table>
             <hr />
