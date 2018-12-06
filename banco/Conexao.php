@@ -13,7 +13,7 @@ class Conexao extends PDO {
         $this->host = '127.0.0.1';
         $this->database = 'sistema_academico';
         $this->user = 'postgres';
-        $this->pass = 'arpus.';
+        $this->pass = '****';
         $dns = $this->tipo . ':dbname=' . $this->database . ";host=" . $this->host;
         parent::__construct($dns, $this->user, $this->pass, null);
     }
